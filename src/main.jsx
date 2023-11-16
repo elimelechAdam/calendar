@@ -5,8 +5,6 @@ import "./index.css";
 import { PublicClientApplication, EventType } from "@azure/msal-browser";
 import config from "./config/Config";
 
-// import reportWebVitals from "./reportWebVitals";
-
 //
 const msalInstance = new PublicClientApplication({
   auth: {
@@ -18,7 +16,6 @@ const msalInstance = new PublicClientApplication({
     storeAuthStateInCookie: true,
   },
 });
-console.log(msalInstance);
 // Check if there are already accounts in the browser session
 // If so, set the first account as the active account
 const accounts = msalInstance.getAllAccounts();
@@ -36,7 +33,5 @@ msalInstance.addEventCallback((event) => {
 // </MsalInstanceSnippet>
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App pca={msalInstance} />
-  </React.StrictMode>
+  <App pca={msalInstance} />
 );
