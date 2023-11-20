@@ -1,19 +1,9 @@
 import { Client } from "@microsoft/microsoft-graph-client";
 
-const ensureClient = async (authProvider) => {
-  let graphClient;
+const client = Client.initWithMiddleware({ authProvider });
 
-  if (!graphClient) {
-    graphClient = Client.initWithMiddleware({
-      authProvider: authProvider,
-    });
-  }
-  return graphClient;
-};
-
-export const getUserDetails = async (authProvider) => {
+export const getUserDetails = async () => {
   try {
-    const client = await ensureClient(authProvider);
     const user = await client.api("/me").get();
     return user;
   } catch (error) {
@@ -22,14 +12,8 @@ export const getUserDetails = async (authProvider) => {
   }
 };
 
-export const grantCalendarAccess = async (
-  authProvider,
-  userId,
-  email,
-  role
-) => {
+export const grantCalendarAccess = async (userId, email, role) => {
   try {
-    const client = await ensureClient(authProvider);
     const request = {
       grantedToId: userId,
       grantedToEmail: email,
@@ -45,9 +29,8 @@ export const grantCalendarAccess = async (
   }
 };
 
-export const getCalendarPermissions = async (authProvider) => {
+export const getCalendarPermissions = async () => {
   try {
-    const client = await ensureClient(authProvider);
     const response = await client.api(`/me/calendar/calendarPermissions`).get();
     return response;
   } catch (error) {
@@ -56,7 +39,7 @@ export const getCalendarPermissions = async (authProvider) => {
   }
 };
 
-export const sendMail = async (authProvider, emailDetails) => {
+export const sendMail = async (emailDetails) => {
   const email = {
     message: {
       subject: emailDetails.subject,
@@ -75,7 +58,6 @@ export const sendMail = async (authProvider, emailDetails) => {
     saveToSentItems: "true",
   };
   try {
-    const client = await ensureClient(authProvider);
     const response = await client.api("/me/sendMail").post(email);
     return response;
   } catch (error) {

@@ -22,7 +22,6 @@ function App() {
       msalInstance.setActiveAccount(authResult.account);
     }
   });
-  console.log(msalInstance.getActiveAccount());
   return (
     <MsalProvider instance={msalInstance}>
       <main>
