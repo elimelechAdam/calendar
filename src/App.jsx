@@ -11,6 +11,7 @@ import "./App.css";
 import { Home } from "./pages/Home";
 import AuthRedirect from "./services/AuthRedirect";
 import { LoginPage } from "./pages/LoginPage";
+import { MyRequests } from "./pages/MyRequests";
 
 const App = ({ pca }) => {
   return (
@@ -20,7 +21,12 @@ const App = ({ pca }) => {
           <Router>
             <Routes>
               <Route path="/" element={<LoginPage />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/home" element={<Home />}>
+                <Route index element={<Home />} />
+                <Route path="calendar-requests" element={<MyRequests />} />
+                <Route path="calendar-logs" element={<MyRequests />} />
+                <Route path="בקשות-שלי" element={<MyRequests />} />
+              </Route>
               <Route path="/auth-redirect" element={AuthRedirect} />
             </Routes>
           </Router>
@@ -29,5 +35,4 @@ const App = ({ pca }) => {
     </>
   );
 };
-
 export default App;

@@ -13,10 +13,7 @@ import {
   Alert,
 } from "@material-tailwind/react";
 import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
   InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
@@ -55,7 +52,7 @@ export function Sidebar() {
         <Accordion
           open={open === 1}
           icon={
-            <ChevronDownIcon
+            <ChevronLeftIcon
               strokeWidth={2.5}
               className={`mx-auto h-4 w-4 transition-transform ${
                 open === 1 ? "rotate-180" : ""
@@ -64,34 +61,15 @@ export function Sidebar() {
           }
         >
           <ListItem className="p-0" selected={open === 1}>
-            <AccordionHeader
-              onClick={() => handleOpen(1)}
-              className="border-b-0 p-3"
-            >
+            <AccordionHeader className="border-b-0 p-3">
               <ListItemPrefix>
                 <CalendarIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className=" font-normal">
-                בקשות ליומן שלי
+                בקשת הרשאה ליומן
               </Typography>
             </AccordionHeader>
           </ListItem>
-          <AccordionBody className="py-1">
-            <List className="p-0">
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronLeftIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                ממתין לאישורי
-              </ListItem>
-              <ListItem>
-                <ListItemPrefix>
-                  <ChevronLeftIcon strokeWidth={3} className="h-3 w-5" />
-                </ListItemPrefix>
-                בקשות שאושרו
-              </ListItem>
-            </List>
-          </AccordionBody>
         </Accordion>
         <Accordion
           open={open === 2}
@@ -113,7 +91,7 @@ export function Sidebar() {
                 <CalendarDaysIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className=" font-normal">
-                בקשת הרשאה ליומן
+                בקשות ליומן שלי{" "}
               </Typography>
             </AccordionHeader>
           </ListItem>
@@ -123,7 +101,7 @@ export function Sidebar() {
                 <ListItemPrefix>
                   <ChevronLeftIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                בקשות שלי
+                ממתין לאישורי{" "}
               </ListItem>
               <ListItem>
                 <ListItemPrefix>
@@ -135,6 +113,12 @@ export function Sidebar() {
           </AccordionBody>
         </Accordion>
         <hr className="my-2 border-blue-gray-50" />
+        <ListItem className="gap-2" onClick={app.signOut}>
+          <ListItemPrefix>
+            <UserCircleIcon className="h-5 w-5 gap-2" />
+          </ListItemPrefix>
+          היי אדם אלימלך
+        </ListItem>
         <ListItem className="gap-2">
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
@@ -142,7 +126,7 @@ export function Sidebar() {
           הודעות
           <ListItemSuffix>
             <Chip
-              value="3"
+              value="0"
               size="sm"
               variant="ghost"
               color="blue-gray"
