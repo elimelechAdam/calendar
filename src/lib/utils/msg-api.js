@@ -1,8 +1,8 @@
 import { Client } from "@microsoft/microsoft-graph-client";
 
-let graphClient = null;
-
 const ensureClient = async (authProvider) => {
+  let graphClient;
+
   if (!graphClient) {
     graphClient = Client.initWithMiddleware({
       authProvider: authProvider,

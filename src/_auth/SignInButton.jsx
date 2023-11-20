@@ -1,17 +1,24 @@
 import { useMsal } from "@azure/msal-react";
 import { config } from "../lib/utils/msal-config";
+import { Button } from "@material-tailwind/react";
 
 const SignInButton = () => {
-  const msal = useMsal();
-
   const handleSignIn = async () => {
-    await msal.instance.loginRedirect({
-      scopes: config.scopes,
-      prompt: "select_account",
-    });
+    try {
+      await msal.instance.loginPopup({
+        scopes: config.scopes,
+        prompt: "select_account",
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  return <button onClick={handleSignIn}>sign in with microsoft</button>;
+  return (
+    <Button variant="filled" onClick={handleSignIn}>
+      כניסה למערכת
+    </Button>
+  );
 };
 
 export default SignInButton;
