@@ -35,14 +35,20 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["למי נשלחה הבקשה", "סוג הבקשה", "מצב הבקשה", "תאריך הבקשה"];
+const TABLE_HEAD = [
+  "ממי נשלחה הבקשה",
+  "סוג הבקשה",
+  "מצב הבקשה",
+  "תאריך הבקשה",
+  "פעולות",
+];
 
 const TABLE_ROWS = [
   {
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
     name: "John Michael",
     email: "john@creative-tim.com",
-    permissions: "מלאה",
+    permissions: "קריאה בלבד",
     org: "Organization",
     online: true,
     date: "23/04/18",
@@ -51,7 +57,7 @@ const TABLE_ROWS = [
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
     name: "Alexa Liras",
     email: "alexa@creative-tim.com",
-    permissions: "מלאה",
+    permissions: "קריאה בלבד",
     org: "Developer",
     online: false,
     date: "23/04/18",
@@ -85,23 +91,23 @@ const TABLE_ROWS = [
   },
 ];
 
-export function UserRequestsTable() {
+export function RequestToMyCalendar() {
   return (
     <Card className="h-full w-full ">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              הבקשות שלי
+              הבקשות שניתנו
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              צפה בבקשות שלך
+              צפה בבקשות שאישרת בקשות ממתינות ובקשות שלא אישרת
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> בקש הרשאה
-              ליומן
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
+              ליומנך
             </Button>
           </div>
         </div>
@@ -199,6 +205,15 @@ export function UserRequestsTable() {
                         className="font-normal flex"
                       >
                         {date}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal flex"
+                      >
+                        X
                       </Typography>
                     </td>
                   </tr>

@@ -26,6 +26,7 @@ import {
   CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
 import { useAppContext } from "../context/appContext";
+import { Link } from "react-router-dom";
 
 export function Sidebar() {
   const app = useAppContext();
@@ -65,19 +66,21 @@ export function Sidebar() {
               <ListItemPrefix>
                 <CalendarIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Typography color="blue-gray" className=" font-normal">
-                בקשת הרשאה ליומן
-              </Typography>
+              <Link to={"/הבקשות-שלי"}>
+                <Typography color="blue-gray" className=" font-normal">
+                  בקשת הרשאה ליומן
+                </Typography>
+              </Link>
             </AccordionHeader>
           </ListItem>
         </Accordion>
         <Accordion
-          open={open === 2}
+          open={open === 1}
           icon={
-            <ChevronDownIcon
+            <ChevronLeftIcon
               strokeWidth={2.5}
               className={`mx-auto h-4 w-4 transition-transform ${
-                open === 2 ? "rotate-180" : ""
+                open === 1 ? "rotate-180" : ""
               }`}
             />
           }
@@ -90,12 +93,14 @@ export function Sidebar() {
               <ListItemPrefix>
                 <CalendarDaysIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Typography color="blue-gray" className=" font-normal">
-                בקשות ליומן שלי{" "}
-              </Typography>
+              <Link to={"בקשות-ליומני"}>
+                <Typography color="blue-gray" className=" font-normal">
+                  בקשות ליומן שלי{" "}
+                </Typography>
+              </Link>
             </AccordionHeader>
           </ListItem>
-          <AccordionBody className="py-1">
+          {/* <AccordionBody className="py-1">
             <List className="p-0">
               <ListItem>
                 <ListItemPrefix>
@@ -110,7 +115,7 @@ export function Sidebar() {
                 בקשות שאושרו
               </ListItem>
             </List>
-          </AccordionBody>
+          </AccordionBody> */}
         </Accordion>
         <hr className="my-2 border-blue-gray-50" />
         <ListItem className="gap-2" onClick={app.signOut}>

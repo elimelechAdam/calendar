@@ -12,6 +12,7 @@ import { Home } from "./pages/Home";
 import AuthRedirect from "./services/AuthRedirect";
 import { LoginPage } from "./pages/LoginPage";
 import { MyRequests } from "./pages/MyRequests";
+import { RequestToMyCalendar } from "./pages/RequestToMyCalendar";
 
 const App = ({ pca }) => {
   return (
@@ -21,11 +22,9 @@ const App = ({ pca }) => {
           <Router>
             <Routes>
               <Route path="/" element={<LoginPage />} />
-              <Route path="/home" element={<Home />}>
-                <Route index element={<Home />} />
-                <Route path="calendar-requests" element={<MyRequests />} />
-                <Route path="calendar-logs" element={<MyRequests />} />
-                <Route path="בקשות-שלי" element={<MyRequests />} />
+              <Route path="/הבקשות-שלי" element={<Home />}>
+                <Route index element={<MyRequests />} />
+                <Route path="בקשות-ליומני" element={<RequestToMyCalendar />} />
               </Route>
               <Route path="/auth-redirect" element={AuthRedirect} />
             </Routes>

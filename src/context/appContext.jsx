@@ -68,7 +68,7 @@ function useProvideAppContext() {
       timeFormat: user.mailboxSettings?.timeFormat || "",
       timeZone: user.mailboxSettings?.timeZone || "UTC",
     });
-    window.location.href = "/home";
+    window.location.href = "/הבקשות-שלי";
   };
 
   const signOut = async () => {
