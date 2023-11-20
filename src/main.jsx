@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { PublicClientApplication, EventType } from "@azure/msal-browser";
 import config from "./config/Config";
+import { ThemeProvider } from "@material-tailwind/react";
 
 //
 const msalInstance = new PublicClientApplication({
@@ -33,5 +34,8 @@ msalInstance.addEventCallback((event) => {
 // </MsalInstanceSnippet>
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <App pca={msalInstance} />
+  <ThemeProvider>
+    <App pca={msalInstance} />
+  </ThemeProvider>
 );
+document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");

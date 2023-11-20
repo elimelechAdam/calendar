@@ -1,17 +1,12 @@
-import React, {
-  useContext,
-  createContext,
-  useState,
-  MouseEventHandler,
-  useEffect,
-} from "react";
+import React, { useContext, createContext, useState } from "react";
 
 import { AuthCodeMSALBrowserAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser";
-import { InteractionType, PublicClientApplication } from "@azure/msal-browser";
+import { InteractionType } from "@azure/msal-browser";
 import { useMsal } from "@azure/msal-react";
 
 import config from "../config/Config";
 import { getUser, grantCalendarAccess } from "../services/graphService";
+
 const appContext = createContext({
   user: undefined,
   error: undefined,
@@ -73,9 +68,11 @@ function useProvideAppContext() {
       timeFormat: user.mailboxSettings?.timeFormat || "",
       timeZone: user.mailboxSettings?.timeZone || "UTC",
     });
+    window.location.href = "/home";
   };
 
   const signOut = async () => {
+    window.location.href = "/";
     await msal.instance.logoutPopup();
     setUser(undefined);
   };
