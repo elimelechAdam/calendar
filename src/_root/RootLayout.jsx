@@ -1,6 +1,7 @@
 import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
+import Sidebar from "../components/Sidebar";
 
 const RootLayout = () => {
   const { instance } = useMsal();
@@ -11,9 +12,12 @@ const RootLayout = () => {
       {!account ? (
         <Navigate to="/sign-in" />
       ) : (
-        <AuthenticatedTemplate>
-          <Outlet />
-        </AuthenticatedTemplate>
+        <section>
+          <AuthenticatedTemplate>
+            <Sidebar />
+            <Outlet />
+          </AuthenticatedTemplate>
+        </section>
       )}
     </>
   );
