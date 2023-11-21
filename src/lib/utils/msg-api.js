@@ -1,6 +1,4 @@
-import { Client } from "@microsoft/microsoft-graph-client";
-
-const client = Client.initWithMiddleware({ authProvider });
+import { client } from "../../App";
 
 export const getUserDetails = async () => {
   try {
@@ -8,33 +6,6 @@ export const getUserDetails = async () => {
     return user;
   } catch (error) {
     console.log(error);
-    throw error;
-  }
-};
-
-export const grantCalendarAccess = async (userId, email, role) => {
-  try {
-    const request = {
-      grantedToId: userId,
-      grantedToEmail: email,
-      role: role,
-    };
-    const response = await client
-      .api(`/me/calendar/calendarPermissions`)
-      .post(request);
-    return response;
-  } catch (error) {
-    console.error("Error fetching calendar permissions", error);
-    throw error;
-  }
-};
-
-export const getCalendarPermissions = async () => {
-  try {
-    const response = await client.api(`/me/calendar/calendarPermissions`).get();
-    return response;
-  } catch (error) {
-    console.error("Error fetching calendar permissions", error);
     throw error;
   }
 };
