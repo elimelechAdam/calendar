@@ -49,7 +49,7 @@ function App() {
           </Route>
 
           <Route element={<RootLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route index element={<Home />} />
           </Route>
         </Routes>
       </main>

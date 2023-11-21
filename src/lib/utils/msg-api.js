@@ -36,3 +36,16 @@ export const sendMail = async (emailDetails) => {
     throw error;
   }
 };
+
+export const getCalendarPermissions = async (authProvider) => {
+  try {
+    const permissions = await client
+      .api("/me/calendar/calendarPermissions")
+      .get();
+
+    return permissions.value;
+  } catch (error) {
+    console.error("Error fetching calendar permissions", error);
+    throw error;
+  }
+};
