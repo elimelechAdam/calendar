@@ -19,6 +19,8 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
+import { useState } from "react";
+import { UserRequestsTableModal } from "./UserRequestsTableModal";
 
 const TABS = [
   {
@@ -26,23 +28,29 @@ const TABS = [
     value: "all",
   },
   {
-    label: "בקשות שאושרו",
+    label: "בקשות שאישרתי",
     value: "monitored",
   },
   {
-    label: "בקשות שלא אושרו",
+    label: "בקשות שלא אישרתי",
     value: "unmonitored",
   },
 ];
 
-const TABLE_HEAD = ["למי נשלחה הבקשה", "סוג הבקשה", "מצב הבקשה", "תאריך הבקשה"];
+const TABLE_HEAD = [
+  "ממי נשלחה הבקשה",
+  "סוג הבקשה",
+  "מצב הבקשה",
+  "תאריך הבקשה",
+  "פעולות",
+];
 
 const TABLE_ROWS = [
   {
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
     name: "John Michael",
     email: "john@creative-tim.com",
-    permissions: "מלאה",
+    permissions: "קריאה בלבד",
     org: "Organization",
     online: true,
     date: "23/04/18",
@@ -51,7 +59,7 @@ const TABLE_ROWS = [
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
     name: "Alexa Liras",
     email: "alexa@creative-tim.com",
-    permissions: "מלאה",
+    permissions: "קריאה בלבד",
     org: "Developer",
     online: false,
     date: "23/04/18",
@@ -65,6 +73,43 @@ const TABLE_ROWS = [
     online: false,
     date: "19/09/17",
   },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+
   {
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
     name: "Michael Levi",
@@ -86,26 +131,35 @@ const TABLE_ROWS = [
 ];
 
 export function UserRequestsTable() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
+
   return (
     <Card className="h-full w-full ">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              הבקשות שלי
+              הבקשות שניתנו
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              צפה בבקשות שלך
+              צפה בבקשות שאישרת בקשות ממתינות ובקשות שלא אישרת
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> בקש הרשאה
-              ליומן
+            <Button
+              className="flex items-center gap-3"
+              size="sm"
+              onClick={() => setOpen(true)}
+            >
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
+              ליומנך
             </Button>
+
+            <UserRequestsTableModal open={open} handleOpen={handleOpen} />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        <div className="flex flex-col items-center justify-between  gap-4 md:flex-row">
           <Tabs value="all" className="w-1/2">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
@@ -125,10 +179,10 @@ export function UserRequestsTable() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      <CardBody className="px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
           <thead>
-            <tr>
+            <tr key={name}>
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
@@ -157,7 +211,7 @@ export function UserRequestsTable() {
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name}>
+                  <tr key={index}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <div className="flex flex-col">
@@ -199,6 +253,15 @@ export function UserRequestsTable() {
                         className="font-normal flex"
                       >
                         {date}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal flex"
+                      >
+                        X
                       </Typography>
                     </td>
                   </tr>

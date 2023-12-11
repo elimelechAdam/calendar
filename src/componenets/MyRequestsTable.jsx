@@ -35,13 +35,7 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = [
-  "ממי נשלחה הבקשה",
-  "סוג הבקשה",
-  "מצב הבקשה",
-  "תאריך הבקשה",
-  "פעולות",
-];
+const TABLE_HEAD = ["למי נשלחה הבקשה", "סוג הבקשה", "מצב הבקשה", "תאריך הבקשה"];
 
 const TABLE_ROWS = [
   {
@@ -72,10 +66,47 @@ const TABLE_ROWS = [
     date: "19/09/17",
   },
   {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "מלאה",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+  {
+    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
+    name: "Laurent Perrier",
+    email: "laurent@creative-tim.com",
+    permissions: "קריאה בלבד",
+    org: "Projects",
+    online: false,
+    date: "19/09/17",
+  },
+
+  {
     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
     name: "Michael Levi",
     email: "michael@creative-tim.com",
-    permissions: "קריאה בלבד",
+    permissions: "מלאה",
     org: "Developer",
     online: true,
     date: "24/12/08",
@@ -91,23 +122,23 @@ const TABLE_ROWS = [
   },
 ];
 
-export function RequestToMyCalendar() {
+export function MyRequestsTable() {
   return (
     <Card className="h-full w-full ">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              הבקשות שניתנו
+              הבקשות שלי
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              צפה בבקשות שאישרת בקשות ממתינות ובקשות שלא אישרת
+              צפה בבקשות שלך
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
-              ליומנך
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> בקש הרשאה
+              ליומן
             </Button>
           </div>
         </div>
@@ -131,7 +162,7 @@ export function RequestToMyCalendar() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      <CardBody className="px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -163,7 +194,7 @@ export function RequestToMyCalendar() {
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name}>
+                  <tr key={index}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <div className="flex flex-col">
@@ -205,15 +236,6 @@ export function RequestToMyCalendar() {
                         className="font-normal flex"
                       >
                         {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal flex"
-                      >
-                        X
                       </Typography>
                     </td>
                   </tr>

@@ -26,7 +26,7 @@ import {
   CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
 import { useAppContext } from "../context/appContext";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export function Sidebar() {
   const app = useAppContext();
@@ -55,51 +55,51 @@ export function Sidebar() {
           icon={
             <ChevronLeftIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${
-                open === 1 ? "rotate-180" : ""
-              }`}
+              className={`mx-auto h-4 w-4 transition-transform}`}
             />
           }
         >
-          <ListItem className="p-0" selected={open === 1}>
-            <AccordionHeader className="border-b-0 p-3">
-              <ListItemPrefix>
-                <CalendarIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Link to={"/הבקשות-שלי"}>
+          <NavLink to={"/my-requests"}>
+            <ListItem className="p-0" selected={open === 1}>
+              <AccordionHeader
+                onClick={() => handleOpen(1)}
+                className="border-b-0 p-3"
+              >
+                <ListItemPrefix>
+                  <CalendarIcon className="h-5 w-5" />
+                </ListItemPrefix>
                 <Typography color="blue-gray" className=" font-normal">
                   בקשת הרשאה ליומן
                 </Typography>
-              </Link>
-            </AccordionHeader>
-          </ListItem>
+              </AccordionHeader>
+            </ListItem>
+          </NavLink>
         </Accordion>
         <Accordion
           open={open === 1}
           icon={
             <ChevronLeftIcon
               strokeWidth={2.5}
-              className={`mx-auto h-4 w-4 transition-transform ${
-                open === 1 ? "rotate-180" : ""
+              className={`mx-auto h-4 w-4 transition-transform
               }`}
             />
           }
         >
-          <ListItem className="p-0" selected={open === 2}>
-            <AccordionHeader
-              onClick={() => handleOpen(2)}
-              className="border-b-0 p-3"
-            >
-              <ListItemPrefix>
-                <CalendarDaysIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <Link to={"בקשות-ליומני"}>
+          <NavLink to={"requests-to-calendar"}>
+            <ListItem className="p-0" selected={open === 2}>
+              <AccordionHeader
+                onClick={() => handleOpen(2)}
+                className="border-b-0 p-3"
+              >
+                <ListItemPrefix>
+                  <CalendarDaysIcon className="h-5 w-5" />
+                </ListItemPrefix>
                 <Typography color="blue-gray" className=" font-normal">
                   בקשות ליומן שלי{" "}
                 </Typography>
-              </Link>
-            </AccordionHeader>
-          </ListItem>
+              </AccordionHeader>
+            </ListItem>
+          </NavLink>
           {/* <AccordionBody className="py-1">
             <List className="p-0">
               <ListItem>

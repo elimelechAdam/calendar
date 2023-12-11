@@ -68,7 +68,7 @@ function useProvideAppContext() {
       timeFormat: user.mailboxSettings?.timeFormat || "",
       timeZone: user.mailboxSettings?.timeZone || "UTC",
     });
-    window.location.href = "/הבקשות-שלי";
+    window.location.href = "/my-requests";
   };
 
   const signOut = async () => {
@@ -77,15 +77,15 @@ function useProvideAppContext() {
     setUser(undefined);
   };
 
-  const givePermission = async () => {
+  const givePermission = async (email, permissionLevel) => {
     console.log("giving permission");
     const user = await getUser(authProvider);
     console.log(user);
     const result = await grantCalendarAccess(
       authProvider,
       user.id,
-      user.mail || user.userPrincipalName || "",
-      "write"
+      email,
+      permissionLevel
     );
     console.log(result);
   };

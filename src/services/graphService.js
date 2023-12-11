@@ -4,6 +4,8 @@ import { Client } from "@microsoft/microsoft-graph-client";
 // import { zonedTimeToUtc } from "date-fns-tz";
 // import { User, Event } from "@microsoft/microsoft-graph-types";
 
+import { AuthCodeMSALBrowserAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser";
+
 let graphClient = undefined;
 
 function ensureClient(authProvider) {
@@ -15,6 +17,7 @@ function ensureClient(authProvider) {
 
   return graphClient;
 }
+
 export async function getUser(authProvider) {
   ensureClient(authProvider);
 
@@ -55,7 +58,6 @@ export async function grantCalendarAccess(
 // Get Calendar Permissions
 export async function getCalendarPermissions(authProvider) {
   ensureClient(authProvider);
-
   try {
     const permissions = await graphClient
       .api("/me/calendar/calendarPermissions")
@@ -97,6 +99,18 @@ export async function sendEmail(authProvider, emailDetails) {
       .post({ message: email.message, saveToSentItems: email.saveToSentItems });
   } catch (error) {
     console.error("Error sending email", error);
+    throw error;
+  }
+}
+export async function getAllUsersEmails(authProvider) {
+  ensureClient(authProvider);
+
+  try {
+    const users = await graphClient.api("/users").get();
+
+    return users; // Extracting the email addresses from the response
+  } catch (error) {
+    console.error("Error fetching users' emails", error);
     throw error;
   }
 }
