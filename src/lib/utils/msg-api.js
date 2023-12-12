@@ -10,6 +10,28 @@ export const getUserDetails = async () => {
   }
 };
 
+export const grantCalendarPermissions = async ({ email, userId, role }) => {
+  const permissions = {
+    emailAddress: {
+      address: email,
+      name: email,
+    },
+    isInsideOrganization: true,
+    isRemovable: true,
+    role: role,
+    allowedRoles: ["none", "freeBusyRead", "limitedRead", "read", "write"],
+  };
+  try {
+    const result = await client
+      .api(`/users/${userId}/calendar/calendarPermissions`)
+      .post(permissions);
+    return result;
+  } catch (error) {
+    console.error("Error granting calendar permissions", error);
+    throw error;
+  }
+};
+
 export const sendMail = async (emailDetails) => {
   const email = {
     message: {
@@ -37,7 +59,7 @@ export const sendMail = async (emailDetails) => {
   }
 };
 
-export const getCalendarPermissions = async (authProvider) => {
+export const getCalendarPermissions = async () => {
   try {
     const permissions = await client
       .api("/me/calendar/calendarPermissions")
@@ -46,6 +68,27 @@ export const getCalendarPermissions = async (authProvider) => {
     return permissions.value;
   } catch (error) {
     console.error("Error fetching calendar permissions", error);
+    throw error;
+  }
+};
+
+export const getCalendar = async () => {
+  try {
+    const calendar = await client.api("me/calendar/events").get();
+    return calendar;
+  } catch (error) {
+    console.error("Error fetching calendar", error);
+    throw error;
+  }
+};
+
+// no permissions yet
+export const getAllUsers = async () => {
+  try {
+    const users = await client.api("/users").get();
+    return users;
+  } catch (error) {
+    console.error("Error fetching users", error);
     throw error;
   }
 };

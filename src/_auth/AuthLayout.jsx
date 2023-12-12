@@ -10,7 +10,7 @@ const AuthLayout = () => {
   return (
     <>
       {account ? (
-        <Navigate to="/" />
+        <Navigate to="/permissions" />
       ) : (
         <div className="bg-site bg-cover bg-center">
           <UnauthenticatedTemplate>

@@ -8,10 +8,11 @@ import { MsalProvider } from "@azure/msal-react";
 import { Routes, Route } from "react-router-dom";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
-import Home from "./_root/pages/Home";
 import SignInButton from "./_auth/SignInButton";
 import { AuthCodeMSALBrowserAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/authCodeMsalBrowser";
 import { Client } from "@microsoft/microsoft-graph-client";
+import Permissions from "./_root/pages/Permissions";
+import Requests from "./_root/pages/Requests";
 
 export const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -45,11 +46,12 @@ function App() {
       <main>
         <Routes>
           <Route element={<AuthLayout />}>
-            <Route path="/sign-in" element={<SignInButton />} />
+            <Route index element={<SignInButton />} />
           </Route>
 
           <Route element={<RootLayout />}>
-            <Route index element={<Home />} />
+            <Route path="/permissions" element={<Permissions />} />
+            <Route path="/requests" element={<Requests />} />
           </Route>
         </Routes>
       </main>

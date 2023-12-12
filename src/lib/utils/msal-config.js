@@ -3,12 +3,13 @@ export const config = {
   redirectUri: "http://localhost:5173",
   scopes: [
     "user.read",
-    "mailboxsettings.read",
+    // "User.ReadBasic.All",
     "Mail.Send",
     "Mail.Read",
     "MailboxSettings.ReadWrite",
     "MailboxSettings.Read",
-    "calendars.readwrite",
+    "Calendars.ReadWrite",
+    // "Calendars.Read.Shared",
   ],
 };
 

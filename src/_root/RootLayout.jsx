@@ -2,22 +2,24 @@ import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
 import Sidebar from "../components/Sidebar";
+import Footer from "../components/Footer";
 
 const RootLayout = () => {
   const { instance } = useMsal();
   const account = instance.getActiveAccount();
+  console.log("account", account);
 
   return (
     <>
       {!account ? (
-        <Navigate to="/sign-in" />
+        <Navigate to="/" />
       ) : (
-        <section>
-          <AuthenticatedTemplate>
-            <Sidebar />
+        <AuthenticatedTemplate>
+          <section className="flex">
+            <Sidebar name={account.name} />
             <Outlet />
-          </AuthenticatedTemplate>
-        </section>
+          </section>
+        </AuthenticatedTemplate>
       )}
     </>
   );
