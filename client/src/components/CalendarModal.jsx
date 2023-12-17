@@ -6,20 +6,19 @@ import {
   DialogBody,
   DialogFooter,
   Input,
-  Textarea,
   Typography,
   Select,
   Option,
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
 
-export function CalendarModal({ open, setOpen, handleSubmit }) {
+export function CalendarModal({ open, setOpen }) {
   const handleClose = () => setOpen(false);
 
   return (
     <>
       <Dialog open={open} size="xs">
-        <div className="flex items-center justify-between relative">
+        <form className="flex items-center justify-between relative">
           <IoMdClose
             onClick={handleClose}
             className="absolute left-2 top-2 text-[2.2rem] hover:cursor-pointer hover:bg-blue-gray-100 rounded-full
@@ -31,7 +30,7 @@ export function CalendarModal({ open, setOpen, handleSubmit }) {
               תן הרשאה ליומנך
             </Typography>
           </DialogHeader>
-        </div>
+        </form>
         <DialogBody>
           <Typography className="mb-6 -mt-7 " color="gray" variant="lead">
             הכנס את כתובת המייל של המשתמש ולחץ על תן הרשאה
@@ -45,7 +44,7 @@ export function CalendarModal({ open, setOpen, handleSubmit }) {
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2 justify-start">
-          <Button variant="text" color="gray" onClick={handleSubmit}>
+          <Button variant="text" color="gray" type="submit" onClick={() => {}}>
             תן הרשאה
           </Button>
           <Button variant="text" color="gray" onClick={handleClose}>

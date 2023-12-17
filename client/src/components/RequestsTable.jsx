@@ -35,7 +35,12 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["למי נשלחה הבקשה", "סוג הבקשה", "מצב הבקשה", "תאריך הבקשה"];
+const TABLE_HEAD = [
+  "למי נשלחה הבקשה",
+  "סוג הבקשה",
+  "מצב הבקשה",
+  "תאריך השליחה",
+];
 
 const TABLE_ROWS = [
   {
@@ -132,11 +137,13 @@ function RequestsTable() {
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70">
+                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                  >
                     {head}{" "}
                     {index !== TABLE_HEAD.length - 1 && (
                       <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
@@ -162,7 +169,8 @@ function RequestsTable() {
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal opacity-70">
+                            className="font-normal opacity-70"
+                          >
                             {email}
                           </Typography>
                         </div>
@@ -173,7 +181,8 @@ function RequestsTable() {
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal flex">
+                          className="font-normal flex"
+                        >
                           {permissions}
                         </Typography>
                       </div>
@@ -192,7 +201,8 @@ function RequestsTable() {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal flex">
+                        className="font-normal flex"
+                      >
                         {date}
                       </Typography>
                     </td>

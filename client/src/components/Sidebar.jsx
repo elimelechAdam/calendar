@@ -24,6 +24,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import SignOutButton from "./SignoutButton";
+import CopyRight from "./CopyRight";
 
 const Sidebar = ({ name }) => {
   const [open, setOpen] = React.useState(0);
@@ -53,19 +54,20 @@ const Sidebar = ({ name }) => {
                 strokeWidth={2.5}
                 className={`mx-auto h-4 w-4 `}
               />
-            }>
-            <ListItem className="p-0">
-              <AccordionHeader className="border-b-0 p-3">
-                <ListItemPrefix>
-                  <CalendarIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                <Link to="permissions">
+            }
+          >
+            <Link to="permissions">
+              <ListItem className="p-0">
+                <AccordionHeader className="border-b-0 p-3">
+                  <ListItemPrefix>
+                    <CalendarIcon className="h-5 w-5" />
+                  </ListItemPrefix>
                   <Typography color="blue-gray" className=" font-normal">
                     הרשאות ליומן שלי
                   </Typography>
-                </Link>
-              </AccordionHeader>
-            </ListItem>
+                </AccordionHeader>
+              </ListItem>
+            </Link>
           </Accordion>
           <Accordion
             open={open === 1}
@@ -75,19 +77,20 @@ const Sidebar = ({ name }) => {
                 className={`mx-auto h-4 w-4 
               }`}
               />
-            }>
-            <ListItem className="p-0">
-              <AccordionHeader className="border-b-0 p-3">
-                <ListItemPrefix>
-                  <CalendarDaysIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                <Link to="requests">
+            }
+          >
+            <Link to="requests">
+              <ListItem className="p-0">
+                <AccordionHeader className="border-b-0 p-3">
+                  <ListItemPrefix>
+                    <CalendarDaysIcon className="h-5 w-5" />
+                  </ListItemPrefix>
                   <Typography color="blue-gray" className=" font-normal">
                     בקשות הרשאה ליומן
                   </Typography>
-                </Link>
-              </AccordionHeader>
-            </ListItem>
+                </AccordionHeader>
+              </ListItem>
+            </Link>
           </Accordion>
           <hr className="my-2 border-blue-gray-50" />
           <ListItem className="gap-2" onClick={() => {}}>
@@ -116,7 +119,8 @@ const Sidebar = ({ name }) => {
       <Alert
         open={openAlert}
         className="mt-auto mb-2"
-        onClose={() => setOpenAlert(false)}>
+        onClose={() => setOpenAlert(false)}
+      >
         <CubeTransparentIcon className="mb-4 h-12 w-12" />
         <Typography variant="h6" className="mb-1">
           בקרוב
@@ -125,7 +129,10 @@ const Sidebar = ({ name }) => {
           מערכת ניהול SharePoint
         </Typography>
       </Alert>
-      <SignOutButton />
+      <div className="">
+        <SignOutButton />
+        <CopyRight />
+      </div>
     </Card>
   );
 };

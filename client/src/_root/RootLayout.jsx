@@ -2,12 +2,22 @@ import { AuthenticatedTemplate } from "@azure/msal-react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useMsal } from "@azure/msal-react";
 import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer";
+import { useEffect } from "react";
+import { useUserStore } from "./../lib/stores/user-store";
 
 const RootLayout = () => {
   const { instance } = useMsal();
   const account = instance.getActiveAccount();
-  console.log("account", account);
+  const { setUser } = useUserStore();
+
+  useEffect(() => {
+    if (account) {
+      setUser({
+        email: account.username,
+        id: account.localAccountId,
+      });
+    }
+  }, []);
 
   return (
     <>

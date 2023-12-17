@@ -21,6 +21,7 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { CalendarModal } from "./CalendarModal";
+import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 
 const TABS = [
   {
@@ -41,7 +42,7 @@ const TABLE_HEAD = [
   "למי נשלחה הרשאה",
   "סוג הרשאה",
   "מצב הרשאה",
-  "תאריך הרשאה",
+  "תאריך השליחה",
   "פעולות",
 ];
 
@@ -107,14 +108,15 @@ function PermissionsTable() {
                 הרשאות שנתתי
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                צפה בהרשאות
+                צפה בהרשאות שלך
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <Button
                 className="flex items-center gap-3"
                 size="sm"
-                onClick={handleOpen}>
+                onClick={handleOpen}
+              >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
               </Button>
@@ -147,11 +149,13 @@ function PermissionsTable() {
                 {TABLE_HEAD.map((head, index) => (
                   <th
                     key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                  >
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70">
+                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                    >
                       {head}{" "}
                       {index !== TABLE_HEAD.length - 1 && (
                         <ChevronUpDownIcon
@@ -183,7 +187,8 @@ function PermissionsTable() {
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal opacity-70">
+                              className="font-normal opacity-70"
+                            >
                               {email}
                             </Typography>
                           </div>
@@ -194,7 +199,8 @@ function PermissionsTable() {
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal flex">
+                            className="font-normal flex"
+                          >
                             {permissions}
                           </Typography>
                         </div>
@@ -213,17 +219,28 @@ function PermissionsTable() {
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal flex">
+                          className="font-normal flex"
+                        >
                           {date}
                         </Typography>
                       </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal flex">
-                          X
-                        </Typography>
+                      <td className={`${classes} flex gap-3`}>
+                        <Tooltip content="לחץ לדחות בקשה">
+                          <Typography
+                            color="red"
+                            className="flex text-[1.3rem] cursor-pointer"
+                          >
+                            <IoMdCloseCircle />
+                          </Typography>
+                        </Tooltip>
+                        <Tooltip content="לחץ לאשר בקשה">
+                          <Typography
+                            color="green"
+                            className="flex text-[1.3rem] cursor-pointer"
+                          >
+                            <IoIosCheckmarkCircle />
+                          </Typography>
+                        </Tooltip>
                       </td>
                     </tr>
                   );
