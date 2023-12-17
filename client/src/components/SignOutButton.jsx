@@ -2,10 +2,12 @@ import { useMsal } from "@azure/msal-react";
 import { PowerIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "./../lib/stores/user-store";
 
 const SignOutButton = () => {
   const { instance, accounts } = useMsal();
   const navigate = useNavigate();
+  const { clearUser } = useUserStore();
 
   const handleSignOut = () => {
     if (accounts.length > 0) {
@@ -15,13 +17,15 @@ const SignOutButton = () => {
           account: instance.getAccountByHomeId(accounts[0].homeAccountId),
           onRedirectNavigate: () => false, // Prevent redirection
         })
+        .then(() => {
+          // Remove the user from the global store
+          clearUser();
+          navigate("/");
+        })
         .catch((error) => {
-          console.error(error);
+          console.error("failed to sign out:", error);
         });
     }
-
-    // Navigate to the root of the application
-    navigate("/");
   };
 
   return (
