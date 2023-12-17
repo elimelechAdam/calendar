@@ -12,7 +12,7 @@ import {
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
 
-export function CalendarModal({ open, setOpen }) {
+export function RequestFormModal({ open, setOpen }) {
   const handleClose = () => setOpen(false);
 
   return (
@@ -27,13 +27,13 @@ export function CalendarModal({ open, setOpen }) {
           <DialogHeader className="flex flex-col items-start">
             {" "}
             <Typography className="mb-1" variant="h4">
-              תן הרשאה ליומנך
+              שלח בקשה ליומן
             </Typography>
           </DialogHeader>
         </form>
         <DialogBody>
           <Typography className="mb-6 -mt-7 " color="gray" variant="lead">
-            הכנס את כתובת המייל של המשתמש ולחץ על תן הרשאה
+            הכנס את כתובת המייל של המשתמש ולחץ על שלח בקשה
           </Typography>
           <div className="grid gap-6">
             <Input label="כתובת מייל" />
@@ -44,8 +44,8 @@ export function CalendarModal({ open, setOpen }) {
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2 justify-start">
-          <Button variant="text" color="gray" type="submit" onClick={() => {}}>
-            תן הרשאה
+          <Button variant="text" color="gray" type="submit">
+            שלח בקשה
           </Button>
           <Button variant="text" color="gray" onClick={handleClose}>
             ביטול

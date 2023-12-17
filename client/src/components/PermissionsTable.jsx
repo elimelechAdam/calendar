@@ -20,7 +20,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { CalendarModal } from "./CalendarModal";
+import { PermissionFormModal } from "./PermissionFormModal";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 
 const TABS = [
@@ -30,11 +30,11 @@ const TABS = [
   },
   {
     label: "בקשות שאושרו",
-    value: "grantedPermissions",
+    value: "granted",
   },
   {
     label: "בקשות שלא אושרו",
-    value: "unGrantedPermissions",
+    value: "unGranted",
   },
 ];
 
@@ -263,7 +263,7 @@ function PermissionsTable() {
           </div>
         </CardFooter>
       </Card>
-      <CalendarModal open={openModal} setOpen={handleOpen} />
+      <PermissionFormModal open={openModal} setOpen={handleOpen} />
     </>
   );
 }
