@@ -1,8 +1,13 @@
 import { useQuery, useMutation } from "react-query";
 import { useUserStore } from "../stores/user-store";
-import { createRequest, getPermissions, getRequests, updateRequest } from "../utils/db-api";
+import {
+  createRequest,
+  getPermissions,
+  getRequests,
+  updateRequest,
+} from "../utils/db-api";
 
-export const useAppQuerys = () => {
+export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
 
   const getPermissionsQuery = () => {
@@ -21,15 +26,15 @@ export const useAppQuerys = () => {
 
   const createRequestMutation = (request) => {
     return useMutation({
-      mutationKey: ["createRequest"],
-      mutationFn: createRequest(user.email, request),
+      mutationKey: ["createRequest", user.email, request],
+      mutationFn: () => createRequest(user.email, request),
     });
   };
 
   const updateRequestMutation = (id, requestStatus) => {
     return useMutation({
-      mutationKey: ["updateRequest"],
-      mutationFn: updateRequest(id, requestStatus),
+      mutationKey: ["updateRequest", id, requestStatus],
+      mutationFn: () => updateRequest(id, requestStatus),
     });
   };
 
