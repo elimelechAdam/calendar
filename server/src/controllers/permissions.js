@@ -10,6 +10,7 @@ route.get("/:email", async (req, res) => {
     const permissions = await Request.find({
       recipientEmail: email,
     });
+
     if (permissions.length === 0)
       res.status(404).json({ message: "no permissions" });
     const sorted = sortByDate(permissions);

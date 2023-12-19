@@ -21,6 +21,9 @@ route.get("/:email", async (req, res) => {
 route.post("/:email", async (req, res) => {
   const { email } = req.params;
   const { requestType, recipientEmail } = req.body;
+
+  if (email === recipientEmail)
+    res.status(400).json({ message: "cannot send request to yourself" });
   const newRequest = new Request({
     requesterEmail: email,
     recipientEmail,
