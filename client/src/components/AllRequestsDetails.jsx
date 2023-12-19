@@ -1,7 +1,8 @@
+import React from "react";
 import { Typography, Chip } from "@material-tailwind/react";
 import { changeRequestsTypeToHeb } from "../lib/utils/utils";
 
-const AllRequestsDetails = ({ detail }) => {
+const AllRequestsDetails = React.memo(({ detail }) => {
   return (
     <tr key={detail._id}>
       <td className="p-4 border-b border-blue-gray-50">
@@ -53,6 +54,6 @@ const AllRequestsDetails = ({ detail }) => {
       </td>
     </tr>
   );
-};
+});
 
 export default AllRequestsDetails;
