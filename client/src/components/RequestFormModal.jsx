@@ -28,7 +28,7 @@ export function RequestFormModal({ open, setOpen }) {
   const { createRequestMutation } = useDbQuerys();
   const { mutateAsync } = createRequestMutation();
 
-  const submitHandler = async (e, data) => {
+  const submitHandler = async (data) => {
     try {
       await mutateAsync(data);
       reset();

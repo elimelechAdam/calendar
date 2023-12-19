@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useUserStore } from "../stores/user-store";
 import { grantCalendarPermissions } from "../utils/msg-api";
 
@@ -7,7 +7,7 @@ export const useMsgQuerys = () => {
 
   const grantCalendarPermissionsMutation = () => {
     return useMutation({
-      mutationKey: ["grantCalendarPermissions", email, user, role],
+      mutationKey: ["grantCalendarPermissions"],
       mutationFn: ({ email, role }) =>
         grantCalendarPermissions({ email: email, userId: user.id, role: role }),
       onSuccess: () => {

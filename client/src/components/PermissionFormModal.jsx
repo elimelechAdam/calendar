@@ -11,13 +11,35 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import { useMsgQuerys } from "../lib/react-query/msg-querys";
 
 export function PermissionFormModal({ open, setOpen }) {
-  const handleClose = () => setOpen(false);
-  const { register, handleSubmit, errors } = useForm();
+  const handleClose = () => {
+    reset();
+    setOpen(false);
+  };
+  const { grantCalendarPermissionsMutation } = useMsgQuerys();
+  const { mutateAsync, isPending } = grantCalendarPermissionsMutation();
+  const { control, handleSubmit, errors, reset } = useForm({
+    defaultValues: {
+      email: "",
+      role: "",
+    },
+  });
 
-  const submitHandler = (data) => {};
+  const submitHandler = async (data) => {
+    try {
+      await mutateAsync({
+        email: data.email,
+        role: data.role,
+      });
+      reset();
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -32,7 +54,6 @@ export function PermissionFormModal({ open, setOpen }) {
           transition-all duration-150 ease-in p-1"
           />
           <DialogHeader className="flex flex-col items-start">
-            {" "}
             <Typography className="mb-1" variant="h4">
               תן הרשאה ליומנך
             </Typography>
@@ -42,15 +63,21 @@ export function PermissionFormModal({ open, setOpen }) {
               הכנס את כתובת המייל של המשתמש ולחץ על תן הרשאה
             </Typography>
             <div className="grid gap-6">
-              <Input label="כתובת מייל" {...register("email")} />
-              <Select
-                {...register("role")}
-                variant="static"
-                label="אנא בחר בהרשאה"
-              >
-                <Option value="read">קריאה בלבד</Option>
-                <Option value="write">קריאה ועריכה</Option>
-              </Select>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => <Input label="כתובת מייל" {...field} />}
+              />
+              <Controller
+                name="role"
+                control={control}
+                render={({ field }) => (
+                  <Select {...field} variant="static" label="אנא בחר בהרשאה">
+                    <Option value="read">קריאה בלבד</Option>
+                    <Option value="write">קריאה ועריכה</Option>
+                  </Select>
+                )}
+              />
             </div>
           </DialogBody>
           <DialogFooter className="space-x-2 justify-start">
