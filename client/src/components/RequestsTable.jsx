@@ -2,7 +2,7 @@ import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -10,19 +10,15 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
   Tabs,
   TabsHeader,
   Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { RequestFormModal } from "./RequestFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
-import { changeValueToHeb } from "../lib/utils/utils";
+import AllRequestsDetails from "./AllRequestsDetails";
 
 const TABS = [
   {
@@ -51,7 +47,6 @@ function RequestsTable() {
   const handleOpen = () => setOpenModal(!openModal);
   const { getRequestsQuery } = useDbQuerys();
   const { data, isPending, isError } = getRequestsQuery();
-  console.log(data);
 
   if (isPending) return <div>Loading...</div>;
 
@@ -126,56 +121,8 @@ function RequestsTable() {
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
-                <tr key={item._id}>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <div className="flex items-center gap-3">
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {item.recipientEmail}
-                        </Typography>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal flex"
-                    >
-                      {changeValueToHeb(item.requestType)}
-                    </Typography>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <div className="w-max">
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={item.requestStatus}
-                        color={
-                          item.requestStatus === "אושר"
-                            ? "green"
-                            : item.requestStatus === "לא אושר"
-                            ? "red"
-                            : "blue-gray"
-                        }
-                      />
-                    </div>
-                  </td>
-                  <td className="p-4 border-b border-blue-gray-50">
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal flex"
-                    >
-                      {new Date(item.createdAt).toLocaleDateString("he-IL")}
-                    </Typography>
-                  </td>
-                </tr>
+              {data.map((detail) => (
+                <AllRequestsDetails detail={detail} />
               ))}
             </tbody>
           </table>
