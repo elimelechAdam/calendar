@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 import { RequestFormModal } from "./RequestFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
-import AllRequestsDetails from "./AllRequestsDetails";
+import AllRequestsDetails from "./RequestsDetails";
 
 const TABS = [
   {
