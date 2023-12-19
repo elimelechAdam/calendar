@@ -43,9 +43,9 @@ export function PermissionFormModal({ open, setOpen }) {
 
   return (
     <>
-      <Dialog open={open} size="xs">
+      <Dialog open={open} size="sm">
         <form
-          className="flex flex-col justify-between relative"
+          className="flex flex-col gap-1 relative"
           onSubmit={handleSubmit(submitHandler)}
         >
           <IoMdClose

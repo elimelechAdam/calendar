@@ -26,7 +26,7 @@ export function RequestFormModal({ open, setOpen }) {
     },
   });
   const { createRequestMutation } = useDbQuerys();
-  const { mutateAsync, isPending } = createRequestMutation();
+  const { mutateAsync, isPending, isError } = createRequestMutation();
 
   const submitHandler = async (data) => {
     try {
@@ -40,9 +40,9 @@ export function RequestFormModal({ open, setOpen }) {
 
   return (
     <>
-      <Dialog open={open} size="xs">
+      <Dialog open={open} size="sm">
         <form
-          className="flex flex-col justify-between relative"
+          className="flex flex-col gap-1 relative"
           onSubmit={handleSubmit(submitHandler)}
         >
           <IoMdClose
@@ -84,6 +84,11 @@ export function RequestFormModal({ open, setOpen }) {
               ביטול
             </Button>
           </DialogFooter>
+          {isError && (
+            <Typography color="red" className="mt-1 font-normal">
+              failed to send request
+            </Typography>
+          )}
         </form>
       </Dialog>
     </>
