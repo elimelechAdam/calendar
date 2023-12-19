@@ -8,8 +8,12 @@ export const useMsgQuerys = () => {
   const grantCalendarPermissionsMutation = () => {
     return useMutation({
       mutationKey: ["grantCalendarPermissions"],
-      mutationFn: ({ email, role }) =>
-        grantCalendarPermissions({ email: email, userId: user.id, role: role }),
+      mutationFn: async ({ email, role }) =>
+        await grantCalendarPermissions({
+          email: email,
+          userId: user.id,
+          role: role,
+        }),
       onSuccess: () => {
         console.log("success");
       },
