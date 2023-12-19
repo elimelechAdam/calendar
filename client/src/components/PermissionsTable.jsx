@@ -20,7 +20,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { PermissionFormModal } from "./PermissionFormModal";
+// import { PermissionFormModal } from "./PermissionFormModal";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 
 const TABS = [
@@ -95,8 +95,8 @@ const TABLE_ROWS = [
 ];
 
 function PermissionsTable() {
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(!openModal);
+  // const [openModal, setOpenModal] = useState(false);
+  // const handleOpen = () => setOpenModal(!openModal);
 
   return (
     <>
@@ -112,14 +112,14 @@ function PermissionsTable() {
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button
+              {/* <Button
                 className="flex items-center gap-3"
                 size="sm"
                 onClick={handleOpen}
               >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -263,7 +263,7 @@ function PermissionsTable() {
           </div>
         </CardFooter>
       </Card>
-      <PermissionFormModal open={openModal} setOpen={handleOpen} />
+      {/* <PermissionFormModal open={openModal} setOpen={handleOpen} /> */}
     </>
   );
 }
