@@ -1,4 +1,6 @@
-export const changeRequestsToHeb = (str) => {
-  if (str === "read") return "קריאה בלבד";
+export const changeRequestsTypeToHeb = (request) => {
+  if (request === "read") return "קריאה בלבד";
   else return "קריאה ועריכה";
 };
+
+export const changePermissionsTypeToHeb = () => {};

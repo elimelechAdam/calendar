@@ -1,5 +1,5 @@
 import { Typography, Chip } from "@material-tailwind/react";
-import { changeRequestsToHeb } from "../lib/utils/utils";
+import { changeRequestsTypeToHeb } from "../lib/utils/utils";
 
 const AllRequestsDetails = ({ detail }) => {
   return (
@@ -23,7 +23,7 @@ const AllRequestsDetails = ({ detail }) => {
           color="blue-gray"
           className="font-normal flex"
         >
-          {changeRequestsToHeb(detail.requestType)}
+          {changeRequestsTypeToHeb(detail.requestType)}
         </Typography>
       </td>
       <td className="p-4 border-b border-blue-gray-50">
