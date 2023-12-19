@@ -122,7 +122,7 @@ function RequestsTable() {
             </thead>
             <tbody>
               {data.map((detail) => (
-                <AllRequestsDetails detail={detail} />
+                <AllRequestsDetails detail={detail} key={detail._id} />
               ))}
             </tbody>
           </table>

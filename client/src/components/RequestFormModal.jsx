@@ -26,7 +26,7 @@ export function RequestFormModal({ open, setOpen }) {
     },
   });
   const { createRequestMutation } = useDbQuerys();
-  const { mutateAsync } = createRequestMutation();
+  const { mutateAsync, isPending } = createRequestMutation();
 
   const submitHandler = async (data) => {
     try {
@@ -78,7 +78,7 @@ export function RequestFormModal({ open, setOpen }) {
           </DialogBody>
           <DialogFooter className="space-x-2 justify-start">
             <Button variant="text" color="gray" type="submit">
-              שלח בקשה
+              {isPending ? "שולח בקשה..." : "שלח בקשה"}
             </Button>
             <Button variant="text" color="gray" onClick={handleClose}>
               ביטול

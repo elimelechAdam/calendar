@@ -28,8 +28,8 @@ export const useDbQuerys = () => {
   const createRequestMutation = () => {
     return useMutation({
       mutationKey: ["createRequest", user.email],
-      mutationFn: (params) => {
-        createRequest(user.email, params);
+      mutationFn: async (params) => {
+        await createRequest(user.email, params);
       },
       onSuccess: () => {
         queryClient.invalidateQueries("requests");
