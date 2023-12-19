@@ -105,10 +105,10 @@ function PermissionsTable() {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                הרשאות שנתתי
+                הבקשות ליומן שלי
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                צפה בהרשאות שלך
+                צפה בבקשות הרשאה ליומנך
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">

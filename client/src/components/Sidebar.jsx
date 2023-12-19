@@ -60,7 +60,7 @@ const Sidebar = ({ name }) => {
                     <CalendarIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className=" font-normal">
-                    בקשת הרשאה ליומן
+                    בקשות שלי ליומנים
                   </Typography>
                 </AccordionHeader>
               </ListItem>

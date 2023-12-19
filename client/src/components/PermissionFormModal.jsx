@@ -88,7 +88,7 @@ export function PermissionFormModal({ open, setOpen }) {
               type="submit"
               disabled={isPending}
             >
-              {isPending ? "נותן הרשאה" : "תן הרשאה"}
+              {isPending ? "...נותן הרשאה" : "תן הרשאה"}
             </Button>
             <Button variant="text" color="gray" onClick={handleClose}>
               ביטול
