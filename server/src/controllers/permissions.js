@@ -7,14 +7,15 @@ const route = Router();
 route.get("/:email", async (req, res) => {
   const { email } = req.params;
   try {
-    const requests = await Request.findBy({
+    const permissions = await Request.find({
       recipientEmail: email,
-    }).exec();
-    if (!requests) res.status(404).json({ message: "no requests" });
-    const sorted = sortByDate(requests);
+    });
+    if (permissions.length === 0)
+      res.status(404).json({ message: "no permissions" });
+    const sorted = sortByDate(permissions);
     res.status(200).json(sorted);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -32,9 +33,15 @@ route.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "No request found" });
     }
 
+    if (updatedRequest.requestStatus === "מאושר")
+      return res.status(400).json({ message: "Request already approved" });
+
+    if (updatedRequest.requestStatus === "לא מאושר")
+      return res.status(400).json({ message: "Request already denied" });
+
     res.status(200).json(updatedRequest);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: err.message });
   }
 });
 

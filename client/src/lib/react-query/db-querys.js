@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useUserStore } from "../stores/user-store";
 import {
   createRequest,
@@ -24,17 +24,21 @@ export const useDbQuerys = () => {
     });
   };
 
-  const createRequestMutation = (request) => {
+  const createRequestMutation = () => {
     return useMutation({
-      mutationKey: ["createRequest", user.email, request],
-      mutationFn: () => createRequest(user.email, request),
+      mutationKey: ["createRequest", user.email],
+
+      mutationFn: (params) => {
+        console.log("params", params);
+        // createRequest(user.email, params);
+      },
     });
   };
 
-  const updateRequestMutation = (id, requestStatus) => {
+  const updateRequestMutation = () => {
     return useMutation({
-      mutationKey: ["updateRequest", id, requestStatus],
-      mutationFn: () => updateRequest(id, requestStatus),
+      mutationKey: ["updateRequest"],
+      mutationFn: (params) => updateRequest(params.id, params.requestStatus),
     });
   };
 

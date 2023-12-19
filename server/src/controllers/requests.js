@@ -7,14 +7,14 @@ const route = Router();
 route.get("/:email", async (req, res) => {
   const { email } = req.params;
   try {
-    const request = await Request.findBy({
+    const request = await Request.find({
       requesterEmail: email,
-    }).exec();
-    if (!request) res.status(404).json({ message: "no requests" });
+    });
+    if (request.length === 0) res.status(404).json({ message: "no requests" });
     const sorted = sortByDate(request);
     res.status(200).json(sorted);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: err.message });
   }
 });
 
@@ -30,7 +30,7 @@ route.post("/:email", async (req, res) => {
     await newRequest.save();
     res.status(201).json(newRequest);
   } catch (err) {
-    res.status(409).json(err);
+    res.status(409).json({ message: err.message });
   }
 });
 

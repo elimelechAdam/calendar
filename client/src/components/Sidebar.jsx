@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Card,
   Typography,
@@ -27,8 +27,8 @@ import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
 
 const Sidebar = ({ name }) => {
-  const [open, setOpen] = React.useState(0);
-  const [openAlert, setOpenAlert] = React.useState(true);
+  const [open, setOpen] = useState(0);
+  const [openAlert, setOpenAlert] = useState(true);
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
@@ -38,13 +38,10 @@ const Sidebar = ({ name }) => {
       <div>
         <div className="mb-2 flex items-center gap-4 p-4">
           <img
-            src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
+            src="https://www.wxg.co.il/app/themes/wxg/resources/assets/images/WXG-Logo.png"
             alt="brand"
-            className="h-8 w-8"
+            className="h-full"
           />
-          <Typography variant="h5" color="blue-gray">
-            WXG
-          </Typography>
         </div>
         <List>
           <Accordion
@@ -56,14 +53,14 @@ const Sidebar = ({ name }) => {
               />
             }
           >
-            <Link to="permissions">
+            <Link to="requests">
               <ListItem className="p-0">
                 <AccordionHeader className="border-b-0 p-3">
                   <ListItemPrefix>
                     <CalendarIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className=" font-normal">
-                    הרשאות ליומן שלי
+                    בקשת הרשאה ליומן
                   </Typography>
                 </AccordionHeader>
               </ListItem>
@@ -79,14 +76,14 @@ const Sidebar = ({ name }) => {
               />
             }
           >
-            <Link to="requests">
+            <Link to="permissions">
               <ListItem className="p-0">
                 <AccordionHeader className="border-b-0 p-3">
                   <ListItemPrefix>
                     <CalendarDaysIcon className="h-5 w-5" />
                   </ListItemPrefix>
                   <Typography color="blue-gray" className=" font-normal">
-                    בקשות הרשאה ליומן
+                    בקשות ליומן שלי
                   </Typography>
                 </AccordionHeader>
               </ListItem>
@@ -116,19 +113,7 @@ const Sidebar = ({ name }) => {
           </ListItem>
         </List>
       </div>
-      <Alert
-        open={openAlert}
-        className="mt-auto mb-2"
-        onClose={() => setOpenAlert(false)}
-      >
-        <CubeTransparentIcon className="mb-4 h-12 w-12" />
-        <Typography variant="h6" className="mb-1">
-          בקרוב
-        </Typography>
-        <Typography variant="small" className="font-normal opacity-80">
-          מערכת ניהול SharePoint
-        </Typography>
-      </Alert>
+
       <div className="">
         <SignOutButton />
         <CopyRight />

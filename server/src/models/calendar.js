@@ -1,16 +1,18 @@
 import mongoose from "mongoose";
 
-const requestSchema = new mongoose.Schema({
-  requesterEmail: String,
-  recipientEmail: String,
-  requestType: String,
-  requestStatus: {
-    type: String,
-    enum: ["ממתין", "אושר", "לא אושר"],
-    default: "ממתין",
+const requestSchema = new mongoose.Schema(
+  {
+    requesterEmail: String,
+    recipientEmail: String,
+    requestType: String,
+    requestStatus: {
+      type: String,
+      enum: ["ממתין", "אושר", "לא אושר"],
+      default: "ממתין",
+    },
   },
-  requestDate: { type: Date, default: Date.now },
-});
+  { timestamps: true }
+);
 
 // const permissionSchema = new mongoose.Schema({
 //   grantorEmail: String,
