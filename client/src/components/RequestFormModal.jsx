@@ -77,19 +77,24 @@ export function RequestFormModal({ open, setOpen }) {
             </div>
           </DialogBody>
           <DialogFooter className="space-x-2 justify-start">
-            <Button variant="text" color="gray" type="submit">
+            <Button
+              variant="text"
+              color="gray"
+              type="submit"
+              disabled={isPending}
+            >
               {isPending ? "שולח בקשה..." : "שלח בקשה"}
             </Button>
             <Button variant="text" color="gray" onClick={handleClose}>
               ביטול
             </Button>
           </DialogFooter>
-          {isError && (
-            <Typography color="red" className="mt-1 font-normal">
-              failed to send request
-            </Typography>
-          )}
         </form>
+        {isError && (
+          <Typography color="red" className="mt-1 font-normal">
+            לא ניתן לשלוח בבקשה
+          </Typography>
+        )}
       </Dialog>
     </>
   );

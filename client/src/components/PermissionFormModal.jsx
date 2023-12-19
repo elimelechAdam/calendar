@@ -20,7 +20,8 @@ export function PermissionFormModal({ open, setOpen }) {
     setOpen(false);
   };
   const { grantCalendarPermissionsMutation } = useMsgQuerys();
-  const { mutateAsync, isPending } = grantCalendarPermissionsMutation();
+  const { mutateAsync, isPending, isError } =
+    grantCalendarPermissionsMutation();
   const { control, handleSubmit, errors, reset } = useForm({
     defaultValues: {
       email: "",
@@ -81,14 +82,24 @@ export function PermissionFormModal({ open, setOpen }) {
             </div>
           </DialogBody>
           <DialogFooter className="space-x-2 justify-start">
-            <Button variant="text" color="gray" type="submit">
-              תן הרשאה
+            <Button
+              variant="text"
+              color="gray"
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending ? "נותן הרשאה" : "תן הרשאה"}
             </Button>
             <Button variant="text" color="gray" onClick={handleClose}>
               ביטול
             </Button>
           </DialogFooter>
         </form>
+        {isError && (
+          <Typography color="red" className="mt-1 font-normal">
+            לא ניתן לתת הרשאה
+          </Typography>
+        )}
       </Dialog>
     </>
   );
