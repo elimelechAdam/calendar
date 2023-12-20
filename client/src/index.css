@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border p-0 m-0;
+  direction: rtl;
+}
+
+body {
+  @apply min-h-screen h-full bg-blue-gray-200;
+}
