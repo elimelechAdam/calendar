@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "../stores/user-store";
+import { usePaginationStore, useUserStore } from "../stores/user-store";
 import {
   createRequest,
   getPermissions,
@@ -8,13 +8,17 @@ import {
 } from "../utils/db-api";
 
 export const useDbQuerys = () => {
-  const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
+  const user = useUserStore((state) => state.user);
+  const currentPage = usePaginationStore((state) => state.currentPage);
+  console.log(currentPage, user);
+  const limit = 1; // Or your desired page size
 
   const getPermissionsQuery = () => {
     return useQuery({
-      queryKey: ["permissions"],
-      queryFn: () => getPermissions(user.email),
+      queryKey: ["permissions", currentPage],
+      queryFn: () => getPermissions(user.email, currentPage, limit),
+      keepPreviousData: true,
     });
   };
 

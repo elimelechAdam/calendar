@@ -24,6 +24,8 @@ import { useState } from "react";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import AllPermissionsDetails from "./PermissionsDetails";
+import TablePagination from "./TablePagination";
+import { usePaginationStore } from "../lib/stores/user-store";
 
 const TABS = [
   {
@@ -58,6 +60,8 @@ function PermissionsTable() {
 
   const { getPermissionsQuery } = useDbQuerys();
   const { data, isPending, isError } = getPermissionsQuery();
+  const { currentPage, setPage } = usePaginationStore();
+  // pageInfo {totalItems: 2, totalPages: 2, currentPage: 1, itemsPerPage: 1}
 
   const [selectedTab, setSelectedTab] = useState(TABS[0].value);
 
@@ -65,7 +69,7 @@ function PermissionsTable() {
   if (isPending) return <div>Loading...</div>;
 
   if (isError) return <div>Error</div>;
-  const filteredRows = data.filter((tab) => {
+  const filteredRows = data.permissions.filter((tab) => {
     if (selectedTab === "all") return true;
     if (selectedTab === "granted") return tab.requestStatus === "אושר";
     if (selectedTab === "awaiting") return tab.requestStatus === "ממתין";
@@ -158,18 +162,12 @@ function PermissionsTable() {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            עמוד 1 מתוך 1
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              הבא
-            </Button>
-            <Button variant="outlined" size="sm">
-              הקודם
-            </Button>
-          </div>
+        <CardFooter className="border-t border-blue-gray-50 p-4">
+          <TablePagination
+            currentPage={currentPage}
+            totalPages={data?.pageInfo.totalPages || 1}
+            setPage={setPage}
+          />
         </CardFooter>
       </Card>
       {/* <PermissionFormModal open={openModal} setOpen={handleOpen} /> */}

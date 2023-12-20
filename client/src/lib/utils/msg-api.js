@@ -11,6 +11,7 @@ export const getUserDetails = async () => {
 };
 
 export const grantCalendarPermissions = async ({ email, userId, role }) => {
+  console.log(email, userId, role);
   const permissions = {
     emailAddress: {
       address: email,

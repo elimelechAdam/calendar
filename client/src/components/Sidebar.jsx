@@ -90,7 +90,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </Accordion>
           <hr className="my-2 border-blue-gray-50" />
-          <ListItem className="gap-2" onClick={() => {}}>
+          <ListItem className="gap-2">
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5 gap-2" />
             </ListItemPrefix>

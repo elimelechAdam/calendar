@@ -2,10 +2,12 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:5050/api";
 
-export const getPermissions = async (email) => {
+export const getPermissions = async (email, page, limit) => {
   try {
-    const response = await axios.get(`${BASE_URL}/permissions/${email}`);
-    console.log(response);
+    const response = await axios.get(
+      `${BASE_URL}/permissions/${email}?page=${page}&limit=${limit}`
+    );
+    console.log("getPermissions", response);
     return response.data;
   } catch (error) {
     console.log(error);
