@@ -7,7 +7,7 @@ import { useUserStore } from "./../lib/stores/user-store";
 const SignOutButton = () => {
   const { instance, accounts } = useMsal();
   const navigate = useNavigate();
-  const { clearUser } = useUserStore();
+  const logOut = useUserStore((state) => state.clearUser);
 
   const handleSignOut = () => {
     if (accounts.length > 0) {
@@ -19,7 +19,7 @@ const SignOutButton = () => {
         })
         .then(() => {
           // Remove the user from the global store
-          clearUser();
+          logOut();
           navigate("/");
         })
         .catch((error) => {

@@ -13,21 +13,21 @@ export const useDbQuerys = () => {
 
   const getPermissionsQuery = () => {
     return useQuery({
-      queryKey: ["permissions"],
+      queryKey: ["permissions", user],
       queryFn: () => getPermissions(user.email),
     });
   };
 
   const getRequestsQuery = () => {
     return useQuery({
-      queryKey: ["requests"],
+      queryKey: ["requests", user],
       queryFn: () => getRequests(user.email),
     });
   };
 
   const createRequestMutation = () => {
     return useMutation({
-      mutationKey: ["createRequest", user.email],
+      mutationKey: ["createRequest"],
       mutationFn: async (params) => {
         await createRequest(user.email, params);
       },
