@@ -15,13 +15,12 @@ import {
   Tabs,
   TabsHeader,
   Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
-// import { PermissionFormModal } from "./PermissionFormModal";
-import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
+import { PermissionFormModal } from "./PermissionFormModal";
+import { useDbQuerys } from "../lib/react-query/db-querys";
+import PermissionsDetails from "./PermissionDetails";
+import { useTabFilter } from "../hooks/useTabFilter";
 
 const TABS = [
   {
@@ -31,6 +30,10 @@ const TABS = [
   {
     label: "בקשות שאושרו",
     value: "granted",
+  },
+  {
+    label: "בקשות ממתינות",
+    value: "awaiting",
   },
   {
     label: "בקשות שלא אושרו",
@@ -46,57 +49,18 @@ const TABLE_HEAD = [
   "פעולות",
 ];
 
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    permissions: "קריאה בלבד",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    permissions: "קריאה בלבד",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    permissions: "קריאה בלבד",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    permissions: "קריאה בלבד",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    permissions: "מלאה",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
-];
-
 function PermissionsTable() {
-  // const [openModal, setOpenModal] = useState(false);
-  // const handleOpen = () => setOpenModal(!openModal);
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpen = () => setOpenModal(!openModal);
+  const { getPermissionsQuery } = useDbQuerys();
+  const { data, isPending, isError } = getPermissionsQuery();
+  const { handleTabChange, filterByTab } = useTabFilter();
+
+  const filteredData = filterByTab(data);
+
+  if (isPending) return <div>loading...</div>;
+
+  if (isError) return <div>error...</div>;
 
   return (
     <>
@@ -112,21 +76,26 @@ function PermissionsTable() {
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              {/* <Button
+              <Button
                 className="flex items-center gap-3"
                 size="sm"
                 onClick={handleOpen}
               >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
-              </Button> */}
+              </Button>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Tabs value="all" className="w-1/2">
               <TabsHeader>
                 {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value} className="">
+                  <Tab
+                    key={value}
+                    value={value}
+                    className=""
+                    onClick={() => handleTabChange(value)}
+                  >
                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                   </Tab>
                 ))}
@@ -169,83 +138,9 @@ function PermissionsTable() {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                (
-                  { img, name, email, permissions, org, online, date },
-                  index
-                ) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
-
-                  return (
-                    <tr key={name}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col ">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal flex"
-                          >
-                            {permissions}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="w-max">
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={online ? "אושר" : "לא אושר"}
-                            color={online ? "green" : "blue-gray"}
-                          />
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal flex"
-                        >
-                          {date}
-                        </Typography>
-                      </td>
-                      <td className={`${classes} flex gap-3`}>
-                        <Tooltip content="לחץ לדחות בקשה">
-                          <Typography
-                            color="red"
-                            className="flex text-[1.3rem] cursor-pointer"
-                          >
-                            <IoMdCloseCircle />
-                          </Typography>
-                        </Tooltip>
-                        <Tooltip content="לחץ לאשר בקשה">
-                          <Typography
-                            color="green"
-                            className="flex text-[1.3rem] cursor-pointer"
-                          >
-                            <IoIosCheckmarkCircle />
-                          </Typography>
-                        </Tooltip>
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
+              {filteredData.map((detail) => (
+                <PermissionsDetails detail={detail} key={detail._id} />
+              ))}
             </tbody>
           </table>
         </CardBody>
@@ -263,7 +158,7 @@ function PermissionsTable() {
           </div>
         </CardFooter>
       </Card>
-      {/* <PermissionFormModal open={openModal} setOpen={handleOpen} /> */}
+      <PermissionFormModal open={openModal} setOpen={handleOpen} />
     </>
   );
 }

@@ -13,6 +13,7 @@ import { AuthCodeMSALBrowserAuthenticationProvider } from "@microsoft/microsoft-
 import { Client } from "@microsoft/microsoft-graph-client";
 import Permissions from "./_root/pages/Permissions";
 import Requests from "./_root/pages/Requests";
+import NotSuppMobileMessage from "./components/ui/NotSuppMobileMessage";
 
 export const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -43,7 +44,8 @@ export const client = Client.initWithMiddleware({ authProvider });
 function App() {
   return (
     <MsalProvider instance={msalInstance}>
-      <main>
+      <NotSuppMobileMessage />
+      <main className="hidden xl:block">
         <Routes>
           <Route element={<AuthLayout />}>
             <Route index element={<SignInButton />} />

@@ -46,4 +46,28 @@ route.put("/:id", async (req, res) => {
   }
 });
 
+route.post("/:email", async (req, res) => {
+  const { email } = req.params;
+  const { recipientEmail } = req.body;
+
+  try {
+    const permission = await Request.findOne({ email, recipientEmail });
+
+    if (permission) {
+      permission.requestStatus = "אושר";
+    } else {
+      permission = new Request({
+        email,
+        recipientEmail,
+        requestStatus: "אושר",
+      });
+    }
+
+    const savedPermission = await permission.save();
+    res.status(201).json(savedPermission);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 export default route;
