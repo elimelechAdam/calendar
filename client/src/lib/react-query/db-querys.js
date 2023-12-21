@@ -18,10 +18,10 @@ export const useDbQuerys = () => {
     });
   };
 
-  const getRequestsQuery = () => {
+  const getRequestsQuery = (page) => {
     return useQuery({
-      queryKey: ["requests", user],
-      queryFn: () => getRequests(user.email),
+      queryKey: ["requests", user, page],
+      queryFn: () => getRequests(user.email, page),
     });
   };
 

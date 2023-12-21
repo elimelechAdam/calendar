@@ -12,9 +12,11 @@ export const getPermissions = async (email) => {
   }
 };
 
-export const getRequests = async (email) => {
+export const getRequests = async (email, page) => {
   try {
-    const response = await axios.get(`${BASE_URL}/requests/${email}`);
+    const response = await axios.get(
+      `${BASE_URL}/requests/${email}?page=${page}`
+    );
     return response.data;
   } catch (error) {
     console.log(error);

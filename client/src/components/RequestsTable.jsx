@@ -46,7 +46,9 @@ function RequestsTable() {
   const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => setOpenModal(!openModal);
   const { getRequestsQuery } = useDbQuerys();
-  const { data, isPending, isError } = getRequestsQuery();
+  const [page, setPage] = useState(1);
+  const { data, isPending, isError } = getRequestsQuery(page);
+  console.log(data);
 
   // will change later to components
   if (isPending) return <div>Loading...</div>;
@@ -124,7 +126,7 @@ function RequestsTable() {
               </tr>
             </thead>
             <tbody>
-              {data.map((detail) => (
+              {data.requests.map((detail) => (
                 <AllRequestsDetails detail={detail} key={detail._id} />
               ))}
             </tbody>
@@ -132,14 +134,24 @@ function RequestsTable() {
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
-            עמוד 1 מתוך 1
+            עמוד {data.currentPage} מתוך {data.totalPages}
           </Typography>
           <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              הבא
-            </Button>
-            <Button variant="outlined" size="sm">
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={() => setPage(page - 1)}
+              disabled={isPending || page === 1}
+            >
               הקודם
+            </Button>
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={() => setPage(page + 1)}
+              disabled={isPending}
+            >
+              הבא
             </Button>
           </div>
         </CardFooter>

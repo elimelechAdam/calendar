@@ -1,20 +1,32 @@
 import { Router } from "express";
 import { Request } from "../models/calendar.js";
-import { sortByDate } from "../utils/utils.js";
 
 const route = Router();
 
 route.get("/:email", async (req, res) => {
+  const page = parseInt(req.query.page || 1);
+  const limit = 6;
+  const skip = (page - 1) * limit;
+
   const { email } = req.params;
   try {
-    const request = await Request.find({
+    const requests = await Request.find({
       requesterEmail: email,
-    }).sort({ createdAt: -1 });
-    if (request.length === 0) res.status(404).json({ message: "no requests" });
+    })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
-    console.log(request);
+    const total = await Request.countDocuments({ requesterEmail: email });
+    if (!requests.length) {
+      return res.status(404).json({ message: "no requests" });
+    }
 
-    res.status(200).json(request);
+    res.status(200).json({
+      requests,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -24,14 +36,14 @@ route.post("/:email", async (req, res) => {
   const { email } = req.params;
   const { requestType, recipientEmail } = req.body;
 
-  if (email === recipientEmail)
-    res.status(400).json({ message: "cannot send request to yourself" });
-  const newRequest = new Request({
-    requesterEmail: email,
-    recipientEmail,
-    requestType,
-  });
   try {
+    if (email === recipientEmail)
+      res.status(400).json({ message: "cannot send request to yourself" });
+    const newRequest = new Request({
+      requesterEmail: email,
+      recipientEmail,
+      requestType,
+    });
     await newRequest.save();
     res.status(201).json(newRequest);
   } catch (err) {

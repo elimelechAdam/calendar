@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { Request } from "../models/calendar.js";
-import { sortByDate } from "../utils/utils.js";
 
 const route = Router();
 
