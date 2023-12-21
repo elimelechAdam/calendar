@@ -11,10 +11,10 @@ export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
 
-  const getPermissionsQuery = () => {
+  const getPermissionsQuery = (page) => {
     return useQuery({
-      queryKey: ["permissions", user],
-      queryFn: () => getPermissions(user.email),
+      queryKey: ["permissions", user, page],
+      queryFn: () => getPermissions(user.email, page),
     });
   };
 

@@ -34,7 +34,7 @@ const Sidebar = ({ name }) => {
   };
 
   return (
-    <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
+    <Card className="min-h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
       <div>
         <div className="mb-2 flex items-center gap-4 p-4">
           <img

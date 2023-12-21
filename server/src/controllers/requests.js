@@ -18,13 +18,18 @@ route.get("/:email", async (req, res) => {
       .limit(limit);
 
     const total = await Request.countDocuments({ requesterEmail: email });
-    if (!requests.length) {
+    const totalPages = Math.ceil(total / limit);
+
+    if (totalPages < page)
       return res.status(404).json({ message: "no requests" });
-    }
+
+    if (!requests.length)
+      return res.status(404).json({ message: "No more requests available" });
 
     res.status(200).json({
       requests,
-      totalPages: Math.ceil(total / limit),
+      totalPages,
+      totalRequests: total,
       currentPage: page,
     });
   } catch (err) {

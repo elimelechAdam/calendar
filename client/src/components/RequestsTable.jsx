@@ -11,29 +11,13 @@ import {
   Button,
   CardBody,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { RequestFormModal } from "./RequestFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import AllRequestsDetails from "./RequestsDetails";
-
-const TABS = [
-  {
-    label: "הכל",
-    value: "all",
-  },
-  {
-    label: "בקשות שאושרו",
-    value: "monitored",
-  },
-  {
-    label: "בקשות שלא אושרו",
-    value: "unmonitored",
-  },
-];
+import TablePagination from "./TablePagination";
+import TableTabs from "./TableTabs";
 
 const TABLE_HEAD = [
   "למי נשלחה הבקשה",
@@ -48,7 +32,6 @@ function RequestsTable() {
   const { getRequestsQuery } = useDbQuerys();
   const [page, setPage] = useState(1);
   const { data, isPending, isError } = getRequestsQuery(page);
-  console.log(data);
 
   // will change later to components
   if (isPending) return <div>Loading...</div>;
@@ -80,15 +63,7 @@ function RequestsTable() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-1/2">
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value} className="">
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
+            <TableTabs />
             <div className="w-full md:w-72">
               <Input
                 label="חפש לפי דואר אלקטרוני"
@@ -133,27 +108,13 @@ function RequestsTable() {
           </table>
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            עמוד {data.currentPage} מתוך {data.totalPages}
-          </Typography>
-          <div className="flex gap-2">
-            <Button
-              variant="outlined"
-              size="sm"
-              onClick={() => setPage(page - 1)}
-              disabled={isPending || page === 1}
-            >
-              הקודם
-            </Button>
-            <Button
-              variant="outlined"
-              size="sm"
-              onClick={() => setPage(page + 1)}
-              disabled={isPending}
-            >
-              הבא
-            </Button>
-          </div>
+          <TablePagination
+            setPage={setPage}
+            page={page}
+            totalPages={data?.totalPages}
+            currentPage={data?.currentPage}
+            isPending={isPending}
+          />
         </CardFooter>
       </Card>
       <RequestFormModal open={openModal} setOpen={handleOpen} />

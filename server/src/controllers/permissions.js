@@ -4,15 +4,30 @@ import { Request } from "../models/calendar.js";
 const route = Router();
 
 route.get("/:email", async (req, res) => {
+  const page = parseInt(req.query.page || 1);
+  const limit = 6;
+  const skip = (page - 1) * limit;
   const { email } = req.params;
   try {
     const permissions = await Request.find({
       recipientEmail: email,
-    }).sort({ createdAt: -1 });
+    })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
-    if (permissions.length === 0)
+    const total = await Request.countDocuments({ recipientEmail: email });
+    const totalPages = Math.ceil(total / limit);
+
+    if (!permissions.length)
       res.status(404).json({ message: "no permissions" });
-    res.status(200).json(permissions);
+
+    res.status(200).json({
+      permissions,
+      totalPages,
+      totalPermissions: total,
+      currentPage: page,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

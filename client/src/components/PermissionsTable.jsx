@@ -10,36 +10,14 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { PermissionFormModal } from "./PermissionFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import PermissionsDetails from "./PermissionDetails";
-import { useTabFilter } from "../hooks/useTabFilter";
-
-const TABS = [
-  {
-    label: "הכל",
-    value: "all",
-  },
-  {
-    label: "בקשות שאושרו",
-    value: "granted",
-  },
-  {
-    label: "בקשות ממתינות",
-    value: "awaiting",
-  },
-  {
-    label: "בקשות שלא אושרו",
-    value: "unGranted",
-  },
-];
+import TablePagination from "./TablePagination";
+import TableTabs from "./TableTabs";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -53,10 +31,8 @@ function PermissionsTable() {
   const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => setOpenModal(!openModal);
   const { getPermissionsQuery } = useDbQuerys();
-  const { data, isPending, isError } = getPermissionsQuery();
-  const { handleTabChange, filterByTab } = useTabFilter();
-
-  const filteredData = filterByTab(data);
+  const [page, setPage] = useState(1);
+  const { data, isPending, isError } = getPermissionsQuery(page);
 
   if (isPending) return <div>loading...</div>;
 
@@ -87,20 +63,7 @@ function PermissionsTable() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-1/2">
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab
-                    key={value}
-                    value={value}
-                    className=""
-                    onClick={() => handleTabChange(value)}
-                  >
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
+            <TableTabs />
             <div className="w-full md:w-72">
               <Input
                 label="חפש לפי דואר אלקטרוני"
@@ -138,24 +101,20 @@ function PermissionsTable() {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((detail) => (
+              {data.permissions.map((detail) => (
                 <PermissionsDetails detail={detail} key={detail._id} />
               ))}
             </tbody>
           </table>
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            עמוד 1 מתוך 1
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              הבא
-            </Button>
-            <Button variant="outlined" size="sm">
-              הקודם
-            </Button>
-          </div>
+          <TablePagination
+            setPage={setPage}
+            page={page}
+            totalPages={data?.totalPages}
+            currentPage={data?.currentPage}
+            isPending={isPending}
+          />
         </CardFooter>
       </Card>
       <PermissionFormModal open={openModal} setOpen={handleOpen} />
