@@ -29,9 +29,6 @@ import CopyRight from "./CopyRight";
 const Sidebar = ({ name }) => {
   const [open, setOpen] = useState(0);
   const [openAlert, setOpenAlert] = useState(true);
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
-  };
 
   return (
     <Card className="min-h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
@@ -45,7 +42,6 @@ const Sidebar = ({ name }) => {
         </div>
         <List>
           <Accordion
-            open={open === 1}
             icon={
               <ChevronLeftIcon
                 strokeWidth={2.5}
@@ -67,7 +63,6 @@ const Sidebar = ({ name }) => {
             </Link>
           </Accordion>
           <Accordion
-            open={open === 1}
             icon={
               <ChevronLeftIcon
                 strokeWidth={2.5}
@@ -90,7 +85,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </Accordion>
           <hr className="my-2 border-blue-gray-50" />
-          <ListItem className="gap-2" onClick={() => {}}>
+          <ListItem className="gap-2">
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5 gap-2" />
             </ListItemPrefix>
