@@ -10,3 +10,19 @@
 body {
   @apply min-h-screen h-full bg-blue-gray-200;
 }
+
+
+@keyframes fadeInFromUp {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeInTable {
+  animation: fadeInFromUp 1s ease-out;
+}

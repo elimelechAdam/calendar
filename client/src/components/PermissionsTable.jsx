@@ -39,7 +39,7 @@ function PermissionsTable() {
 
   return (
     <>
-      <Card className="h-full w-full">
+      <Card className="h-full w-full fadeInTable">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>

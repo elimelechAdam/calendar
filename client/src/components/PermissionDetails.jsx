@@ -53,8 +53,8 @@ const PermissionsDetails = React.memo(({ detail }) => {
               detail.requestStatus === "אושר"
                 ? "green"
                 : detail.requestStatus === "לא אושר"
-                ? "red"
-                : "blue-gray"
+                  ? "red"
+                  : "blue-gray"
             }
           />
         </div>
@@ -73,11 +73,11 @@ const PermissionsDetails = React.memo(({ detail }) => {
         {detail.requestStatus === "אושר" ? (
           ""
         ) : (
-          <>
+          <div className="m-max flex gap-2">
             <Tooltip content="לחץ לדחות בקשה">
               <Typography
                 color="red"
-                className="flex text-[1.3rem] cursor-pointer"
+                className="text-[1.3rem] cursor-pointer"
                 type="button"
                 onClick={() => handleApprove("לא אושר")}
               >
@@ -87,14 +87,14 @@ const PermissionsDetails = React.memo(({ detail }) => {
             <Tooltip content="לחץ לאשר בקשה">
               <Typography
                 color="green"
-                className="flex text-[1.3rem] cursor-pointer"
+                className="text-[1.3rem] cursor-pointer"
                 type="button"
                 onClick={() => handleApprove("אושר")}
               >
                 <IoIosCheckmarkCircle />
               </Typography>
             </Tooltip>
-          </>
+          </div>
         )}
       </td>
     </tr>
