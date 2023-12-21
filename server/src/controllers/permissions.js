@@ -61,17 +61,22 @@ route.put("/:id", async (req, res) => {
 
 route.post("/:email", async (req, res) => {
   const { email } = req.params;
-  const { recipientEmail } = req.body;
+  const { requesterEmail, requestType } = req.body;
 
   try {
-    const permission = await Request.findOne({ email, recipientEmail });
+    let permission = await Request.findOne({
+      recipientEmail: email,
+      requesterEmail,
+    });
 
     if (permission) {
       permission.requestStatus = "אושר";
+      permission.requestType = requestType;
     } else {
       permission = new Request({
-        email,
-        recipientEmail,
+        requesterEmail: requesterEmail,
+        recipientEmail: email,
+        requestType,
         requestStatus: "אושר",
       });
     }

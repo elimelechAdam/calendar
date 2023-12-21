@@ -47,3 +47,16 @@ export const updateRequest = async (id, requestStatus) => {
     throw error;
   }
 };
+
+export const createPermission = async (email, permission) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/permissions/${email}`,
+      permission
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

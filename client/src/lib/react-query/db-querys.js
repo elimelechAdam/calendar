@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../stores/user-store";
 import {
+  createPermission,
   createRequest,
   getPermissions,
   getRequests,
@@ -47,10 +48,21 @@ export const useDbQuerys = () => {
     });
   };
 
+  const createPermissionMutation = () => {
+    return useMutation({
+      mutationKey: ["createPermission"],
+      mutationFn: (params) => createPermission(user.email, params),
+      onSuccess: () => {
+        queryClient.invalidateQueries("permissions");
+      },
+    });
+  };
+
   return {
     getPermissionsQuery,
     getRequestsQuery,
     createRequestMutation,
     updatePermissionMutation,
+    createPermissionMutation,
   };
 };

@@ -12,16 +12,15 @@ import {
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
 import { useForm, Controller } from "react-hook-form";
-import { useMsgQuerys } from "../lib/react-query/msg-querys";
+import { useDbQuerys } from "../lib/react-query/db-querys";
 
 export function PermissionFormModal({ open, setOpen }) {
   const handleClose = () => {
     reset();
     setOpen(false);
   };
-  const { grantCalendarPermissionsMutation } = useMsgQuerys();
-  const { mutateAsync, isPending, isError } =
-    grantCalendarPermissionsMutation();
+  const { createPermissionMutation } = useDbQuerys();
+  const { mutateAsync, isPending, isError } = createPermissionMutation();
   const { control, handleSubmit, errors, reset } = useForm({
     defaultValues: {
       email: "",
@@ -31,10 +30,7 @@ export function PermissionFormModal({ open, setOpen }) {
 
   const submitHandler = async (data) => {
     try {
-      await mutateAsync({
-        email: data.email,
-        role: data.role,
-      });
+      await mutateAsync(data);
       reset();
       handleClose();
     } catch (error) {
@@ -65,12 +61,12 @@ export function PermissionFormModal({ open, setOpen }) {
             </Typography>
             <div className="grid gap-6">
               <Controller
-                name="email"
+                name="requesterEmail"
                 control={control}
                 render={({ field }) => <Input label="כתובת מייל" {...field} />}
               />
               <Controller
-                name="role"
+                name="requestType"
                 control={control}
                 render={({ field }) => (
                   <Select {...field} variant="static" label="אנא בחר בהרשאה">
