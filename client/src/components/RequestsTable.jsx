@@ -18,6 +18,7 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 import AllRequestsDetails from "./RequestsDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
+import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
 const TABLE_HEAD = [
   "למי נשלחה הבקשה",
@@ -34,7 +35,6 @@ function RequestsTable() {
 
   const handleOpen = () => setOpenModal(!openModal);
   // will change later to components
-  if (isPending) return <div>Loading...</div>;
 
   if (isError) return <div>Error</div>;
 
@@ -101,9 +101,13 @@ function RequestsTable() {
               </tr>
             </thead>
             <tbody>
-              {data.requests.map((detail) => (
-                <AllRequestsDetails detail={detail} key={detail._id} />
-              ))}
+              {isPending ? (
+                <LoadingSkeleton />
+              ) : (
+                data.requests.map((detail) => (
+                  <AllRequestsDetails detail={detail} key={detail._id} />
+                ))
+              )}
             </tbody>
           </table>
         </CardBody>

@@ -18,6 +18,7 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 import PermissionsDetails from "./PermissionDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
+import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -33,8 +34,6 @@ function PermissionsTable() {
   const { getPermissionsQuery } = useDbQuerys();
   const [page, setPage] = useState(1);
   const { data, isPending, isError } = getPermissionsQuery(page);
-
-  if (isPending) return <div>loading...</div>;
 
   if (isError) return <div>error...</div>;
 
@@ -101,9 +100,13 @@ function PermissionsTable() {
               </tr>
             </thead>
             <tbody>
-              {data.permissions.map((detail) => (
-                <PermissionsDetails detail={detail} key={detail._id} />
-              ))}
+              {isPending ? (
+                <LoadingSkeleton />
+              ) : (
+                data.permissions.map((detail) => (
+                  <PermissionsDetails detail={detail} key={detail._id} />
+                ))
+              )}
             </tbody>
           </table>
         </CardBody>
