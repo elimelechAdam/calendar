@@ -2,8 +2,22 @@ import React from "react";
 import { Typography, Chip, Tooltip } from "@material-tailwind/react";
 import { changeRequestsTypeToHeb } from "../lib/utils/utils";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
+import { useDbQuerys } from "../lib/react-query/db-querys";
 
 const PermissionsDetails = React.memo(({ detail }) => {
+  const { updatePermissionMutation } = useDbQuerys();
+  const { mutateAsync, isPending, isError } = updatePermissionMutation();
+
+  const handleApprove = async (status) => {
+    try {
+      await mutateAsync({
+        id: detail._id,
+        requestStatus: status,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const classes = "p-4 border-b border-blue-gray-50";
   return (
     <tr key={detail._id}>
@@ -64,6 +78,8 @@ const PermissionsDetails = React.memo(({ detail }) => {
               <Typography
                 color="red"
                 className="flex text-[1.3rem] cursor-pointer"
+                type="button"
+                onClick={() => handleApprove("לא אושר")}
               >
                 <IoMdCloseCircle />
               </Typography>
@@ -72,6 +88,8 @@ const PermissionsDetails = React.memo(({ detail }) => {
               <Typography
                 color="green"
                 className="flex text-[1.3rem] cursor-pointer"
+                type="button"
+                onClick={() => handleApprove("אושר")}
               >
                 <IoIosCheckmarkCircle />
               </Typography>

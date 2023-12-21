@@ -37,10 +37,13 @@ export const useDbQuerys = () => {
     });
   };
 
-  const updateRequestMutation = () => {
+  const updatePermissionMutation = () => {
     return useMutation({
       mutationKey: ["updateRequest"],
       mutationFn: (params) => updateRequest(params.id, params.requestStatus),
+      onSuccess: () => {
+        queryClient.invalidateQueries("permissions");
+      },
     });
   };
 
@@ -48,6 +51,6 @@ export const useDbQuerys = () => {
     getPermissionsQuery,
     getRequestsQuery,
     createRequestMutation,
-    updateRequestMutation,
+    updatePermissionMutation,
   };
 };

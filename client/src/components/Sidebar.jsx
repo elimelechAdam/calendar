@@ -9,16 +9,10 @@ import {
   Chip,
   Accordion,
   AccordionHeader,
-  AccordionBody,
-  Alert,
-  Button,
 } from "@material-tailwind/react";
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
 import {
-  ChevronRightIcon,
-  ChevronDownIcon,
   ChevronLeftIcon,
-  CubeTransparentIcon,
   CalendarIcon,
   CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
@@ -42,6 +36,7 @@ const Sidebar = ({ name }) => {
         </div>
         <List>
           <Accordion
+            open={open === 0}
             icon={
               <ChevronLeftIcon
                 strokeWidth={2.5}
@@ -63,6 +58,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </Accordion>
           <Accordion
+            open={open === 0}
             icon={
               <ChevronLeftIcon
                 strokeWidth={2.5}
