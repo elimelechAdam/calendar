@@ -10,7 +10,7 @@ const NotSuppMobileMessage = () => {
     >
       <Alert
         icon={<MdErrorOutline className="text-[1.7rem]" />}
-        className="max-w-[400px] w-full flex align-middle items-center px-5"
+        className="max-w-[400px] w-full flex align-middle items-center mx-2"
       >
         אין תמיכה בטלפונים או טאבלטים
       </Alert>
