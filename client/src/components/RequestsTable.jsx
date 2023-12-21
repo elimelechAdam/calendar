@@ -28,11 +28,11 @@ const TABLE_HEAD = [
 
 function RequestsTable() {
   const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(!openModal);
   const { getRequestsQuery } = useDbQuerys();
   const [page, setPage] = useState(1);
   const { data, isPending, isError } = getRequestsQuery(page);
 
+  const handleOpen = () => setOpenModal(!openModal);
   // will change later to components
   if (isPending) return <div>Loading...</div>;
 
