@@ -3,24 +3,60 @@ import { Request } from "../models/calendar.js";
 
 const route = Router();
 
+// route.get("/:email", async (req, res) => {
+//   const page = parseInt(req.query.page || 1);
+//   const limit = 6;
+//   const skip = (page - 1) * limit;
+//   const { email } = req.params;
+//   try {
+//     const permissions = await Request.find({
+//       recipientEmail: email,
+//     })
+//       .sort({ createdAt: -1 })
+//       .skip(skip)
+//       .limit(limit);
+
+//     const total = await Request.countDocuments({ recipientEmail: email });
+//     const totalPages = Math.ceil(total / limit);
+
+//     if (!permissions.length)
+//       res.status(404).json({ message: "no permissions" });
+
+//     res.status(200).json({
+//       permissions,
+//       totalPages,
+//       totalPermissions: total,
+//       currentPage: page,
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
 route.get("/:email", async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = 6;
   const skip = (page - 1) * limit;
   const { email } = req.params;
+  const status = req.query.status; // Get the status filter from the query string
+  console.log("status", status);
   try {
-    const permissions = await Request.find({
-      recipientEmail: email,
-    })
+    let filter = { recipientEmail: email, requestStatus: status };
+
+    if (filter.requestStatus === "הכל") {
+      filter = { recipientEmail: email };
+    }
+    const permissions = await Request.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 
-    const total = await Request.countDocuments({ recipientEmail: email });
-    const totalPages = Math.ceil(total / limit);
+    // if (permissions.length === 0) {
+    //   return res.status(404).json({ message: "no permissions" });
+    // }
 
-    if (!permissions.length)
-      res.status(404).json({ message: "no permissions" });
+    const total = await Request.countDocuments(filter);
+    const totalPages = Math.ceil(total / limit);
 
     res.status(200).json({
       permissions,

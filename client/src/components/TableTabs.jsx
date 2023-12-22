@@ -3,28 +3,38 @@ import { Tab, Tabs, TabsHeader } from "@material-tailwind/react";
 const TABS = [
   {
     label: "הכל",
-    value: "all",
+    value: "הכל",
   },
   {
     label: "בקשות שאושרו",
-    value: "granted",
+    value: "אושר",
   },
   {
     label: "בקשות ממתינות",
-    value: "awaiting",
+    value: "ממתין",
   },
   {
     label: "בקשות שלא אושרו",
-    value: "unGranted",
+    value: "לא אושר",
   },
 ];
 
-const TableTabs = () => {
+const TableTabs = ({ activeTab, setActiveTab }) => {
   return (
-    <Tabs value="all" className="w-1/2">
-      <TabsHeader>
+    <Tabs
+      value={activeTab}
+      onChange={(e, newValue) => setActiveTab(newValue)}
+      className="w-3/5"
+    >
+      <TabsHeader className="">
         {TABS.map(({ label, value }) => (
-          <Tab key={value} value={value} className="">
+          <Tab
+            key={value}
+            value={value}
+            onClick={() => {
+              setActiveTab(value);
+            }}
+          >
             &nbsp;&nbsp;{label}&nbsp;&nbsp;
           </Tab>
         ))}

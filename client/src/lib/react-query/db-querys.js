@@ -12,17 +12,20 @@ export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
 
-  const getPermissionsQuery = (page) => {
+  const getPermissionsQuery = (user, activeTab, page) => {
+    console.log(user, activeTab, page);
     return useQuery({
-      queryKey: ["permissions", user, page],
-      queryFn: () => getPermissions(user.email, page),
+      queryKey: ["permissions", user.email, activeTab, page],
+      queryFn: () => getPermissions(user.email, activeTab, page),
     });
   };
 
-  const getRequestsQuery = (page) => {
+  const getRequestsQuery = (user, activeTab, page) => {
+    console.log(page);
+
     return useQuery({
-      queryKey: ["requests", user, page],
-      queryFn: () => getRequests(user.email, page),
+      queryKey: ["requests", user.email, activeTab, page],
+      queryFn: () => getRequests(user.email, activeTab, page),
     });
   };
 

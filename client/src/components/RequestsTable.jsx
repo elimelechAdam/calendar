@@ -30,14 +30,15 @@ const TABLE_HEAD = [
 function RequestsTable() {
   const [openModal, setOpenModal] = useState(false);
   const { getRequestsQuery } = useDbQuerys();
+
   const [page, setPage] = useState(1);
+
   const { data, isPending, isError } = getRequestsQuery(page);
 
   const handleOpen = () => setOpenModal(!openModal);
   // will change later to components
 
   if (isError) return <div>Error</div>;
-
   return (
     <>
       <Card className="h-full w-full fadeInTable">

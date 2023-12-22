@@ -11,11 +11,8 @@ import {
   AccordionHeader,
 } from "@material-tailwind/react";
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
-import {
-  ChevronLeftIcon,
-  CalendarIcon,
-  CalendarDaysIcon,
-} from "@heroicons/react/24/outline";
+import { CalendarIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
@@ -35,51 +32,29 @@ const Sidebar = ({ name }) => {
           />
         </div>
         <List>
-          <Accordion
-            open={open === 0}
-            icon={
-              <ChevronLeftIcon
-                strokeWidth={2.5}
-                className={`mx-auto h-4 w-4 `}
-              />
-            }
-          >
-            <Link to="requests">
-              <ListItem className="p-0">
-                <AccordionHeader className="border-b-0 p-3">
-                  <ListItemPrefix>
-                    <CalendarIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className=" font-normal">
-                    בקשות שלי ליומנים
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-            </Link>
-          </Accordion>
-          <Accordion
-            open={open === 0}
-            icon={
-              <ChevronLeftIcon
-                strokeWidth={2.5}
-                className={`mx-auto h-4 w-4 
-              }`}
-              />
-            }
-          >
-            <Link to="permissions">
-              <ListItem className="p-0">
-                <AccordionHeader className="border-b-0 p-3">
-                  <ListItemPrefix>
-                    <CalendarDaysIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  <Typography color="blue-gray" className=" font-normal">
-                    בקשות ליומן שלי
-                  </Typography>
-                </AccordionHeader>
-              </ListItem>
-            </Link>
-          </Accordion>
+          <Link to="requests">
+            <ListItem className="flex justify-between text-lg">
+              <ListItemPrefix>
+                <CalendarIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              בקשות שלי ליומנים
+              <Typography color="blue-gray" className=" font-normal">
+                <FiArrowLeft />
+              </Typography>
+            </ListItem>
+          </Link>
+
+          <Link to="permissions">
+            <ListItem className="flex justify-between text-lg">
+              <ListItemPrefix>
+                <CalendarDaysIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              בקשות ליומן שלי
+              <Typography color="blue-gray" className=" font-normal">
+                <FiArrowLeft />
+              </Typography>
+            </ListItem>
+          </Link>
           <hr className="my-2 border-blue-gray-50" />
           <ListItem className="gap-2">
             <ListItemPrefix>

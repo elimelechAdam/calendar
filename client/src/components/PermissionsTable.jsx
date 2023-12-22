@@ -19,6 +19,7 @@ import PermissionsDetails from "./PermissionDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
+import { useUserStore } from "../lib/stores/user-store";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -33,10 +34,18 @@ function PermissionsTable() {
   const handleOpen = () => setOpenModal(!openModal);
   const { getPermissionsQuery } = useDbQuerys();
   const [page, setPage] = useState(1);
-  const { data, isPending, isError } = getPermissionsQuery(page);
+  const user = useUserStore((state) => state.user);
+
+  const [activeTab, setActiveTab] = useState("הכל");
+
+  const { data, isPending, isError } = getPermissionsQuery(
+    user,
+    activeTab,
+    page
+  );
+  console.log(isError);
 
   if (isError) return <div>error...</div>;
-
   return (
     <>
       <Card className="h-full w-full fadeInTable">
@@ -62,7 +71,7 @@ function PermissionsTable() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <TableTabs />
+            <TableTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="w-full md:w-72">
               <Input
                 label="חפש לפי דואר אלקטרוני"
@@ -102,7 +111,7 @@ function PermissionsTable() {
             <tbody>
               {isPending ? (
                 <tr>
-                  <td colSpan="the number of columns to span">
+                  <td>
                     <LoadingSkeleton />
                   </td>
                 </tr>
@@ -110,6 +119,15 @@ function PermissionsTable() {
                 data.permissions.map((detail) => (
                   <PermissionsDetails detail={detail} key={detail._id} />
                 ))
+              )}
+              {data?.permissions.length === 0 && (
+                <tr>
+                  <td className="text-center" colSpan="5">
+                    <Typography color="blue-gray" className="font-normal">
+                      אין נתונים להצגה
+                    </Typography>
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>

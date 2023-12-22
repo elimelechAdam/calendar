@@ -2,10 +2,11 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:5050/api";
 
-export const getPermissions = async (email, page) => {
+export const getPermissions = async (email, activeTab, page) => {
+  console.log(email, activeTab, page);
   try {
     const response = await axios.get(
-      `${BASE_URL}/permissions/${email}?page=${page}`
+      `${BASE_URL}/permissions/${email}?status=${activeTab}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -14,10 +15,10 @@ export const getPermissions = async (email, page) => {
   }
 };
 
-export const getRequests = async (email, page) => {
+export const getRequests = async (email, activeTab, page) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/requests/${email}?page=${page}`
+      `${BASE_URL}/requests/${email}?status=${activeTab}&page=${page}`
     );
     return response.data;
   } catch (error) {
