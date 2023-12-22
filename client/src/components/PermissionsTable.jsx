@@ -101,7 +101,11 @@ function PermissionsTable() {
             </thead>
             <tbody>
               {isPending ? (
-                <LoadingSkeleton />
+                <tr>
+                  <td colSpan="the number of columns to span">
+                    <LoadingSkeleton />
+                  </td>
+                </tr>
               ) : (
                 data.permissions.map((detail) => (
                   <PermissionsDetails detail={detail} key={detail._id} />

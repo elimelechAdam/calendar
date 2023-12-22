@@ -102,7 +102,11 @@ function RequestsTable() {
             </thead>
             <tbody>
               {isPending ? (
-                <LoadingSkeleton />
+                <tr>
+                  <td colSpan="the number of columns to span">
+                    <LoadingSkeleton />
+                  </td>
+                </tr>
               ) : (
                 data.requests.map((detail) => (
                   <AllRequestsDetails detail={detail} key={detail._id} />
