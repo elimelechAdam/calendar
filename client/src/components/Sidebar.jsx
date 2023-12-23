@@ -18,9 +18,6 @@ import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
 
 const Sidebar = ({ name }) => {
-  const [open, setOpen] = useState(0);
-  const [openAlert, setOpenAlert] = useState(true);
-
   return (
     <Card className="min-h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
       <div>

@@ -2,7 +2,7 @@ import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import {
   Card,
   CardHeader,
@@ -19,7 +19,6 @@ import PermissionsDetails from "./PermissionDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
-import { useUserStore } from "../lib/stores/user-store";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",

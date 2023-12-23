@@ -15,12 +15,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 
 export function PermissionFormModal({ open, setOpen }) {
-  const handleClose = () => {
-    reset();
-    setOpen(false);
-  };
   const { createPermissionMutation } = useDbQuerys();
-  const { mutateAsync, isPending, isError } = createPermissionMutation();
+  const { mutateAsync, isPending } = createPermissionMutation();
   const {
     control,
     handleSubmit,
@@ -33,6 +29,11 @@ export function PermissionFormModal({ open, setOpen }) {
       requestType: "",
     },
   });
+
+  const handleClose = () => {
+    reset();
+    setOpen(false);
+  };
 
   const submitHandler = async (data) => {
     try {
