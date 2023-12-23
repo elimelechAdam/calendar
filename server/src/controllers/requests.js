@@ -7,12 +7,17 @@ route.get("/:email", async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = 6;
   const skip = (page - 1) * limit;
+  const status = req.query.status;
 
   const { email } = req.params;
   try {
-    const requests = await Request.find({
-      requesterEmail: email,
-    })
+    let filter = { requesterEmail: email, requestStatus: status };
+
+    if (filter.requestStatus === "all") {
+      filter = { requesterEmail: email };
+    }
+
+    const requests = await Request.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
@@ -23,8 +28,8 @@ route.get("/:email", async (req, res) => {
     if (totalPages < page)
       return res.status(404).json({ message: "no requests" });
 
-    if (!requests.length)
-      return res.status(404).json({ message: "No more requests available" });
+    // if (!requests.length)
+    //   return res.status(404).json({ message: "No more requests available" });
 
     res.status(200).json({
       requests,

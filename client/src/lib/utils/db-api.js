@@ -3,7 +3,6 @@ import axios from "axios";
 const BASE_URL = "http://localhost:5050/api";
 
 export const getPermissions = async (email, activeTab, page) => {
-  console.log(email, activeTab, page);
   try {
     const response = await axios.get(
       `${BASE_URL}/permissions/${email}?status=${activeTab}&page=${page}`

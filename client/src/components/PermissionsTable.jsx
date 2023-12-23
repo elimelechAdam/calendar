@@ -34,16 +34,9 @@ function PermissionsTable() {
   const handleOpen = () => setOpenModal(!openModal);
   const { getPermissionsQuery } = useDbQuerys();
   const [page, setPage] = useState(1);
-  const user = useUserStore((state) => state.user);
+  const [activeTab, setActiveTab] = useState("all");
 
-  const [activeTab, setActiveTab] = useState("הכל");
-
-  const { data, isPending, isError } = getPermissionsQuery(
-    user,
-    activeTab,
-    page
-  );
-  console.log(isError);
+  const { data, isPending, isError } = getPermissionsQuery(activeTab, page);
 
   if (isError) return <div>error...</div>;
   return (
@@ -124,7 +117,7 @@ function PermissionsTable() {
                 <tr>
                   <td className="text-center" colSpan="5">
                     <Typography color="blue-gray" className="font-normal">
-                      אין נתונים להצגה
+                      אין תוצאות
                     </Typography>
                   </td>
                 </tr>

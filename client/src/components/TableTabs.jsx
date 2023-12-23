@@ -3,19 +3,19 @@ import { Tab, Tabs, TabsHeader } from "@material-tailwind/react";
 const TABS = [
   {
     label: "הכל",
-    value: "הכל",
+    value: "all",
   },
   {
     label: "בקשות שאושרו",
-    value: "אושר",
+    value: "approved",
   },
   {
     label: "בקשות ממתינות",
-    value: "ממתין",
+    value: "pending",
   },
   {
     label: "בקשות שלא אושרו",
-    value: "לא אושר",
+    value: "denied",
   },
 ];
 
@@ -23,7 +23,7 @@ const TableTabs = ({ activeTab, setActiveTab }) => {
   return (
     <Tabs
       value={activeTab}
-      onChange={(e, newValue) => setActiveTab(newValue)}
+      onChange={(newValue) => setActiveTab(newValue)}
       className="w-3/5"
     >
       <TabsHeader className="">

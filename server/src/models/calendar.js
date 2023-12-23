@@ -7,8 +7,8 @@ const requestSchema = new mongoose.Schema(
     requestType: String,
     requestStatus: {
       type: String,
-      enum: ["ממתין", "אושר", "לא אושר"],
-      default: "ממתין",
+      enum: ["pending", "approved", "denied"],
+      default: "pending",
     },
   },
   { timestamps: true }

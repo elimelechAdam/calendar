@@ -43,7 +43,7 @@ route.get("/:email", async (req, res) => {
   try {
     let filter = { recipientEmail: email, requestStatus: status };
 
-    if (filter.requestStatus === "הכל") {
+    if (filter.requestStatus === "all") {
       filter = { recipientEmail: email };
     }
     const permissions = await Request.find(filter)

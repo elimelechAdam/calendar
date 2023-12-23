@@ -1,6 +1,9 @@
 import React from "react";
 import { Typography, Chip } from "@material-tailwind/react";
-import { changeRequestsTypeToHeb } from "../lib/utils/utils";
+import {
+  changeRequestsStatusToHeb,
+  changeRequestsTypeToHeb,
+} from "../lib/utils/utils";
 
 const AllRequestsDetails = React.memo(({ detail }) => {
   return (
@@ -32,13 +35,13 @@ const AllRequestsDetails = React.memo(({ detail }) => {
           <Chip
             variant="ghost"
             size="sm"
-            value={detail.requestStatus}
+            value={changeRequestsStatusToHeb(detail.requestStatus)}
             color={
-              detail.requestStatus === "אושר"
+              detail.requestStatus === "approved"
                 ? "green"
-                : detail.requestStatus === "לא אושר"
-                ? "red"
-                : "blue-gray"
+                : detail.requestStatus === "denied"
+                  ? "red"
+                  : "blue-gray"
             }
           />
         </div>

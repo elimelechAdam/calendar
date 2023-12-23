@@ -1,6 +1,9 @@
 import React from "react";
 import { Typography, Chip, Tooltip } from "@material-tailwind/react";
-import { changeRequestsTypeToHeb } from "../lib/utils/utils";
+import {
+  changeRequestsStatusToHeb,
+  changeRequestsTypeToHeb,
+} from "../lib/utils/utils";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 
@@ -48,11 +51,11 @@ const PermissionsDetails = React.memo(({ detail }) => {
           <Chip
             variant="ghost"
             size="sm"
-            value={detail.requestStatus}
+            value={changeRequestsStatusToHeb(detail.requestStatus)}
             color={
-              detail.requestStatus === "אושר"
+              detail.requestStatus === "approved"
                 ? "green"
-                : detail.requestStatus === "לא אושר"
+                : detail.requestStatus === "denied"
                   ? "red"
                   : "blue-gray"
             }
@@ -70,7 +73,8 @@ const PermissionsDetails = React.memo(({ detail }) => {
       </td>
       <td className={` ${classes} flex gap-3`}>
         <div>&nbsp;</div>
-        {detail.requestStatus === "אושר" ? (
+        {detail.requestStatus === "אושר" ||
+        detail.requestStatus === "לא אושר" ? (
           ""
         ) : (
           <div className="m-max flex gap-2">

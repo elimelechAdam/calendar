@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { RequestFormModal } from "./RequestFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
-import AllRequestsDetails from "./RequestsDetails";
+import RequestsDetails from "./RequestsDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
@@ -30,10 +30,9 @@ const TABLE_HEAD = [
 function RequestsTable() {
   const [openModal, setOpenModal] = useState(false);
   const { getRequestsQuery } = useDbQuerys();
-
+  const [activeTab, setActiveTab] = useState("all");
   const [page, setPage] = useState(1);
-
-  const { data, isPending, isError } = getRequestsQuery(page);
+  const { data, isPending, isError } = getRequestsQuery(activeTab, page);
 
   const handleOpen = () => setOpenModal(!openModal);
   // will change later to components
@@ -64,7 +63,7 @@ function RequestsTable() {
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <TableTabs />
+            <TableTabs setActiveTab={setActiveTab} activeTab={activeTab} />
             <div className="w-full md:w-72">
               <Input
                 label="חפש לפי דואר אלקטרוני"
@@ -110,10 +109,19 @@ function RequestsTable() {
                 </tr>
               ) : (
                 data.requests.map((detail) => (
-                  <AllRequestsDetails detail={detail} key={detail._id} />
+                  <RequestsDetails detail={detail} key={detail._id} />
                 ))
               )}
             </tbody>
+            {data?.requests.length === 0 && (
+              <tr>
+                <td className="text-center" colSpan="5">
+                  <Typography color="gray" variant="h6">
+                    אין תוצאות
+                  </Typography>
+                </td>
+              </tr>
+            )}
           </table>
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
