@@ -23,7 +23,7 @@ const PermissionsDetails = React.memo(({ detail }) => {
   };
   const classes = "p-4 border-b border-blue-gray-50";
   return (
-    <tr key={detail._id}>
+    <tr>
       <td className={classes}>
         <div className="flex items-center gap-3">
           <div className="flex flex-col">

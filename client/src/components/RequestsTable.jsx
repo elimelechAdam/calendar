@@ -112,16 +112,16 @@ function RequestsTable() {
                   <RequestsDetails detail={detail} key={detail._id} />
                 ))
               )}
+              {data?.requests.length === 0 && (
+                <tr>
+                  <td className="text-center" colSpan="5">
+                    <Typography color="gray" variant="h6">
+                      אין תוצאות
+                    </Typography>
+                  </td>
+                </tr>
+              )}
             </tbody>
-            {data?.requests.length === 0 && (
-              <tr>
-                <td className="text-center" colSpan="5">
-                  <Typography color="gray" variant="h6">
-                    אין תוצאות
-                  </Typography>
-                </td>
-              </tr>
-            )}
           </table>
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">

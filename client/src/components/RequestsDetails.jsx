@@ -5,9 +5,9 @@ import {
   changeRequestsTypeToHeb,
 } from "../lib/utils/utils";
 
-const AllRequestsDetails = React.memo(({ detail }) => {
+const RequestsDetails = React.memo(({ detail }) => {
   return (
-    <tr key={detail._id}>
+    <tr>
       <td className="p-4 border-b border-blue-gray-50">
         <div className="flex items-center gap-3">
           <div className="flex flex-col">
@@ -59,4 +59,4 @@ const AllRequestsDetails = React.memo(({ detail }) => {
   );
 });
 
-export default AllRequestsDetails;
+export default RequestsDetails;

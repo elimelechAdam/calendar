@@ -23,8 +23,8 @@ export function PermissionFormModal({ open, setOpen }) {
   const { mutateAsync, isPending, isError } = createPermissionMutation();
   const { control, handleSubmit, errors, reset } = useForm({
     defaultValues: {
-      email: "",
-      role: "",
+      requesterEmail: "",
+      requestType: "",
     },
   });
 
