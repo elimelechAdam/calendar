@@ -83,10 +83,10 @@ route.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "No request found" });
     }
 
-    if (updatedRequest.requestStatus === "מאושר")
+    if (updatedRequest.requestStatus === "approved")
       return res.status(400).json({ message: "Request already approved" });
 
-    if (updatedRequest.requestStatus === "לא מאושר")
+    if (updatedRequest.requestStatus === "denied")
       return res.status(400).json({ message: "Request already denied" });
 
     res.status(200).json(updatedRequest);
@@ -106,14 +106,14 @@ route.post("/:email", async (req, res) => {
     });
 
     if (permission) {
-      permission.requestStatus = "אושר";
+      permission.requestStatus = "approved";
       permission.requestType = requestType;
     } else {
       permission = new Request({
         requesterEmail: requesterEmail,
         recipientEmail: email,
         requestType,
-        requestStatus: "אושר",
+        requestStatus: "approved",
       });
     }
 

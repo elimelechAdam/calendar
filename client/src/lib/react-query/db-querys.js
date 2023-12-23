@@ -57,7 +57,7 @@ export const useDbQuerys = () => {
       mutationKey: ["createPermission"],
       mutationFn: (params) => createPermission(user.email, params),
       onSuccess: () => {
-        mutate({ email: params.recipientEmail, role: params.requestStatus });
+        // mutate({ email: params.recipientEmail, role: params.requestStatus });
         console.log(params);
         queryClient.invalidateQueries("permissions");
       },
