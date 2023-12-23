@@ -89,12 +89,12 @@ export function RequestFormModal({ open, setOpen }) {
               ביטול
             </Button>
           </DialogFooter>
-        </form>
-        {isError && (
+          {/* {isError && (
           <Typography color="red" className="mt-1 font-normal">
             לא ניתן לשלוח בבקשה
           </Typography>
-        )}
+        )} */}
+        </form>
       </Dialog>
     </>
   );

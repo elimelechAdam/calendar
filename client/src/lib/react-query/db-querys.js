@@ -45,8 +45,8 @@ export const useDbQuerys = () => {
     return useMutation({
       mutationKey: ["updateRequest"],
       mutationFn: (params) => updateRequest(params.id, params.requestStatus),
-      onSuccess: () => {
-        mutate({ email: params.recipientEmail, role: params.requestStatus });
+      onSuccess: (data) => {
+        mutate({ email: data.requesterEmail, role: data.requestType });
         queryClient.invalidateQueries("permissions");
       },
     });
@@ -56,9 +56,8 @@ export const useDbQuerys = () => {
     return useMutation({
       mutationKey: ["createPermission"],
       mutationFn: (params) => createPermission(user.email, params),
-      onSuccess: () => {
-        // mutate({ email: params.recipientEmail, role: params.requestStatus });
-        console.log(params);
+      onSuccess: (data) => {
+        mutate({ email: data.requesterEmail, role: data.requestType });
         queryClient.invalidateQueries("permissions");
       },
     });

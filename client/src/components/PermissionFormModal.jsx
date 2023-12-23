@@ -90,12 +90,12 @@ export function PermissionFormModal({ open, setOpen }) {
               ביטול
             </Button>
           </DialogFooter>
+          {/* {isError && (
+            <Typography color="red" className="mt-1 font-normal">
+              לא ניתן לתת הרשאה
+            </Typography>
+          )} */}
         </form>
-        {isError && (
-          <Typography color="red" className="mt-1 font-normal">
-            לא ניתן לתת הרשאה
-          </Typography>
-        )}
       </Dialog>
     </>
   );

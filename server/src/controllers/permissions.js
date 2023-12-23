@@ -83,12 +83,6 @@ route.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "No request found" });
     }
 
-    if (updatedRequest.requestStatus === "approved")
-      return res.status(400).json({ message: "Request already approved" });
-
-    if (updatedRequest.requestStatus === "denied")
-      return res.status(400).json({ message: "Request already denied" });
-
     res.status(200).json(updatedRequest);
   } catch (err) {
     res.status(500).json({ message: err.message });
