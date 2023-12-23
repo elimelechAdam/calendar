@@ -21,7 +21,13 @@ export function PermissionFormModal({ open, setOpen }) {
   };
   const { createPermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending, isError } = createPermissionMutation();
-  const { control, handleSubmit, errors, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    register,
+  } = useForm({
     defaultValues: {
       requesterEmail: "",
       requestType: "",
@@ -42,7 +48,7 @@ export function PermissionFormModal({ open, setOpen }) {
     <>
       <Dialog open={open} size="sm">
         <form
-          className="flex flex-col gap-1 relative"
+          className="flex flex-col relative"
           onSubmit={handleSubmit(submitHandler)}
         >
           <IoMdClose
@@ -59,15 +65,28 @@ export function PermissionFormModal({ open, setOpen }) {
             <Typography className="mb-6 -mt-7 " color="gray" variant="lead">
               הכנס את כתובת המייל של המשתמש ולחץ על תן הרשאה
             </Typography>
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               <Controller
                 name="requesterEmail"
                 control={control}
+                rules={{
+                  required: "שדה חובה",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "אנא הכנס כתובת מייל תקינה",
+                  },
+                }}
                 render={({ field }) => <Input label="כתובת מייל" {...field} />}
               />
+              {errors?.requesterEmail && (
+                <Typography color="red" className="font-normal text-sm">
+                  {errors.requesterEmail.message}
+                </Typography>
+              )}
               <Controller
                 name="requestType"
                 control={control}
+                rules={{ required: "שדה חובה" }}
                 render={({ field }) => (
                   <Select {...field} variant="static" label="אנא בחר בהרשאה">
                     <Option value="read">קריאה בלבד</Option>
@@ -75,6 +94,11 @@ export function PermissionFormModal({ open, setOpen }) {
                   </Select>
                 )}
               />
+              {errors?.requestType && (
+                <Typography color="red" className="font-normal text-sm">
+                  {errors.requestType.message}
+                </Typography>
+              )}
             </div>
           </DialogBody>
           <DialogFooter className="space-x-2 justify-start">

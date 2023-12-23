@@ -19,7 +19,12 @@ export function RequestFormModal({ open, setOpen }) {
     reset();
     setOpen(false);
   };
-  const { handleSubmit, control, reset } = useForm({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       recipientEmail: "",
       requestType: "",
@@ -42,7 +47,7 @@ export function RequestFormModal({ open, setOpen }) {
     <>
       <Dialog open={open} size="sm">
         <form
-          className="flex flex-col gap-1 relative"
+          className="flex flex-col relative"
           onSubmit={handleSubmit(submitHandler)}
         >
           <IoMdClose
@@ -58,15 +63,28 @@ export function RequestFormModal({ open, setOpen }) {
             <Typography className="mb-6 -mt-7 " color="gray" variant="lead">
               הכנס את כתובת המייל של המשתמש ולחץ על שלח בקשה
             </Typography>
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               <Controller
                 name="recipientEmail"
                 control={control}
+                rules={{
+                  required: "שדה חובה",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "אנא הכנס כתובת מייל תקינה",
+                  },
+                }}
                 render={({ field }) => <Input label="כתובת מייל" {...field} />}
               />
+              {errors?.recipientEmail && (
+                <Typography color="red" className="font-normal text-sm">
+                  {errors.recipientEmail.message}
+                </Typography>
+              )}
               <Controller
                 name="requestType"
                 control={control}
+                rules={{ required: "שדה חובה" }}
                 render={({ field }) => (
                   <Select {...field} label="אנא בחר בהרשאה" variant="static">
                     <Option value="read">קריאה בלבד</Option>
@@ -74,6 +92,11 @@ export function RequestFormModal({ open, setOpen }) {
                   </Select>
                 )}
               />
+              {errors?.recipientEmail && (
+                <Typography color="red" className="font-normal text-sm">
+                  {errors.recipientEmail.message}
+                </Typography>
+              )}
             </div>
           </DialogBody>
           <DialogFooter className="space-x-2 justify-start">

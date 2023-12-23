@@ -2,9 +2,17 @@ import mongoose from "mongoose";
 
 const requestSchema = new mongoose.Schema(
   {
-    requesterEmail: String,
-    recipientEmail: String,
-    requestType: String,
+    requesterEmail: {
+      type: String,
+      required: [true, "Requester email is required"],
+      match: [/.+@.+\..+/, "Please use a valid email address"],
+    },
+    recipientEmail: {
+      type: String,
+      required: [true, "Recipient email is required"],
+      match: [/.+@.+\..+/, "Please use a valid email address"],
+    },
+    requestType: { type: String, required: true },
     requestStatus: {
       type: String,
       enum: ["pending", "approved", "denied"],
