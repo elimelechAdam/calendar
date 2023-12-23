@@ -51,10 +51,6 @@ route.get("/:email", async (req, res) => {
       .skip(skip)
       .limit(limit);
 
-    // if (permissions.length === 0) {
-    //   return res.status(404).json({ message: "no permissions" });
-    // }
-
     const total = await Request.countDocuments(filter);
     const totalPages = Math.ceil(total / limit);
 
@@ -78,6 +74,10 @@ route.put("/:id", async (req, res) => {
       { requestStatus },
       { new: true }
     );
+
+    if (updatedRequest.requestStatus === requestStatus) {
+      return res.status(400).json({ message: "Request already updated" });
+    }
 
     if (!updatedRequest) {
       return res.status(404).json({ message: "No request found" });
