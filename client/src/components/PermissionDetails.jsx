@@ -73,8 +73,8 @@ const PermissionsDetails = React.memo(({ detail }) => {
       </td>
       <td className={` ${classes} flex gap-3`}>
         <div>&nbsp;</div>
-        {detail.requestStatus === "אושר" ||
-        detail.requestStatus === "לא אושר" ? (
+        {detail.requestStatus === "approved" ||
+        detail.requestStatus === "denied" ? (
           ""
         ) : (
           <div className="m-max flex gap-2">
@@ -83,7 +83,7 @@ const PermissionsDetails = React.memo(({ detail }) => {
                 color="red"
                 className="text-[1.3rem] cursor-pointer"
                 type="button"
-                onClick={() => handleApprove("לא אושר")}
+                onClick={() => handleApprove("denied")}
               >
                 <IoMdCloseCircle />
               </Typography>
@@ -93,7 +93,7 @@ const PermissionsDetails = React.memo(({ detail }) => {
                 color="green"
                 className="text-[1.3rem] cursor-pointer"
                 type="button"
-                onClick={() => handleApprove("אושר")}
+                onClick={() => handleApprove("approved")}
               >
                 <IoIosCheckmarkCircle />
               </Typography>

@@ -7,10 +7,13 @@ import {
   getRequests,
   updateRequest,
 } from "../utils/db-api";
+import { useMsgQuerys } from "./msg-querys";
 
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
+  const { grantCalendarPermissionsMutation } = useMsgQuerys();
+  const { mutate } = grantCalendarPermissionsMutation();
 
   const getPermissionsQuery = (activeTab, page) => {
     return useQuery({
@@ -43,6 +46,7 @@ export const useDbQuerys = () => {
       mutationKey: ["updateRequest"],
       mutationFn: (params) => updateRequest(params.id, params.requestStatus),
       onSuccess: () => {
+        mutate({ email: params.recipientEmail, role: params.requestStatus });
         queryClient.invalidateQueries("permissions");
       },
     });
@@ -53,6 +57,8 @@ export const useDbQuerys = () => {
       mutationKey: ["createPermission"],
       mutationFn: (params) => createPermission(user.email, params),
       onSuccess: () => {
+        mutate({ email: params.recipientEmail, role: params.requestStatus });
+        console.log(params);
         queryClient.invalidateQueries("permissions");
       },
     });
