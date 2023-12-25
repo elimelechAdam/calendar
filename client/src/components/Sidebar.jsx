@@ -7,8 +7,7 @@ import {
   ListItemPrefix,
   ListItemSuffix,
   Chip,
-  Accordion,
-  AccordionHeader,
+  Tooltip,
 } from "@material-tailwind/react";
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
 import { CalendarIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
@@ -16,8 +15,14 @@ import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
+import { UserInfo } from "./UserInfo";
 
 const Sidebar = ({ name }) => {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const toggleTooltip = () => {
+    setTooltipOpen(!tooltipOpen);
+  };
   return (
     <Card className="min-h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
       <div>
@@ -35,7 +40,7 @@ const Sidebar = ({ name }) => {
                 <CalendarIcon className="h-5 w-5" />
               </ListItemPrefix>
               בקשות שלי ליומנים
-              <Typography color="blue-gray" className=" font-normal">
+              <Typography color="blue-gray" className="font-normal">
                 <FiArrowLeft />
               </Typography>
             </ListItem>
@@ -53,12 +58,18 @@ const Sidebar = ({ name }) => {
             </ListItem>
           </Link>
           <hr className="my-2 border-blue-gray-50" />
-          <ListItem className="gap-2">
-            <ListItemPrefix>
-              <UserCircleIcon className="h-5 w-5 gap-2" />
-            </ListItemPrefix>
-            היי {name}
-          </ListItem>
+          <Tooltip
+            content={<UserInfo name={name} toggleTooltip={toggleTooltip} />}
+            placement="left-start"
+            open={tooltipOpen}
+          >
+            <ListItem className="gap-2" onClick={toggleTooltip}>
+              <ListItemPrefix>
+                <UserCircleIcon className="h-5 w-5 gap-2" />
+              </ListItemPrefix>
+              היי {name}
+            </ListItem>
+          </Tooltip>
           <ListItem className="gap-2">
             <ListItemPrefix>
               <InboxIcon className="h-5 w-5" />
