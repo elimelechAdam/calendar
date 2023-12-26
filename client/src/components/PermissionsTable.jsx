@@ -19,6 +19,7 @@ import PermissionsDetails from "./PermissionDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
+import { motion } from "framer-motion";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -39,7 +40,14 @@ function PermissionsTable() {
 
   if (isError) return <div>error...</div>;
   return (
-    <>
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+    >
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
@@ -135,7 +143,7 @@ function PermissionsTable() {
         </CardFooter>
       </Card>
       <PermissionFormModal open={openModal} setOpen={handleOpen} />
-    </>
+    </motion.div>
   );
 }
 

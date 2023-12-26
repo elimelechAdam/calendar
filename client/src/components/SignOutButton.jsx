@@ -3,6 +3,7 @@ import { PowerIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "./../lib/stores/user-store";
+import { motion } from "framer-motion";
 
 const SignOutButton = () => {
   const { instance, accounts } = useMsal();
@@ -29,13 +30,18 @@ const SignOutButton = () => {
   };
 
   return (
-    <Button
-      onClick={handleSignOut}
-      className="flex items-center justify-center gap-3 font-bold text-md mb-3 w-full"
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 300 }}
     >
-      <PowerIcon className="h-5 w-5" />
-      התנתק
-    </Button>
+      <Button
+        onClick={handleSignOut}
+        className="flex items-center justify-center gap-3 font-bold text-md mb-3 w-full"
+      >
+        <PowerIcon className="h-5 w-5" />
+        התנתק
+      </Button>
+    </motion.div>
   );
 };
 
