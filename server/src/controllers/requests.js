@@ -5,7 +5,7 @@ const route = Router();
 
 route.get("/:email", async (req, res) => {
   const page = parseInt(req.query.page || 1);
-  const limit = 6;
+  const limit = 9;
   const skip = (page - 1) * limit;
   const status = req.query.status;
 
@@ -24,12 +24,6 @@ route.get("/:email", async (req, res) => {
 
     const total = await Request.countDocuments({ requesterEmail: email });
     const totalPages = Math.ceil(total / limit);
-
-    if (totalPages < page)
-      return res.status(404).json({ message: "no requests" });
-
-    // if (!requests.length)
-    //   return res.status(404).json({ message: "No more requests available" });
 
     res.status(200).json({
       requests,

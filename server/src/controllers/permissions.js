@@ -35,7 +35,7 @@ const route = Router();
 
 route.get("/:email", async (req, res) => {
   const page = parseInt(req.query.page || 1);
-  const limit = 6;
+  const limit = 9;
   const skip = (page - 1) * limit;
   const { email } = req.params;
   const status = req.query.status; // Get the status filter from the query string
@@ -74,10 +74,6 @@ route.put("/:id", async (req, res) => {
       { requestStatus },
       { new: true }
     );
-
-    if (updatedRequest.requestStatus === requestStatus) {
-      return res.status(400).json({ message: "Request already updated" });
-    }
 
     if (!updatedRequest) {
       return res.status(404).json({ message: "No request found" });
