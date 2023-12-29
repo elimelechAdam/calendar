@@ -18,10 +18,10 @@ import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 
 const Sidebar = ({ name }) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const toggleTooltip = () => {
-    setTooltipOpen(!tooltipOpen);
-  };
+  // const [tooltipOpen, setTooltipOpen] = useState(false);
+  // const toggleTooltip = () => {
+  //   setTooltipOpen(!tooltipOpen);
+  // };
   return (
     <Card className="min-h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
       <div>
@@ -58,11 +58,16 @@ const Sidebar = ({ name }) => {
           </Link>
           <hr className="my-2 border-blue-gray-50" />
           <Tooltip
-            content={<UserInfo name={name} toggleTooltip={toggleTooltip} />}
+            content={
+              <UserInfo
+                name={name}
+                //  toggleTooltip={toggleTooltip}
+              />
+            }
             placement="left-start"
-            open={tooltipOpen}
+            // open={tooltipOpen}
           >
-            <ListItem className="gap-2" onClick={toggleTooltip}>
+            <ListItem className="gap-2">
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5 gap-2" />
               </ListItemPrefix>
