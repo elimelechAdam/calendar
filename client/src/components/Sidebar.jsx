@@ -19,7 +19,6 @@ import { UserInfo } from "./UserInfo";
 
 const Sidebar = ({ name }) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
-
   const toggleTooltip = () => {
     setTooltipOpen(!tooltipOpen);
   };
