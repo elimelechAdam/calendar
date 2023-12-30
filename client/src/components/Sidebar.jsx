@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
+import { ViewPermissionsModal } from "./ViewPermissionsModal";
 
 const Sidebar = ({ name }) => {
   // const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -88,6 +89,9 @@ const Sidebar = ({ name }) => {
                 className="rounded-full"
               />
             </ListItemSuffix>
+          </ListItem>
+          <ListItem className="gap-2">
+            <ViewPermissionsModal />{" "}
           </ListItem>
         </List>
       </div>
