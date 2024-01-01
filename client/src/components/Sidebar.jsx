@@ -90,9 +90,6 @@ const Sidebar = ({ name }) => {
               />
             </ListItemSuffix>
           </ListItem>
-          <ListItem className="gap-2">
-            <ViewPermissionsModal />{" "}
-          </ListItem>
         </List>
       </div>
 
