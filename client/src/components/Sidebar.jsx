@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
-import { ViewPermissionsModal } from "./ViewPermissionsModal";
 
 const Sidebar = ({ name }) => {
   // const [tooltipOpen, setTooltipOpen] = useState(false);
