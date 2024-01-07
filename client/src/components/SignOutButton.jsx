@@ -31,13 +31,11 @@ const SignOutButton = () => {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 300 }}
-    >
+      whileHover={{ scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 300 }}>
       <Button
         onClick={handleSignOut}
-        className="flex items-center justify-center gap-3 font-bold text-md mb-3 w-full"
-      >
+        className="flex items-center justify-center gap-3 font-bold text-md mb-3 w-full">
         <PowerIcon className="h-5 w-5" />
         התנתק
       </Button>

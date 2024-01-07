@@ -8,9 +8,6 @@ export const UserInfo = ({ name }) => {
   console.log(user);
   return (
     <div className="flex flex-col items-center w-full p-2 my-3">
-      <div className="absolute left-2 top-3">
-        <IoClose className="text-xl cursor-pointer" />
-      </div>
       <Typography color="white" className="text-center">
         שם העובד : {name}
       </Typography>
