@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import SignOutButton from "./SignoutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
-import { ViewPermissionsModal } from "./ViewPermissionsModal";
+import { motion } from "framer-motion";
 
 const Sidebar = ({ name }) => {
   // const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -33,7 +33,8 @@ const Sidebar = ({ name }) => {
           duration: 0.6,
         },
       }}
-      className="max-w-[20rem]">
+      className="max-w-[20rem]"
+    >
       <Card className="min-h-screen w-full p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
         <div>
           <div className="mb-2 flex items-center gap-4 p-4">
@@ -100,29 +101,14 @@ const Sidebar = ({ name }) => {
                 />
               </ListItemSuffix>
             </ListItem>
-          </Tooltip>
-          <ListItem className="gap-2">
-            <ListItemPrefix>
-              <InboxIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            הודעות
-            <ListItemSuffix>
-              <Chip
-                value="0"
-                size="sm"
-                variant="ghost"
-                color="blue-gray"
-                className="rounded-full"
-              />
-            </ListItemSuffix>
-          </ListItem>
-        </List>
-      </div>
-      <div className="">
-        <SignOutButton />
-        <CopyRight />
-      </div>
-    </Card>
+          </List>
+        </div>
+        <div className="">
+          <SignOutButton />
+          <CopyRight />
+        </div>
+      </Card>
+    </motion.div>
   );
 };
 
