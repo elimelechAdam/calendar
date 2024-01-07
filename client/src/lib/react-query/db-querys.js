@@ -8,6 +8,7 @@ import {
   updateRequest,
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
+import { sendMail } from "../utils/msg-api";
 
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
@@ -28,15 +29,29 @@ export const useDbQuerys = () => {
       queryFn: () => getRequests(user.email, activeTab, page),
     });
   };
-
   const createRequestMutation = () => {
     return useMutation({
       mutationKey: ["createRequest"],
       mutationFn: async (params) => {
-        await createRequest(user.email, params);
+        try {
+          await createRequest(user.email, params);
+          await sendMail({
+            subject: "בקשת הרשאה ליומנך",
+            body: "send",
+            to: "nikoniko0@walla.co.il",
+          });
+        } catch (error) {
+          // Handle or log the error
+          console.error(error);
+        }
       },
       onSuccess: () => {
         queryClient.invalidateQueries("requests");
+      },
+      // Optionally, handle errors for the mutation itself
+      onError: (error) => {
+        // Error handling logic
+        console.error(error);
       },
     });
   };

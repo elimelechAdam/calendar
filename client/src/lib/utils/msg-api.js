@@ -92,13 +92,3 @@ export const getAllUsers = async () => {
     throw error;
   }
 };
-
-export const test = async () => {
-  try {
-    const test = await client.api("/me/messages").get();
-    return test;
-  } catch (error) {
-    console.error("Error fetching messages", error);
-    throw error;
-  }
-};
