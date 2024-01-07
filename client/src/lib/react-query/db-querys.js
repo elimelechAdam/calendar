@@ -61,7 +61,6 @@ export const useDbQuerys = () => {
       mutationKey: ["updateRequest"],
       mutationFn: (params) => updateRequest(params.id, params.requestStatus),
       onSuccess: (data) => {
-        //works but no needed for now
         mutate({ email: data.requesterEmail, role: data.requestType });
         console.log("just updated a request");
         queryClient.invalidateQueries("permissions");
@@ -74,7 +73,6 @@ export const useDbQuerys = () => {
       mutationKey: ["createPermission"],
       mutationFn: (params) => createPermission(user.email, params),
       onSuccess: (data) => {
-        //works but no needed for now
         mutate({ email: data.requesterEmail, role: data.requestType });
         console.log("just created a permission");
         queryClient.invalidateQueries("permissions");

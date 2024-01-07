@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Card,
   Typography,
@@ -91,7 +90,6 @@ const Sidebar = ({ name }) => {
           </ListItem>
         </List>
       </div>
-
       <div className="">
         <SignOutButton />
         <CopyRight />

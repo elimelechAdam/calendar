@@ -10,6 +10,18 @@ export const getUserDetails = async () => {
   }
 };
 
+// Will be used in the future
+// To get all users - need admin consent for that
+// export const getUsersDetails = async () => {
+//   try {
+//     let users = await client.api("/users").get();
+//     return users;
+//   } catch (error) {
+//     console.log("getUsersDetails error: ", error);
+//     throw error;
+//   }
+// };
+
 export const grantCalendarPermissions = async ({ email, userId, role }) => {
   const permissions = {
     emailAddress: {
