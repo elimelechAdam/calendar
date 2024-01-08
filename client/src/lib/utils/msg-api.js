@@ -49,7 +49,7 @@ export const sendMail = async (emailDetails) => {
     message: {
       subject: emailDetails.subject,
       body: {
-        contentType: "Text",
+        contentType: "HTML",
         content: emailDetails.body,
       },
       toRecipients: [

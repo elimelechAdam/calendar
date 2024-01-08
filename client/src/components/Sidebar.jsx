@@ -103,6 +103,7 @@ const Sidebar = ({ name }) => {
             </ListItem>
           </List>
         </div>
+
         <div className="">
           <SignOutButton />
           <CopyRight />

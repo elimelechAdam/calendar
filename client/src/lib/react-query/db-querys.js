@@ -9,7 +9,7 @@ import {
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
-
+import emailContent from "../../components/email-template/email";
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
@@ -37,8 +37,8 @@ export const useDbQuerys = () => {
           await createRequest(user.email, params);
           await sendMail({
             subject: "בקשת הרשאה ליומנך",
-            body: "send",
-            to: "nikoniko0@walla.co.il",
+            body: emailContent,
+            to: params.recipientEmail,
           });
         } catch (error) {
           // Handle or log the error
