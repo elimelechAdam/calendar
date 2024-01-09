@@ -3,7 +3,7 @@ export const config = {
   // appId: "61fc7fce-34de-489f-a3ea-8138cbaf26fb",
   appId: "7c1c570a-146e-44cf-b715-ecc470c6436c",
   // redirectUri: "http://localhost:5173", // Local
-  redirectUri: "https://calendar-y87a.vercel.app/", // Production
+  redirectUri: "https://calendar-new.vercel.app/", // Production
   scopes: [
     "user.read",
     // "User.ReadBasic.All",
