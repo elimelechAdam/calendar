@@ -12,7 +12,7 @@ import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
 import { CalendarIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import SignOutButton from "./SignoutButton";
+import SignOutButton from "./SignOutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
