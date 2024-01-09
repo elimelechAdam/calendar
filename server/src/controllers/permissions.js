@@ -114,4 +114,12 @@ route.post("/:email", async (req, res) => {
   }
 });
 
+//test route
+route.post("/test", async (req, res) => {
+  try {
+    res.status(200).send("test");
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 export default route;
