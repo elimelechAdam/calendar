@@ -13,8 +13,10 @@ export const getUserDetails = async () => {
 // Will be used in the future
 // To get all users - need admin consent for that
 export const getUsersDetails = async () => {
+  console.log("getUsersDetails");
   try {
     let users = await client.api("/users").get();
+    console.log(users);
     return users;
   } catch (error) {
     console.log("getUsersDetails error: ", error);
