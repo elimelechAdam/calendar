@@ -4,7 +4,7 @@ module.exports = withMT({
   theme: {
     extend: {},
     backgroundImage: {
-      site: 'url("./src/assets/login-bg.jpg")',
+      site: 'url("/login-bg.jpg")',
     },
   },
   plugins: [],
