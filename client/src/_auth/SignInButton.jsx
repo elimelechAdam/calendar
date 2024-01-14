@@ -1,4 +1,3 @@
-import { useMsal } from "@azure/msal-react";
 import { config } from "../lib/utils/msal-config";
 import { Button } from "@material-tailwind/react";
 

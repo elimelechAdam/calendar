@@ -8,6 +8,7 @@ import { useUserStore } from "./../lib/stores/user-store";
 const RootLayout = () => {
   const { instance } = useMsal();
   const account = instance.getActiveAccount();
+  console.log(account);
   const setUser = useUserStore((state) => state.setUser);
 
   useEffect(() => {

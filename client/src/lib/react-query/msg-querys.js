@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useUserStore } from "../stores/user-store";
-import { grantCalendarPermissions } from "../utils/msg-api";
+import { grantCalendarPermissions, searchUser } from "../utils/msg-api";
 
 export const useMsgQuerys = () => {
   const user = useUserStore((state) => state.user);
@@ -21,7 +21,20 @@ export const useMsgQuerys = () => {
     });
   };
 
+  const getUserDataQuery = (searchTerm) => {
+    return useQuery({
+      queryKey: ["getUserData", searchTerm],
+      enabled: !!searchTerm,
+      queryFn: async () => {
+        const res = await searchUser(searchTerm);
+        console.log(res);
+        if (res) return res;
+      },
+    });
+  };
+
   return {
     grantCalendarPermissionsMutation,
+    getUserDataQuery,
   };
 };

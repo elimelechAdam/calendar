@@ -1,29 +1,5 @@
 import { client } from "../../App";
 
-export const getUserDetails = async () => {
-  try {
-    const user = await client.api("/me").get();
-    return user;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-// Will be used in the future
-// To get all users - need admin consent for that
-export const getUsersDetails = async () => {
-  console.log("getUsersDetails");
-  try {
-    let users = await client.api("/users").get();
-    console.log(users);
-    return users;
-  } catch (error) {
-    console.log("getUsersDetails error: ", error);
-    throw error;
-  }
-};
-
 export const grantCalendarPermissions = async ({ email, userId, role }) => {
   const permissions = {
     emailAddress: {
@@ -96,13 +72,45 @@ export const getCalendar = async () => {
   }
 };
 
-// no permissions yet
-export const getAllUsers = async () => {
+export const getUsersDetails = async () => {
+  console.log("getUsersDetails");
   try {
-    const users = await client.api("/users").get();
+    let users = await client.api("/users").get();
+    console.log(users);
     return users;
   } catch (error) {
-    console.error("Error fetching users", error);
+    console.log("getUsersDetails error: ", error);
+    throw error;
+  }
+};
+export const getAllUsers = async () => {
+  let users = [];
+  try {
+    let response = await client.api("/users").get();
+    users = users.concat(response.value);
+
+    // Loop through each page of users
+    while (response["@odata.nextLink"]) {
+      response = await client.api(response["@odata.nextLink"]).get();
+      users = users.concat(response.value);
+    }
+    console.log(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  }
+
+  return users;
+};
+export const searchUser = async (searchTerm) => {
+  try {
+    //search by email or name
+    // =startswith(displayName,'${searchTerm}') or
+    const response = await client
+      .api(`/users?$filter=startswith(mail,'${searchTerm}')`)
+      .get();
+    return response.value;
+  } catch (error) {
+    console.error("Error searching users:", error);
     throw error;
   }
 };

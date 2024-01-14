@@ -16,7 +16,6 @@ import SignOutButton from "./SignOutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
-import { getUsersDetails } from "../lib/utils/msg-api";
 
 const Sidebar = ({ name }) => {
   // const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -104,7 +103,8 @@ const Sidebar = ({ name }) => {
             </ListItem>
           </List>
         </div>
-        <div className="">
+
+        <div>
           <SignOutButton />
           <CopyRight />
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -9,20 +9,27 @@ import {
   Typography,
   Select,
   Option,
+  Card,
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
 import { useDbQuerys } from "../lib/react-query/db-querys";
+import { useMsgQuerys } from "../lib/react-query/msg-querys";
 
 export function PermissionFormModal({ open, setOpen }) {
   const { createPermissionMutation } = useDbQuerys();
+  const { getUserDataQuery } = useMsgQuerys();
+
+  const [users, setUsers] = useState([]);
+
   const { mutateAsync, isPending } = createPermissionMutation();
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
-    register,
+    setValue,
+    watch,
   } = useForm({
     defaultValues: {
       requesterEmail: "",
@@ -30,6 +37,14 @@ export function PermissionFormModal({ open, setOpen }) {
     },
   });
 
+  const { data: userData, isPending: isUserDataLoading } = getUserDataQuery(
+    watch("requesterEmail")
+  );
+  useEffect(() => {
+    setUsers(userData);
+  }, [userData]);
+
+  console.log(users);
   const handleClose = () => {
     reset();
     setOpen(false);
@@ -67,18 +82,46 @@ export function PermissionFormModal({ open, setOpen }) {
               הכנס את כתובת המייל של המשתמש ולחץ על תן הרשאה
             </Typography>
             <div className="grid gap-4">
-              <Controller
-                name="requesterEmail"
-                control={control}
-                rules={{
-                  required: "שדה חובה",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "אנא הכנס כתובת מייל תקינה",
-                  },
-                }}
-                render={({ field }) => <Input label="כתובת מייל" {...field} />}
-              />
+              <div className="relative">
+                <Controller
+                  name="requesterEmail"
+                  control={control}
+                  rules={{
+                    required: "שדה חובה",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: "אנא הכנס כתובת מייל תקינה",
+                    },
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      label="כתובת מייל"
+                      {...field}
+                      onChange={(e) => {
+                        setValue("requesterEmail", e.target.value);
+                      }}
+                    />
+                  )}
+                />
+                <Card className="absolute z-50 divide-y-2 w-full bg-[#212121] text-white mt-1 max-h-80 overflow-auto">
+                  {users?.map((user) => {
+                    console.log(user);
+                    return (
+                      <div className="px-2 py-3" key={user.id}>
+                        <Typography
+                          onClick={() => {
+                            setValue("requesterEmail", user.mail);
+                            setUsers([]);
+                          }}
+                          className="hover:cursor-pointer"
+                        >
+                          {user?.mail}
+                        </Typography>
+                      </div>
+                    );
+                  })}
+                </Card>
+              </div>
               {errors?.requesterEmail && (
                 <Typography color="red" className="font-normal text-sm">
                   {errors.requesterEmail.message}
