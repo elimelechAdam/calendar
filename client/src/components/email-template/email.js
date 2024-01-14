@@ -116,7 +116,7 @@ const emailContent = `
                         ${body}
                       </p>
                       <a
-                        href="#home"
+                        href="https://calendaralp.vercel.app/"
                         style="
                           background-color: #212121;
                           text-decoration: none !important;
