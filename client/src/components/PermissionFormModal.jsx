@@ -114,7 +114,14 @@ export function PermissionFormModal({ open, setOpen }) {
                             }}
                             className="hover:cursor-pointer"
                           >
-                            {user?.mail}
+                            <div className="flex flex-col">
+                              <p className="text-gray-100 font-medium">
+                                {user?.displayName}
+                              </p>
+                              <p className="text-gray-500 text-sm">
+                                {user?.mail}
+                              </p>
+                            </div>
                           </Typography>
                         </div>
                       );
