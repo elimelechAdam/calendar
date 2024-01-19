@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useUserStore } from "../stores/user-store";
 import { grantCalendarPermissions, searchUser } from "../utils/msg-api";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export const useMsgQuerys = () => {
   const user = useUserStore((state) => state.user);
@@ -22,11 +23,12 @@ export const useMsgQuerys = () => {
   };
 
   const getUserDataQuery = (searchTerm) => {
+    const debouncedSearch = useDebounce(searchTerm, 500);
     return useQuery({
-      queryKey: ["getUserData", searchTerm],
-      enabled: !!searchTerm,
+      queryKey: ["getUserData", debouncedSearch],
+      enabled: !!debouncedSearch,
       queryFn: async () => {
-        const res = await searchUser(searchTerm);
+        const res = await searchUser(debouncedSearch);
         console.log(res);
         if (res) return res;
       },

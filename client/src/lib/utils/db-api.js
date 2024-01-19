@@ -1,5 +1,4 @@
 import axios from "axios";
-import { client } from "../../App";
 //backend url
 // const BASE_URL = "http://localhost:5050/api"; // Local
 const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production

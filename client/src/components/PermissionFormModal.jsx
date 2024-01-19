@@ -19,9 +19,8 @@ import { useMsgQuerys } from "../lib/react-query/msg-querys";
 export function PermissionFormModal({ open, setOpen }) {
   const { createPermissionMutation } = useDbQuerys();
   const { getUserDataQuery } = useMsgQuerys();
-
   const [users, setUsers] = useState([]);
-
+  const [showDropdown, setShowDropdown] = useState(false);
   const { mutateAsync, isPending } = createPermissionMutation();
   const {
     control,
@@ -43,8 +42,6 @@ export function PermissionFormModal({ open, setOpen }) {
   useEffect(() => {
     setUsers(userData);
   }, [userData]);
-
-  console.log(users);
   const handleClose = () => {
     reset();
     setOpen(false);
@@ -99,27 +96,29 @@ export function PermissionFormModal({ open, setOpen }) {
                       {...field}
                       onChange={(e) => {
                         setValue("requesterEmail", e.target.value);
+                        setShowDropdown(true); // Show dropdown when the user is typing
                       }}
                     />
                   )}
                 />
                 <Card className="absolute z-50 divide-y-2 w-full bg-[#212121] text-white mt-1 max-h-80 overflow-auto">
-                  {users?.map((user) => {
-                    console.log(user);
-                    return (
-                      <div className="px-2 py-3" key={user.id}>
-                        <Typography
-                          onClick={() => {
-                            setValue("requesterEmail", user.mail);
-                            setUsers([]);
-                          }}
-                          className="hover:cursor-pointer"
-                        >
-                          {user?.mail}
-                        </Typography>
-                      </div>
-                    );
-                  })}
+                  {showDropdown &&
+                    users?.map((user) => {
+                      return (
+                        <div className="px-2 py-3" key={user.id}>
+                          <Typography
+                            onClick={() => {
+                              setValue("requesterEmail", user.mail);
+                              setUsers([]);
+                              setShowDropdown(false);
+                            }}
+                            className="hover:cursor-pointer"
+                          >
+                            {user?.mail}
+                          </Typography>
+                        </div>
+                      );
+                    })}
                 </Card>
               </div>
               {errors?.requesterEmail && (

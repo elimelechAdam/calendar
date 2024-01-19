@@ -106,7 +106,12 @@ export const searchUser = async (searchTerm) => {
     //search by email or name
     // =startswith(displayName,'${searchTerm}') or
     const response = await client
-      .api(`/users?$filter=startswith(mail,'${searchTerm}')`)
+      // .api(`/users?$filter=startswith(mail,'${searchTerm}')`)
+      .api(
+        `/users?$filter=startswith(mail,'${encodeURIComponent(
+          searchTerm
+        )}') or startswith(displayName,'${encodeURIComponent(searchTerm)}')`
+      )
       .get();
     return response.value;
   } catch (error) {

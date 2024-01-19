@@ -20,6 +20,7 @@ export function RequestFormModal({ open, setOpen }) {
   const { getUserDataQuery } = useMsgQuerys();
 
   const [users, setUsers] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleClose = () => {
     reset();
@@ -95,27 +96,37 @@ export function RequestFormModal({ open, setOpen }) {
                       {...field}
                       onChange={(e) => {
                         setValue("recipientEmail", e.target.value);
+                        setShowDropdown(true); // Show dropdown when the user is typing
                       }}
                     />
                   )}
                 />
                 <Card className="absolute z-50 divide-y-2 w-full bg-[#212121] text-white mt-1 max-h-80 overflow-auto">
-                  {users?.map((user) => {
-                    console.log(user);
-                    return (
-                      <div className="px-2 py-3" key={user.id}>
-                        <Typography
-                          onClick={() => {
-                            setValue("recipientEmail", user.mail);
-                            setUsers([]);
-                          }}
-                          className="hover:cursor-pointer"
-                        >
-                          {user?.mail}
-                        </Typography>
-                      </div>
-                    );
-                  })}
+                  {showDropdown &&
+                    users?.map((user) => {
+                      console.log(user);
+                      return (
+                        <div className="px-2 py-3" key={user.id}>
+                          <Typography
+                            onClick={() => {
+                              setValue("recipientEmail", user.mail);
+                              setUsers([]);
+                              setShowDropdown(false);
+                            }}
+                            className="hover:cursor-pointer"
+                          >
+                            <div className="flex flex-col">
+                              <p className="text-gray-100 font-medium">
+                                {user?.displayName}
+                              </p>
+                              <p className="text-gray-500 text-sm">
+                                {user?.mail}
+                              </p>
+                            </div>
+                          </Typography>
+                        </div>
+                      );
+                    })}
                 </Card>
               </div>
               {errors?.recipientEmail && (
