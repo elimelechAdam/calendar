@@ -15,6 +15,7 @@ const PermissionsDetails = React.memo(({ detail }) => {
     try {
       await mutateAsync({
         id: detail._id,
+        requesterEmail: detail.requesterEmail,
         requestStatus: status,
       });
     } catch (error) {

@@ -15,6 +15,7 @@ export const grantCalendarPermissions = async ({ email, userId, role }) => {
     const result = await client
       .api(`/users/${userId}/calendar/calendarPermissions`)
       .post(permissions);
+    console.log("result: ", result);
     return result;
   } catch (error) {
     console.error("Error granting calendar permissions", error);

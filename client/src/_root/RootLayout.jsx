@@ -15,11 +15,13 @@ const RootLayout = () => {
     if (account) {
       setUser({
         email: account.username,
+        name: account.name,
         id: account.localAccountId,
       });
     }
   }, []);
 
+  const userData = useUserStore((state) => state.user);
   return (
     <>
       {!account ? (
@@ -27,7 +29,9 @@ const RootLayout = () => {
       ) : (
         <AuthenticatedTemplate>
           <section className="flex">
-            <Sidebar name={account.name} />
+            <Sidebar {...userData} />
+            {/* <Sidebar name={account.name} /> */}
+
             <Outlet />
           </section>
         </AuthenticatedTemplate>

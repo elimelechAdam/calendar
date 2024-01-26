@@ -9,7 +9,8 @@ import {
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
-import emailContent from "../../components/email-template/email";
+import getEmailContent from "../../components/email-template/askForPermissionEmail";
+import { changeRequestsTypeToHeb } from "../utils/utils";
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
@@ -35,9 +36,14 @@ export const useDbQuerys = () => {
       mutationFn: async (params) => {
         try {
           await createRequest(user.email, params);
+
           await sendMail({
             subject: "בקשת הרשאה ליומנך",
-            body: emailContent,
+            body: getEmailContent(
+              user.email,
+              user.name,
+              changeRequestsTypeToHeb(params.requestType)
+            ),
             to: params.recipientEmail,
           });
         } catch (error) {
@@ -63,6 +69,7 @@ export const useDbQuerys = () => {
       onSuccess: (data) => {
         mutate({ email: data.requesterEmail, role: data.requestType });
         console.log("just updated a request");
+        console.log("updatePermissionMutation data: ", data);
         queryClient.invalidateQueries("permissions");
       },
     });
@@ -74,7 +81,6 @@ export const useDbQuerys = () => {
       mutationFn: (params) => createPermission(user.email, params),
       onSuccess: (data) => {
         mutate({ email: data.requesterEmail, role: data.requestType });
-        console.log("just created a permission");
         queryClient.invalidateQueries("permissions");
       },
     });

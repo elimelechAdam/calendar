@@ -3,6 +3,8 @@ import {
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { CiViewList } from "react-icons/ci";
+
 import {
   Card,
   CardHeader,
@@ -20,6 +22,7 @@ import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import { motion } from "framer-motion";
+import { AccessToMyCalendar } from "./AccessToMyCalendar";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -35,6 +38,10 @@ function PermissionsTable() {
   const { getPermissionsQuery } = useDbQuerys();
   const [page, setPage] = useState(1);
   const [activeTab, setActiveTab] = useState("all");
+
+  const handleOpenPermissions = () => {
+    setOpenModal(!openModal);
+  };
 
   const { data, isPending, isError } = getPermissionsQuery(activeTab, page);
 
@@ -67,6 +74,14 @@ function PermissionsTable() {
               >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
+              </Button>
+              <Button
+                className="flex items-center gap-3"
+                size="sm"
+                onClick={handleOpenPermissions}
+              >
+                <CiViewList strokeWidth={2} className="h-4 w-4" /> למי יש הרשאה
+                ליומני
               </Button>
             </div>
           </div>
@@ -143,6 +158,7 @@ function PermissionsTable() {
         </CardFooter>
       </Card>
       <PermissionFormModal open={openModal} setOpen={handleOpen} />
+      <AccessToMyCalendar open={openModal} setOpen={handleOpen} />
     </motion.div>
   );
 }

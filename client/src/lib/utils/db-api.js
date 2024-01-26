@@ -1,7 +1,7 @@
 import axios from "axios";
 //backend url
-// const BASE_URL = "http://localhost:5050/api"; // Local
-const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production
+const BASE_URL = "http://localhost:5050/api"; // Local
+// const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production
 
 export const getPermissions = async (email, activeTab, page) => {
   try {
@@ -42,6 +42,7 @@ export const updateRequest = async (id, requestStatus) => {
     const response = await axios.put(`${BASE_URL}/permissions/${id}`, {
       requestStatus,
     });
+    console.log("response", response);
     return response.data;
   } catch (error) {
     console.log(error);

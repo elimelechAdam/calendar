@@ -21,6 +21,7 @@ export function PermissionFormModal({ open, setOpen }) {
   const { getUserDataQuery } = useMsgQuerys();
   const [users, setUsers] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+
   const { mutateAsync, isPending } = createPermissionMutation();
   const {
     control,

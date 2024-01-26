@@ -17,11 +17,7 @@ import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
 
-const Sidebar = ({ name }) => {
-  // const [tooltipOpen, setTooltipOpen] = useState(false);
-  // const toggleTooltip = () => {
-  //   setTooltipOpen(!tooltipOpen);
-  // };
+const Sidebar = ({ email, id, name }) => {
   return (
     <motion.div
       initial={{
@@ -70,12 +66,7 @@ const Sidebar = ({ name }) => {
             </Link>
             <hr className="my-2 border-blue-gray-50" />
             <Tooltip
-              content={
-                <UserInfo
-                  name={name}
-                  //  toggleTooltip={toggleTooltip}
-                />
-              }
+              content={<UserInfo name={name} email={email} />}
               placement="left-start"
               // open={tooltipOpen}
             >
