@@ -11,6 +11,7 @@ import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
 import getEmailContent from "../../components/email-template/askForPermissionEmail";
 import { changeRequestsTypeToHeb } from "../utils/utils";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
@@ -19,16 +20,19 @@ export const useDbQuerys = () => {
   const { mutate } = grantCalendarPermissionsMutation();
 
   const getPermissionsQuery = (activeTab, page, searchTerm) => {
+    const debouncedSearch = useDebounce(searchTerm, 200);
     return useQuery({
-      queryKey: ["permissions", user, activeTab, page, searchTerm],
-      queryFn: () => getPermissions(user.email, activeTab, page, searchTerm),
+      queryKey: ["permissions", user, activeTab, page, debouncedSearch],
+      queryFn: () =>
+        getPermissions(user.email, activeTab, page, debouncedSearch),
     });
   };
 
   const getRequestsQuery = (activeTab, page, searchTerm) => {
+    const debouncedSearch = useDebounce(searchTerm, 200);
     return useQuery({
-      queryKey: ["requests", user, activeTab, page, searchTerm],
-      queryFn: () => getRequests(user.email, activeTab, page, searchTerm),
+      queryKey: ["requests", user, activeTab, page, debouncedSearch],
+      queryFn: () => getRequests(user.email, activeTab, page, debouncedSearch),
     });
   };
   const createRequestMutation = () => {
