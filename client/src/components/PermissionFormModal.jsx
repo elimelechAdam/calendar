@@ -106,7 +106,10 @@ export function PermissionFormModal({ open, setOpen }) {
                   {showDropdown &&
                     users?.map((user) => {
                       return (
-                        <div className="px-2 py-3" key={user.id}>
+                        <div
+                          className="px-2 py-3 hover:bg-blue-gray-900"
+                          key={user.id}
+                        >
                           <Typography
                             onClick={() => {
                               setValue("requesterEmail", user.mail);
