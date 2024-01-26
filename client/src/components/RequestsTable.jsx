@@ -22,6 +22,7 @@ import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import { motion } from "framer-motion";
 import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
+import { TableContainerVariants } from "../lib/utils/variants";
 
 const TABLE_HEAD = [
   "למי נשלחה הבקשה",
@@ -109,7 +110,11 @@ function RequestsTable() {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <motion.tbody
+              initial="hidden"
+              animate="visible"
+              variants={isPending ? "" : TableContainerVariants}
+            >
               {isPending ? (
                 <tr>
                   <td colSpan="the number of columns to span">
@@ -117,9 +122,7 @@ function RequestsTable() {
                   </td>
                 </tr>
               ) : (
-                data.requests.map((detail) => (
-                  <RequestsDetails detail={detail} key={detail._id} />
-                ))
+                <RequestsDetails data={data.requests} />
               )}
               {data?.requests.length === 0 && (
                 <tr>
@@ -130,7 +133,7 @@ function RequestsTable() {
                   </td>
                 </tr>
               )}
-            </tbody>
+            </motion.tbody>
           </table>
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">

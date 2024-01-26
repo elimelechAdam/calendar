@@ -24,6 +24,7 @@ import { motion } from "framer-motion";
 import { AccessToMyCalendar } from "./AccessToMyCalendar";
 import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
+import { TableContainerVariants } from "../lib/utils/variants";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -45,6 +46,8 @@ function PermissionsTable() {
     page,
     searchTerm
   );
+
+  console.log(data);
 
   if (isError) return <div>error...</div>;
   return (
@@ -111,7 +114,11 @@ function PermissionsTable() {
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <motion.tbody
+              initial="hidden"
+              animate="visible"
+              variants={isPending ? "" : TableContainerVariants}
+            >
               {isPending ? (
                 <tr>
                   <td>
@@ -119,9 +126,7 @@ function PermissionsTable() {
                   </td>
                 </tr>
               ) : (
-                data.permissions.map((detail) => (
-                  <PermissionsDetails detail={detail} key={detail._id} />
-                ))
+                <PermissionsDetails data={data.permissions} />
               )}
               {data?.permissions.length === 0 && (
                 <tr>
@@ -132,7 +137,7 @@ function PermissionsTable() {
                   </td>
                 </tr>
               )}
-            </tbody>
+            </motion.tbody>
           </table>
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">

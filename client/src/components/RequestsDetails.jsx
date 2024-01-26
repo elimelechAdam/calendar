@@ -4,58 +4,64 @@ import {
   changeRequestsStatusToHeb,
   changeRequestsTypeToHeb,
 } from "../lib/utils/utils";
+import { motion } from "framer-motion";
+import { TableItemVariants } from "../lib/utils/variants";
 
-const RequestsDetails = React.memo(({ detail }) => {
+const RequestsDetails = React.memo(({ data }) => {
   return (
-    <tr>
-      <td className="p-4 border-b border-blue-gray-50">
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col">
+    <>
+      {data.map((detail) => (
+        <motion.tr key={detail._id} variants={TableItemVariants}>
+          <td className="p-4 border-b border-blue-gray-50">
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col">
+                <Typography
+                  variant="small"
+                  color="blue-gray"
+                  className="font-normal opacity-70"
+                >
+                  {detail.recipientEmail}
+                </Typography>
+              </div>
+            </div>
+          </td>
+          <td className="p-4 border-b border-blue-gray-50">
             <Typography
               variant="small"
               color="blue-gray"
-              className="font-normal opacity-70"
+              className="font-normal flex"
             >
-              {detail.recipientEmail}
+              {changeRequestsTypeToHeb(detail.requestType)}
             </Typography>
-          </div>
-        </div>
-      </td>
-      <td className="p-4 border-b border-blue-gray-50">
-        <Typography
-          variant="small"
-          color="blue-gray"
-          className="font-normal flex"
-        >
-          {changeRequestsTypeToHeb(detail.requestType)}
-        </Typography>
-      </td>
-      <td className="p-4 border-b border-blue-gray-50">
-        <div className="w-max">
-          <Chip
-            variant="ghost"
-            size="sm"
-            value={changeRequestsStatusToHeb(detail.requestStatus)}
-            color={
-              detail.requestStatus === "approved"
-                ? "green"
-                : detail.requestStatus === "denied"
-                  ? "red"
-                  : "blue-gray"
-            }
-          />
-        </div>
-      </td>
-      <td className="p-4 border-b border-blue-gray-50">
-        <Typography
-          variant="small"
-          color="blue-gray"
-          className="font-normal flex"
-        >
-          {new Date(detail.createdAt).toLocaleDateString("he-IL")}
-        </Typography>
-      </td>
-    </tr>
+          </td>
+          <td className="p-4 border-b border-blue-gray-50">
+            <div className="w-max">
+              <Chip
+                variant="ghost"
+                size="sm"
+                value={changeRequestsStatusToHeb(detail.requestStatus)}
+                color={
+                  detail.requestStatus === "approved"
+                    ? "green"
+                    : detail.requestStatus === "denied"
+                      ? "red"
+                      : "blue-gray"
+                }
+              />
+            </div>
+          </td>
+          <td className="p-4 border-b border-blue-gray-50">
+            <Typography
+              variant="small"
+              color="blue-gray"
+              className="font-normal flex"
+            >
+              {new Date(detail.createdAt).toLocaleDateString("he-IL")}
+            </Typography>
+          </td>
+        </motion.tr>
+      ))}
+    </>
   );
 });
 
