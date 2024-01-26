@@ -6,6 +6,7 @@ import {
 } from "../lib/utils/utils";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 import { useDbQuerys } from "../lib/react-query/db-querys";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
 
 const PermissionsDetails = React.memo(({ detail }) => {
   const { updatePermissionMutation } = useDbQuerys();
@@ -97,6 +98,19 @@ const PermissionsDetails = React.memo(({ detail }) => {
                 onClick={() => handleApprove("approved")}
               >
                 <IoIosCheckmarkCircle />
+              </Typography>
+            </Tooltip>
+          </div>
+        )}
+        {detail.requestStatus === "approved" && (
+          <div className="m-max flex gap-2">
+            <Tooltip content="לחץ לשנות הרשאה">
+              <Typography
+                color="blue"
+                className="text-[1.3rem] cursor-pointer"
+                type="button"
+              >
+                <BiSolidMessageSquareEdit />
               </Typography>
             </Tooltip>
           </div>

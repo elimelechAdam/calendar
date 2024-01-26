@@ -7,14 +7,18 @@ route.get("/:email", async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = 9;
   const skip = (page - 1) * limit;
-  const status = req.query.status;
-
   const { email } = req.params;
-  try {
-    let filter = { requesterEmail: email, requestStatus: status };
+  const { status, search } = req.query;
 
-    if (filter.requestStatus === "all") {
-      filter = { requesterEmail: email };
+  try {
+    let filter = { requesterEmail: email };
+
+    if (status && status !== "all") {
+      filter.requestStatus = status;
+    }
+
+    if (search && search.trim() !== "") {
+      filter.recipientEmail = { $regex: search, $options: "i" };
     }
 
     const requests = await Request.find(filter)
@@ -22,7 +26,7 @@ route.get("/:email", async (req, res) => {
       .skip(skip)
       .limit(limit);
 
-    const total = await Request.countDocuments({ requesterEmail: email });
+    const total = await Request.countDocuments(filter);
     const totalPages = Math.ceil(total / limit);
 
     res.status(200).json({
@@ -64,5 +68,19 @@ route.post("/:email", async (req, res) => {
     res.status(409).json({ message: err.message });
   }
 });
+
+// route.get("search/:email", async (req, res) => {
+//   const { email } = req.params;
+//   const { searchQuery } = req.query;
+//   try {
+//     const requests = await Request.find({
+//       requesterEmail: email,
+//       recipientEmail: { $regex: searchQuery, $options: "i" },
+//     });
+//     res.status(200).json(requests);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 export default route;

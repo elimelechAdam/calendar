@@ -30,8 +30,6 @@ const RootLayout = () => {
         <AuthenticatedTemplate>
           <section className="flex">
             <Sidebar {...userData} />
-            {/* <Sidebar name={account.name} /> */}
-
             <Outlet />
           </section>
         </AuthenticatedTemplate>

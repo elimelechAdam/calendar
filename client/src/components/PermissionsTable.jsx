@@ -3,7 +3,6 @@ import {
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { CiViewList } from "react-icons/ci";
 
 import {
   Card,
@@ -14,7 +13,7 @@ import {
   CardBody,
   CardFooter,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PermissionFormModal } from "./PermissionFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import PermissionsDetails from "./PermissionDetails";
@@ -23,6 +22,8 @@ import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import { motion } from "framer-motion";
 import { AccessToMyCalendar } from "./AccessToMyCalendar";
+import useTabWithPagination from "../hooks/useTabWithPagination";
+import TableSearch from "./TableSearch";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -36,14 +37,14 @@ function PermissionsTable() {
   const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => setOpenModal(!openModal);
   const { getPermissionsQuery } = useDbQuerys();
-  const [page, setPage] = useState(1);
-  const [activeTab, setActiveTab] = useState("all");
+  const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const handleOpenPermissions = () => {
-    setOpenModal(!openModal);
-  };
-
-  const { data, isPending, isError } = getPermissionsQuery(activeTab, page);
+  const { data, isPending, isError } = getPermissionsQuery(
+    activeTab,
+    page,
+    searchTerm
+  );
 
   if (isError) return <div>error...</div>;
   return (
@@ -75,25 +76,12 @@ function PermissionsTable() {
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
               </Button>
-              <Button
-                className="flex items-center gap-3"
-                size="sm"
-                onClick={handleOpenPermissions}
-              >
-                <CiViewList strokeWidth={2} className="h-4 w-4" /> למי יש הרשאה
-                ליומני
-              </Button>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <TableTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="w-full md:w-72">
-              <Input
-                label="חפש לפי דואר אלקטרוני"
-                icon={
-                  <MagnifyingGlassIcon className="h-5 w-5 relative right-[15.5rem]" />
-                }
-              />
+              <TableSearch setSearchTerm={setSearchTerm} />
             </div>
           </div>
         </CardHeader>

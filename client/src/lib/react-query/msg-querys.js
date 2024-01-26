@@ -23,7 +23,7 @@ export const useMsgQuerys = () => {
   };
 
   const getUserDataQuery = (searchTerm) => {
-    const debouncedSearch = useDebounce(searchTerm, 500);
+    const debouncedSearch = useDebounce(searchTerm, 200);
     return useQuery({
       queryKey: ["getUserData", debouncedSearch],
       enabled: !!debouncedSearch,

@@ -38,14 +38,19 @@ route.get("/:email", async (req, res) => {
   const limit = 9;
   const skip = (page - 1) * limit;
   const { email } = req.params;
-  const status = req.query.status; // Get the status filter from the query string
-  console.log("status", status);
-  try {
-    let filter = { recipientEmail: email, requestStatus: status };
+  const { status, search } = req.query;
 
-    if (filter.requestStatus === "all") {
-      filter = { recipientEmail: email };
+  try {
+    let filter = { recipientEmail: email };
+
+    if (status !== "all") {
+      filter.requestStatus = status;
     }
+
+    if (search && search.trim() !== "") {
+      filter.requesterEmail = { $regex: search, $options: "i" };
+    }
+
     const permissions = await Request.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
@@ -122,4 +127,24 @@ route.post("/test", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+route.get("/search/:email", async (req, res) => {
+  const { email } = req.params;
+  const { searchQuery } = req.query;
+
+  try {
+    let query = { recipientEmail: email };
+
+    // Ensure searchQuery is a string and not empty
+    if (typeof searchQuery === "string" && searchQuery.trim() !== "") {
+      query.requesterEmail = { $regex: searchQuery, $options: "i" };
+    }
+
+    const requests = await Request.find(query);
+    res.status(200).json(requests);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default route;

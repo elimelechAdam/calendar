@@ -20,6 +20,8 @@ import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import { motion } from "framer-motion";
+import useTabWithPagination from "../hooks/useTabWithPagination";
+import TableSearch from "./TableSearch";
 
 const TABLE_HEAD = [
   "למי נשלחה הבקשה",
@@ -31,9 +33,13 @@ const TABLE_HEAD = [
 function RequestsTable() {
   const [openModal, setOpenModal] = useState(false);
   const { getRequestsQuery } = useDbQuerys();
-  const [activeTab, setActiveTab] = useState("all");
-  const [page, setPage] = useState(1);
-  const { data, isPending, isError } = getRequestsQuery(activeTab, page);
+  const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
+  const [searchTerm, setSearchTerm] = useState("");
+  const { data, isPending, isError } = getRequestsQuery(
+    activeTab,
+    page,
+    searchTerm
+  );
 
   const handleOpen = () => setOpenModal(!openModal);
   // will change later to components
@@ -73,12 +79,7 @@ function RequestsTable() {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <TableTabs setActiveTab={setActiveTab} activeTab={activeTab} />
             <div className="w-full md:w-72">
-              <Input
-                label="חפש לפי דואר אלקטרוני"
-                icon={
-                  <MagnifyingGlassIcon className="h-5 w-5 relative right-[15.5rem]" />
-                }
-              />
+              <TableSearch setSearchTerm={setSearchTerm} />
             </div>
           </div>
         </CardHeader>

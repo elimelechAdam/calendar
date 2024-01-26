@@ -3,23 +3,23 @@ import axios from "axios";
 const BASE_URL = "http://localhost:5050/api"; // Local
 // const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production
 
-export const getPermissions = async (email, activeTab, page) => {
+export const getPermissions = async (email, activeTab, page, searchTerm) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/permissions/${email}?status=${activeTab}&page=${page}`
-    );
+    const queryString = `status=${activeTab}&page=${page}&search=${searchTerm}`;
+    const url = `${BASE_URL}/permissions/${email}?${queryString}`;
+    const response = await axios.get(url);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching permissions:", error);
     throw error;
   }
 };
 
-export const getRequests = async (email, activeTab, page) => {
+export const getRequests = async (email, activeTab, page, searchTerm) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/requests/${email}?status=${activeTab}&page=${page}`
-    );
+    const queryString = `status=${activeTab}&page=${page}&search=${searchTerm}`;
+    const url = `${BASE_URL}/requests/${email}?${queryString}`;
+    const response = await axios.get(url);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -42,7 +42,6 @@ export const updateRequest = async (id, requestStatus) => {
     const response = await axios.put(`${BASE_URL}/permissions/${id}`, {
       requestStatus,
     });
-    console.log("response", response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -60,5 +59,18 @@ export const createPermission = async (email, permission) => {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+};
+
+export const searchPermissions = async (email, searchTerms) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/permissions/search/${email}?search=${searchTerms}`
+    );
+    console.log("response", response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
 };
