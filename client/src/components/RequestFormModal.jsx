@@ -93,6 +93,7 @@ export function RequestFormModal({ open, setOpen }) {
                   render={({ field }) => (
                     <Input
                       label="כתובת מייל"
+                      autoComplete="off"
                       {...field}
                       onChange={(e) => {
                         setValue("recipientEmail", e.target.value);

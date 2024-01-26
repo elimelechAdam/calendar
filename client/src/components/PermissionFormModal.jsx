@@ -94,6 +94,7 @@ export function PermissionFormModal({ open, setOpen }) {
                   render={({ field }) => (
                     <Input
                       label="כתובת מייל"
+                      autoComplete="off"
                       {...field}
                       onChange={(e) => {
                         setValue("requesterEmail", e.target.value);
