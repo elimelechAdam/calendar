@@ -14,7 +14,7 @@ const PermissionsDetails = React.memo(({ data }) => {
   const { updatePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending, isError } = updatePermissionMutation();
 
-  const handleApprove = async (status) => {
+  const handleApprove = async (status, detail) => {
     try {
       await mutateAsync({
         id: detail._id,
@@ -89,7 +89,7 @@ const PermissionsDetails = React.memo(({ data }) => {
                     color="red"
                     className="text-[1.3rem] cursor-pointer"
                     type="button"
-                    onClick={() => handleApprove("denied")}
+                    onClick={() => handleApprove("denied", detail)}
                   >
                     <IoMdCloseCircle />
                   </Typography>
@@ -99,7 +99,7 @@ const PermissionsDetails = React.memo(({ data }) => {
                     color="green"
                     className="text-[1.3rem] cursor-pointer"
                     type="button"
-                    onClick={() => handleApprove("approved")}
+                    onClick={() => handleApprove("approved", detail)}
                   >
                     <IoIosCheckmarkCircle />
                   </Typography>
