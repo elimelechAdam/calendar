@@ -9,8 +9,6 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { TableItemVariants } from "../lib/utils/variants";
-import EditPermissionModal from "./features/EditPermissionModal";
-import { useToggle } from "../hooks/useToggle";
 
 const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
   const { updatePermissionMutation } = useDbQuerys();
