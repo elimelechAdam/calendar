@@ -12,10 +12,9 @@ import { TableItemVariants } from "../lib/utils/variants";
 import EditPermissionModal from "./features/EditPermissionModal";
 import { useToggle } from "../hooks/useToggle";
 
-const PermissionsDetails = React.memo(({ data }) => {
+const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
   const { updatePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending, isError } = updatePermissionMutation();
-  const [toggleModal, setToggleModal] = useToggle();
 
   const handleApprove = async (status) => {
     try {
@@ -114,7 +113,10 @@ const PermissionsDetails = React.memo(({ data }) => {
                 color="blue"
                 className="text-[1.3rem] cursor-pointer"
                 type="button"
-                onClick={() => {}}
+                onClick={() => {
+                  setDetails(data);
+                  handleToggle();
+                }}
               >
                 <BiSolidMessageSquareEdit />
               </Typography>

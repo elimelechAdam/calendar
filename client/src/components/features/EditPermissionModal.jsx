@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 
-const EditPermissionModal = ({ open, handleToggle }) => {
+const EditPermissionModal = ({ open, handleToggle, details }) => {
   return (
     <Dialog open={open} size="sm">
       <form className="flex flex-col relative">
@@ -21,7 +21,7 @@ const EditPermissionModal = ({ open, handleToggle }) => {
         />
         <DialogHeader className="flex flex-col items-start">
           <Typography className="mb-1" variant="h4">
-            שנה הרשאה ל {details?.recipientEmail}
+            שנה הרשאה ל {details?.requesterEmail}
           </Typography>
         </DialogHeader>
         <DialogBody>

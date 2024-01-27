@@ -25,6 +25,7 @@ import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
 import { TableContainerVariants } from "../lib/utils/variants";
 import { useToggle } from "./../hooks/useToggle";
+import EditPermissionModal from "./features/EditPermissionModal";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -36,9 +37,12 @@ const TABLE_HEAD = [
 
 function PermissionsTable() {
   const [toggleModal, setToggleModal] = useToggle();
+  const [toggleEditModal, setToggleEditModal] = useToggle();
   const { getPermissionsQuery } = useDbQuerys();
   const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
   const [searchTerm, setSearchTerm] = useState("");
+  const [details, setDetails] = useState({});
+  console.log(details);
 
   const { data, isPending, isError } = getPermissionsQuery(
     activeTab,
@@ -126,7 +130,12 @@ function PermissionsTable() {
                 </tr>
               ) : (
                 data?.permissions.map((permission) => (
-                  <PermissionsDetails key={permission._id} data={permission} />
+                  <PermissionsDetails
+                    key={permission._id}
+                    data={permission}
+                    handleToggle={setToggleEditModal}
+                    setDetails={setDetails}
+                  />
                 ))
               )}
               {data?.permissions.length === 0 && (
@@ -152,6 +161,11 @@ function PermissionsTable() {
         </CardFooter>
       </Card>
       <PermissionFormModal open={toggleModal} handleToggle={setToggleModal} />
+      <EditPermissionModal
+        open={toggleEditModal}
+        details={details}
+        handleToggle={setToggleEditModal}
+      />
     </motion.div>
   );
 }
