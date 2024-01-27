@@ -78,7 +78,7 @@ export const useDbQuerys = () => {
         }
         if (data.requestStatus === "denied") {
           sendMail({
-            subject: "",
+            subject: "הרשאה ליומנך נדחתה",
             body: declinePermissionEmail(user.email, user.name),
             to: data.requesterEmail,
           });
