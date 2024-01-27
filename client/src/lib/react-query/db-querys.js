@@ -12,6 +12,7 @@ import { sendMail } from "../utils/msg-api";
 import getEmailContent from "../../components/email-template/askForPermissionEmail";
 import { changeRequestsTypeToHeb } from "../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
+import declinePermissionEmail from "../../components/email-template/declinePermissionEmail";
 
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
@@ -74,6 +75,13 @@ export const useDbQuerys = () => {
       onSuccess: (data) => {
         if (data.requestStatus === "approved") {
           mutate({ email: data.requesterEmail, role: data.requestType });
+        }
+        if (data.requestStatus === "denied") {
+          sendMail({
+            subject: "",
+            body: declinePermissionEmail(user.email, user.name),
+            to: data.requesterEmail,
+          });
         }
         queryClient.invalidateQueries("permissions");
       },
