@@ -121,7 +121,9 @@ function RequestsTable() {
                   </td>
                 </tr>
               ) : (
-                <RequestsDetails data={data.requests} />
+                data.requests.map((request) => (
+                  <RequestsDetails key={request._id} data={request} />
+                ))
               )}
               {data?.requests.length === 0 && (
                 <tr>

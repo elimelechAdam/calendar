@@ -11,9 +11,7 @@ import {
 import React from "react";
 import { IoMdClose } from "react-icons/io";
 
-const EditPermissionModal = ({ open, details, handleToggle }) => {
-  console.log(details);
-
+const EditPermissionModal = ({ open, handleToggle }) => {
   return (
     <Dialog open={open} size="sm">
       <form className="flex flex-col relative">

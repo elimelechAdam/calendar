@@ -125,7 +125,9 @@ function PermissionsTable() {
                   </td>
                 </tr>
               ) : (
-                <PermissionsDetails data={data.permissions} />
+                data?.permissions.map((permission) => (
+                  <PermissionsDetails key={permission._id} data={permission} />
+                ))
               )}
               {data?.permissions.length === 0 && (
                 <tr>

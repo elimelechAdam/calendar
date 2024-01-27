@@ -17,11 +17,11 @@ const PermissionsDetails = React.memo(({ data }) => {
   const { mutateAsync, isPending, isError } = updatePermissionMutation();
   const [toggleModal, setToggleModal] = useToggle();
 
-  const handleApprove = async (status, detail) => {
+  const handleApprove = async (status) => {
     try {
       await mutateAsync({
-        id: detail._id,
-        requesterEmail: detail.requesterEmail,
+        id: data._id,
+        requesterEmail: data.requesterEmail,
         requestStatus: status,
       });
     } catch (error) {
@@ -30,105 +30,99 @@ const PermissionsDetails = React.memo(({ data }) => {
   };
   const classes = "p-4 border-b border-blue-gray-50";
   return (
-    <>
-      {data.map((detail) => (
-        <motion.tr key={detail._id} variants={TableItemVariants}>
-          <td className={classes}>
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col">
-                <Typography
-                  variant="small"
-                  color="blue-gray"
-                  className="font-normal opacity-70"
-                >
-                  {detail.requesterEmail}
-                </Typography>
-              </div>
-            </div>
-          </td>
-          <td className={classes}>
+    <motion.tr variants={TableItemVariants}>
+      <td className={classes}>
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col">
             <Typography
               variant="small"
               color="blue-gray"
-              className="font-normal flex"
+              className="font-normal opacity-70"
             >
-              {changeRequestsTypeToHeb(detail.requestType)}
+              {data.requesterEmail}
             </Typography>
-          </td>
-          <td className={classes}>
-            <div className="w-max">
-              <Chip
-                variant="ghost"
-                size="sm"
-                value={changeRequestsStatusToHeb(detail.requestStatus)}
-                color={
-                  detail.requestStatus === "approved"
-                    ? "green"
-                    : detail.requestStatus === "denied"
-                      ? "red"
-                      : "blue-gray"
-                }
-              />
-            </div>
-          </td>
-          <td className={classes}>
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal flex"
-            >
-              {new Date(detail.createdAt).toLocaleDateString("he-IL")}
-            </Typography>
-          </td>
-          <td className={` ${classes} flex gap-3`}>
-            <div>&nbsp;</div>
-            {detail.requestStatus === "approved" ||
-            detail.requestStatus === "denied" ? (
-              ""
-            ) : (
-              <div className="m-max flex gap-2">
-                <Tooltip content="לחץ לדחות בקשה">
-                  <Typography
-                    color="red"
-                    className="text-[1.3rem] cursor-pointer"
-                    type="button"
-                    onClick={() => handleApprove("denied", detail)}
-                  >
-                    <IoMdCloseCircle />
-                  </Typography>
-                </Tooltip>
-                <Tooltip content="לחץ לאשר בקשה">
-                  <Typography
-                    color="green"
-                    className="text-[1.3rem] cursor-pointer"
-                    type="button"
-                    onClick={() => handleApprove("approved", detail)}
-                  >
-                    <IoIosCheckmarkCircle />
-                  </Typography>
-                </Tooltip>
-              </div>
-            )}
-            {detail.requestStatus === "approved" && (
-              <div className="m-max flex gap-2">
-                <Tooltip content="לחץ לשנות הרשאה">
-                  <Typography
-                    color="blue"
-                    className="text-[1.3rem] cursor-pointer"
-                    type="button"
-                    onClick={setToggleModal}
-                  >
-                    <BiSolidMessageSquareEdit />
-                  </Typography>
-                </Tooltip>
-              </div>
-            )}
-          </td>
-        </motion.tr>
-      ))}
-      <EditPermissionModal open={toggleModal} handleToggle={setToggleModal} />
-      // need to fix this don't get the right data
-    </>
+          </div>
+        </div>
+      </td>
+      <td className={classes}>
+        <Typography
+          variant="small"
+          color="blue-gray"
+          className="font-normal flex"
+        >
+          {changeRequestsTypeToHeb(data.requestType)}
+        </Typography>
+      </td>
+      <td className={classes}>
+        <div className="w-max">
+          <Chip
+            variant="ghost"
+            size="sm"
+            value={changeRequestsStatusToHeb(data.requestStatus)}
+            color={
+              data.requestStatus === "approved"
+                ? "green"
+                : data.requestStatus === "denied"
+                  ? "red"
+                  : "blue-gray"
+            }
+          />
+        </div>
+      </td>
+      <td className={classes}>
+        <Typography
+          variant="small"
+          color="blue-gray"
+          className="font-normal flex"
+        >
+          {new Date(data.createdAt).toLocaleDateString("he-IL")}
+        </Typography>
+      </td>
+      <td className={` ${classes} flex gap-3`}>
+        <div>&nbsp;</div>
+        {data.requestStatus === "approved" ||
+        data.requestStatus === "denied" ? (
+          ""
+        ) : (
+          <div className="m-max flex gap-2">
+            <Tooltip content="לחץ לדחות בקשה">
+              <Typography
+                color="red"
+                className="text-[1.3rem] cursor-pointer"
+                type="button"
+                onClick={() => handleApprove("denied")}
+              >
+                <IoMdCloseCircle />
+              </Typography>
+            </Tooltip>
+            <Tooltip content="לחץ לאשר בקשה">
+              <Typography
+                color="green"
+                className="text-[1.3rem] cursor-pointer"
+                type="button"
+                onClick={() => handleApprove("approved")}
+              >
+                <IoIosCheckmarkCircle />
+              </Typography>
+            </Tooltip>
+          </div>
+        )}
+        {data.requestStatus === "approved" && (
+          <div className="m-max flex gap-2">
+            <Tooltip content="לחץ לשנות הרשאה">
+              <Typography
+                color="blue"
+                className="text-[1.3rem] cursor-pointer"
+                type="button"
+                onClick={() => {}}
+              >
+                <BiSolidMessageSquareEdit />
+              </Typography>
+            </Tooltip>
+          </div>
+        )}
+      </td>
+    </motion.tr>
   );
 });
 
