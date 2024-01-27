@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Chip, Tooltip } from "@material-tailwind/react";
 import {
   changeRequestsStatusToHeb,
@@ -9,10 +9,19 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 import { BiSolidMessageSquareEdit } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { TableItemVariants } from "../lib/utils/variants";
+import EditPermissionModal from "./features/EditPermissionModal";
+import { useToggle } from "../hooks/useToggle";
 
 const PermissionsDetails = React.memo(({ data }) => {
   const { updatePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending, isError } = updatePermissionMutation();
+  const [openModal, setOpenModal] = useToggle();
+  const [detail, setDetail] = useState({});
+
+  const handleOpenModal = (detail) => {
+    setDetail({ ...detail });
+    setOpenModal((prev) => !prev);
+  };
 
   const handleApprove = async (status, detail) => {
     try {
@@ -113,6 +122,7 @@ const PermissionsDetails = React.memo(({ data }) => {
                     color="blue"
                     className="text-[1.3rem] cursor-pointer"
                     type="button"
+                    onClick={() => handleOpenModal(detail)}
                   >
                     <BiSolidMessageSquareEdit />
                   </Typography>
@@ -122,6 +132,11 @@ const PermissionsDetails = React.memo(({ data }) => {
           </td>
         </motion.tr>
       ))}
+      <EditPermissionModal
+        open={openModal}
+        details={detail}
+        setOpen={setOpenModal}
+      />
     </>
   );
 });

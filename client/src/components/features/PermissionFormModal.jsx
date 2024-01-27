@@ -13,8 +13,8 @@ import {
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
 import { useForm, Controller, set } from "react-hook-form";
-import { useDbQuerys } from "../lib/react-query/db-querys";
-import { useMsgQuerys } from "../lib/react-query/msg-querys";
+import { useDbQuerys } from "../../lib/react-query/db-querys";
+import { useMsgQuerys } from "../../lib/react-query/msg-querys";
 
 export function PermissionFormModal({ open, setOpen }) {
   const { createPermissionMutation } = useDbQuerys();
@@ -45,7 +45,7 @@ export function PermissionFormModal({ open, setOpen }) {
   }, [userData]);
   const handleClose = () => {
     reset();
-    setOpen(false);
+    setOpen((prev) => !prev);
   };
 
   const submitHandler = async (data) => {

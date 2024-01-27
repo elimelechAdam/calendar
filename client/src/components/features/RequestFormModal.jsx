@@ -13,8 +13,8 @@ import {
 } from "@material-tailwind/react";
 import { IoMdClose } from "react-icons/io";
 import { useForm, Controller } from "react-hook-form";
-import { useDbQuerys } from "../lib/react-query/db-querys";
-import { useMsgQuerys } from "../lib/react-query/msg-querys";
+import { useDbQuerys } from "../../lib/react-query/db-querys";
+import { useMsgQuerys } from "../../lib/react-query/msg-querys";
 
 export function RequestFormModal({ open, setOpen }) {
   const { getUserDataQuery } = useMsgQuerys();

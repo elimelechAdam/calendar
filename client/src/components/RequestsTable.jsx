@@ -13,7 +13,7 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { RequestFormModal } from "./RequestFormModal";
+import { RequestFormModal } from "./features/RequestFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import RequestsDetails from "./RequestsDetails";
 import TablePagination from "./TablePagination";
@@ -23,6 +23,7 @@ import { motion } from "framer-motion";
 import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
 import { TableContainerVariants } from "../lib/utils/variants";
+import { useToggle } from "./../hooks/useToggle";
 
 const TABLE_HEAD = [
   "למי נשלחה הבקשה",
@@ -32,7 +33,7 @@ const TABLE_HEAD = [
 ];
 
 function RequestsTable() {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useToggle();
   const { getRequestsQuery } = useDbQuerys();
   const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,9 +42,6 @@ function RequestsTable() {
     page,
     searchTerm
   );
-
-  const handleOpen = () => setOpenModal(!openModal);
-  // will change later to components
 
   if (isError) return <div>Error</div>;
   return (
@@ -146,7 +144,7 @@ function RequestsTable() {
           />
         </CardFooter>
       </Card>
-      <RequestFormModal open={openModal} setOpen={handleOpen} />
+      <RequestFormModal open={openModal} setOpen={setOpenModal} />
     </motion.div>
   );
 }

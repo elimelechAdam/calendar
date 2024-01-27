@@ -14,17 +14,17 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { PermissionFormModal } from "./PermissionFormModal";
+import { PermissionFormModal } from "./features/PermissionFormModal";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import PermissionsDetails from "./PermissionDetails";
 import TablePagination from "./TablePagination";
 import TableTabs from "./TableTabs";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import { motion } from "framer-motion";
-import { AccessToMyCalendar } from "./AccessToMyCalendar";
 import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
 import { TableContainerVariants } from "../lib/utils/variants";
+import { useToggle } from "./../hooks/useToggle";
 
 const TABLE_HEAD = [
   "למי נשלחה הרשאה",
@@ -35,8 +35,7 @@ const TABLE_HEAD = [
 ];
 
 function PermissionsTable() {
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpen = () => setOpenModal(!openModal);
+  const [openModal, setOpenModal] = useToggle();
   const { getPermissionsQuery } = useDbQuerys();
   const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,7 +73,7 @@ function PermissionsTable() {
               <Button
                 className="flex items-center gap-3"
                 size="sm"
-                onClick={handleOpen}
+                onClick={setOpenModal}
               >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
@@ -150,8 +149,7 @@ function PermissionsTable() {
           />
         </CardFooter>
       </Card>
-      <PermissionFormModal open={openModal} setOpen={handleOpen} />
-      <AccessToMyCalendar open={openModal} setOpen={handleOpen} />
+      <PermissionFormModal open={openModal} setOpen={setOpenModal} />
     </motion.div>
   );
 }
