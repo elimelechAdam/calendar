@@ -24,6 +24,7 @@ import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
 import { TableContainerVariants } from "../lib/utils/variants";
 import { useToggle } from "./../hooks/useToggle";
+import { set } from "react-hook-form";
 
 const TABLE_HEAD = [
   "למי נשלחה הבקשה",
@@ -33,7 +34,7 @@ const TABLE_HEAD = [
 ];
 
 function RequestsTable() {
-  const [openModal, setOpenModal] = useToggle();
+  const [toggleModal, setToggleModal] = useToggle();
   const { getRequestsQuery } = useDbQuerys();
   const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,7 +69,7 @@ function RequestsTable() {
               <Button
                 className="flex items-center gap-3"
                 size="sm"
-                onClick={() => setOpenModal(true)}
+                onClick={setToggleModal}
               >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> בקש הרשאה
                 ליומן
@@ -144,7 +145,7 @@ function RequestsTable() {
           />
         </CardFooter>
       </Card>
-      <RequestFormModal open={openModal} setOpen={setOpenModal} />
+      <RequestFormModal open={toggleModal} handleToggle={setToggleModal} />
     </motion.div>
   );
 }

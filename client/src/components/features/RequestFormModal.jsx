@@ -16,7 +16,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDbQuerys } from "../../lib/react-query/db-querys";
 import { useMsgQuerys } from "../../lib/react-query/msg-querys";
 
-export function RequestFormModal({ open, setOpen }) {
+export function RequestFormModal({ open, handleToggle }) {
   const { getUserDataQuery } = useMsgQuerys();
 
   const [users, setUsers] = useState([]);
@@ -24,7 +24,7 @@ export function RequestFormModal({ open, setOpen }) {
 
   const handleClose = () => {
     reset();
-    setOpen(false);
+    handleToggle();
   };
   const {
     handleSubmit,
@@ -48,10 +48,10 @@ export function RequestFormModal({ open, setOpen }) {
   useEffect(() => {
     setUsers(userData);
   }, [userData]);
+
   const submitHandler = async (data) => {
     try {
       await mutateAsync(data);
-      reset();
       handleClose();
     } catch (error) {
       console.log(error);

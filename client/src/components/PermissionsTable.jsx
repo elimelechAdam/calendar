@@ -35,7 +35,7 @@ const TABLE_HEAD = [
 ];
 
 function PermissionsTable() {
-  const [openModal, setOpenModal] = useToggle();
+  const [toggleModal, setToggleModal] = useToggle();
   const { getPermissionsQuery } = useDbQuerys();
   const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,7 +73,7 @@ function PermissionsTable() {
               <Button
                 className="flex items-center gap-3"
                 size="sm"
-                onClick={setOpenModal}
+                onClick={setToggleModal}
               >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> תן הרשאה
                 ליומנך
@@ -149,7 +149,7 @@ function PermissionsTable() {
           />
         </CardFooter>
       </Card>
-      <PermissionFormModal open={openModal} setOpen={setOpenModal} />
+      <PermissionFormModal open={toggleModal} handleToggle={setToggleModal} />
     </motion.div>
   );
 }

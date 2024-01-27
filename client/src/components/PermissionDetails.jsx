@@ -15,12 +15,12 @@ import { useToggle } from "../hooks/useToggle";
 const PermissionsDetails = React.memo(({ data }) => {
   const { updatePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending, isError } = updatePermissionMutation();
-  const [openModal, setOpenModal] = useToggle();
+  const [toggleModal, setToggleModal] = useToggle();
   const [detail, setDetail] = useState({});
 
   const handleOpenModal = (detail) => {
     setDetail({ ...detail });
-    setOpenModal((prev) => !prev);
+    setToggleModal();
   };
 
   const handleApprove = async (status, detail) => {
@@ -133,9 +133,9 @@ const PermissionsDetails = React.memo(({ data }) => {
         </motion.tr>
       ))}
       <EditPermissionModal
-        open={openModal}
+        open={toggleModal}
         details={detail}
-        setOpen={setOpenModal}
+        handleToggle={setToggleModal}
       />
     </>
   );
