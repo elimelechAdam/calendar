@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Chip, Tooltip } from "@material-tailwind/react";
 import {
   changeRequestsStatusToHeb,
@@ -16,12 +16,6 @@ const PermissionsDetails = React.memo(({ data }) => {
   const { updatePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending, isError } = updatePermissionMutation();
   const [toggleModal, setToggleModal] = useToggle();
-  const [detail, setDetail] = useState({});
-
-  const handleOpenModal = (detail) => {
-    setDetail({ ...detail });
-    setToggleModal();
-  };
 
   const handleApprove = async (status, detail) => {
     try {
@@ -122,7 +116,7 @@ const PermissionsDetails = React.memo(({ data }) => {
                     color="blue"
                     className="text-[1.3rem] cursor-pointer"
                     type="button"
-                    onClick={() => handleOpenModal(detail)}
+                    onClick={() => {}}
                   >
                     <BiSolidMessageSquareEdit />
                   </Typography>
@@ -132,11 +126,12 @@ const PermissionsDetails = React.memo(({ data }) => {
           </td>
         </motion.tr>
       ))}
-      <EditPermissionModal
+      {/* <EditPermissionModal
         open={toggleModal}
         details={detail}
         handleToggle={setToggleModal}
-      />
+      /> */}
+      // need to fix this don't get the right data
     </>
   );
 });
