@@ -42,7 +42,6 @@ function PermissionsTable() {
   const { activeTab, setActiveTab, page, setPage } = useTabWithPagination();
   const [searchTerm, setSearchTerm] = useState("");
   const [details, setDetails] = useState({});
-  console.log(details);
 
   const { data, isPending, isError } = getPermissionsQuery(
     activeTab,

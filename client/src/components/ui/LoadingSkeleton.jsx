@@ -7,35 +7,35 @@ export const LoadingSkeleton = () => {
       <Typography
         as="div"
         variant="h1"
-        className="mb-4 h-3 w-80 rounded-full bg-gray-300"
+        className="mb-4 h-3 w-[340px] rounded-full bg-gray-300"
       >
         &nbsp;
       </Typography>
       <Typography
         as="div"
         variant="paragraph"
-        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+        className="mb-2 h-2 w-[370px] rounded-full bg-gray-300"
       >
         &nbsp;
       </Typography>
       <Typography
         as="div"
         variant="paragraph"
-        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+        className="mb-2 h-2 w-[380px] rounded-full bg-gray-300"
       >
         &nbsp;
       </Typography>
       <Typography
         as="div"
         variant="paragraph"
-        className="mb-2 h-2 w-96 rounded-full bg-gray-300"
+        className="mb-2 h-2 w-[390px] rounded-full bg-gray-300"
       >
         &nbsp;
       </Typography>
       <Typography
         as="div"
         variant="paragraph"
-        className="mb-2 h-2 w-80 rounded-full bg-gray-300"
+        className="mb-2 h-2 w-[400px] rounded-full bg-gray-300"
       >
         &nbsp;
       </Typography>

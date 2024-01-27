@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Chip, Tooltip } from "@material-tailwind/react";
+import {
+  Typography,
+  Chip,
+  Tooltip,
+  IconButton,
+} from "@material-tailwind/react";
 import {
   changeRequestsStatusToHeb,
   changeRequestsTypeToHeb,
@@ -83,41 +88,45 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
         ) : (
           <div className="m-max flex gap-2">
             <Tooltip content="לחץ לדחות בקשה">
-              <Typography
+              <IconButton
                 color="red"
-                className="text-[1.3rem] cursor-pointer"
                 type="button"
+                className="text-[1.3rem]"
+                variant="text"
+                size="sm"
                 onClick={() => handleApprove("denied")}
               >
                 <IoMdCloseCircle />
-              </Typography>
+              </IconButton>
             </Tooltip>
             <Tooltip content="לחץ לאשר בקשה">
-              <Typography
+              <IconButton
                 color="green"
-                className="text-[1.3rem] cursor-pointer"
-                type="button"
+                size="sm"
+                variant="text"
+                className="text-[1.3rem]"
                 onClick={() => handleApprove("approved")}
               >
                 <IoIosCheckmarkCircle />
-              </Typography>
+              </IconButton>
             </Tooltip>
           </div>
         )}
         {data.requestStatus === "approved" && (
           <div className="m-max flex gap-2">
             <Tooltip content="לחץ לשנות הרשאה">
-              <Typography
+              <IconButton
+                size="sm"
                 color="blue"
-                className="text-[1.3rem] cursor-pointer"
-                type="button"
+                variant="text"
+                className="text-[1.3rem]"
                 onClick={() => {
                   setDetails(data);
                   handleToggle();
                 }}
               >
                 <BiSolidMessageSquareEdit />
-              </Typography>
+              </IconButton>
             </Tooltip>
           </div>
         )}
