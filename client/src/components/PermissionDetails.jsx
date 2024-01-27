@@ -116,7 +116,7 @@ const PermissionsDetails = React.memo(({ data }) => {
                     color="blue"
                     className="text-[1.3rem] cursor-pointer"
                     type="button"
-                    onClick={() => {}}
+                    onClick={setToggleModal}
                   >
                     <BiSolidMessageSquareEdit />
                   </Typography>
@@ -126,11 +126,7 @@ const PermissionsDetails = React.memo(({ data }) => {
           </td>
         </motion.tr>
       ))}
-      {/* <EditPermissionModal
-        open={toggleModal}
-        details={detail}
-        handleToggle={setToggleModal}
-      /> */}
+      <EditPermissionModal open={toggleModal} handleToggle={setToggleModal} />
       // need to fix this don't get the right data
     </>
   );
