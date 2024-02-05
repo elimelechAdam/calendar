@@ -12,6 +12,7 @@ import React from "react";
 import { IoMdClose } from "react-icons/io";
 
 const EditPermissionModal = ({ open, handleToggle, details }) => {
+  const textTop = "עדכן הרשאה למשתמש -  ";
   return (
     <Dialog open={open} size="sm">
       <form className="flex flex-col relative">
@@ -21,21 +22,19 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
         />
         <DialogHeader className="flex flex-col items-start">
           <Typography className="mb-1" variant="h4">
-            שנה הרשאה ל {details?.requesterEmail}
+            {textTop + details?.requesterEmail}
           </Typography>
         </DialogHeader>
         <DialogBody>
-          <Typography className="mb-6 -mt-7 " color="gray" variant="lead">
-            משהו רשום פה
-          </Typography>
-          <Select label="משהו רשום פה" variant="static">
+          <Select label="עדכן סוג הרשאה" variant="static">
+            <Option value="freeBusyRead">בטל הרשאות</Option>
             <Option value="read">קריאה בלבד</Option>
             <Option value="write">קריאה ועריכה</Option>
           </Select>
         </DialogBody>
         <DialogFooter className="space-x-2 justify-start">
           <Button variant="text" color="gray" type="button">
-            משהו
+            עדכן
           </Button>
           <Button variant="text" color="gray" onClick={handleToggle}>
             ביטול
