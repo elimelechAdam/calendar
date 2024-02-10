@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Request } from "../models/calendar.js";
+import { Notification } from "../models/calendar.js";
 
 const route = Router();
 
@@ -81,6 +82,15 @@ route.post("/:email", async (req, res) => {
         requestStatus: "approved",
       });
     }
+
+    const notification = new Notification({
+      recipientEmail: requesterEmail,
+      senderEmail: email,
+      requestType,
+      message: "Permission approved",
+    });
+    
+    await notification.save();
 
     const savedPermission = await permission.save();
     res.status(201).json(savedPermission);

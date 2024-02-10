@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Request } from "../models/calendar.js";
+import { Notification } from "../models/calendar.js";
 
 const route = Router();
 
@@ -62,7 +63,19 @@ route.post("/:email", async (req, res) => {
       recipientEmail,
       requestType,
     });
+
     await newRequest.save();
+
+    if (newRequest) {
+      const newNotification = new Notification({
+        recipientEmail,
+        senderEmail: email,
+        requestType,
+        message: "You have a new request",
+      });
+      await newNotification.save();
+    }
+
     res.status(201).json(newRequest);
   } catch (err) {
     res.status(409).json({ message: err.message });

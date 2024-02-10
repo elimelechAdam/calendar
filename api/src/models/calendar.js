@@ -22,6 +22,14 @@ const requestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const notificationSchema = new mongoose.Schema({
+  recipientEmail: String,
+  senderEmail: String,
+  requestType: String,
+  message: String,
+  read: { type: Boolean, default: false },
+});
+
 // const permissionSchema = new mongoose.Schema({
 //   grantorEmail: String,
 //   recipientEmail: String,
@@ -35,4 +43,5 @@ const requestSchema = new mongoose.Schema(
 // });
 
 // export const Permission = mongoose.model("Permission", permissionSchema);
+export const Notification = mongoose.model("Notification", notificationSchema);
 export const Request = mongoose.model("Request", requestSchema);
