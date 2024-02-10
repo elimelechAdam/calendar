@@ -24,6 +24,7 @@ export const grantCalendarPermissions = async ({ email, userId, role }) => {
 };
 
 export const sendMail = async (emailDetails) => {
+  console.log(emailDetails);
   const email = {
     message: {
       subject: emailDetails.subject,
