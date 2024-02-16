@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import permissions from "./src/controllers/permissions.js";
 import requests from "./src/controllers/requests.js";
+import notification from "./src/controllers/notification.js";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/permissions", permissions);
 app.use("/api/requests", requests);
-app.use("/api/notifications");
+app.use("/api/notifications", notification);
 
 const PORT = process.env.PORT || 5000;
 
