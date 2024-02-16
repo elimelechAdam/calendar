@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Dialog,
   Select,
@@ -11,18 +10,58 @@ import {
 } from "@material-tailwind/react";
 import { useForm, Controller } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
+import { useDbQuerys } from "../../lib/react-query/db-querys";
+import { useEffect } from "react";
 
 const EditPermissionModal = ({ open, handleToggle, details }) => {
-  const { control, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
-
   const textTop = "עדכן הרשאה למשתמש -  ";
+  const { ownerUpdatePermissionMutation } = useDbQuerys();
+  const { mutateAsync, isPending, isError } = ownerUpdatePermissionMutation();
+
+  const handleClose = () => {
+    reset();
+    handleToggle();
+  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      id: details?._id,
+      recipientEmail: details?.recipientEmail,
+      requestType: details?.requestType,
+      requestType: details?.requestType,
+    },
+  });
+  useEffect(() => {
+    if (details) {
+      // Use setValue for each form field that needs to be updated.
+      setValue("id", details._id);
+      setValue("recipientEmail", details.recipientEmail);
+      setValue("requestType", details.requestType);
+      setValue("requestType", details.requestType);
+    }
+  }, [details, setValue]);
+
+  const submitHandler = async (data) => {
+    console.log("submitHandler", data);
+    try {
+      await mutateAsync(data);
+      handleClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Dialog open={open} size="sm">
       <form
         className="flex flex-col relative"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitHandler)}
       >
         <IoMdClose
           onClick={handleToggle}
@@ -35,7 +74,7 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
         </DialogHeader>
         <DialogBody>
           <Controller
-            name="permissionType"
+            name="requestType"
             control={control}
             defaultValue=""
             render={({ field }) => (

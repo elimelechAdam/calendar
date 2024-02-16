@@ -49,8 +49,6 @@ function PermissionsTable() {
     searchTerm
   );
 
-  console.log(data);
-
   if (isError) return <div>error...</div>;
   return (
     <motion.div

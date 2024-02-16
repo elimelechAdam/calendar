@@ -44,6 +44,7 @@ route.get("/:email", async (req, res) => {
 route.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { requestStatus } = req.body;
+  console.log(requestStatus);
   try {
     const updatedRequest = await Request.findByIdAndUpdate(
       id,
@@ -89,7 +90,7 @@ route.post("/:email", async (req, res) => {
       requestType,
       message: "Permission approved",
     });
-    
+
     await notification.save();
 
     const savedPermission = await permission.save();

@@ -6,6 +6,7 @@ import {
   getPermissions,
   getRequests,
   updateRequest,
+  updatePermission,
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
@@ -87,6 +88,25 @@ export const useDbQuerys = () => {
       },
     });
   };
+  const ownerUpdatePermissionMutation = () => {
+    return useMutation({
+      mutationKey: ["updatePermission"],
+      mutationFn: (params) => updatePermission(params),
+      onSuccess: (data) => {
+        // mutate({ email: data.requesterEmail, role: data.requestType });
+        console.log("ownerUpdatePermissionMutation", data);
+
+        // if (data.requestStatus === "denied") {
+        //   sendMail({
+        //     subject: "הרשאה ליומנך נדחתה",
+        //     body: declinePermissionEmail(user.email, user.name),
+        //     to: data.requesterEmail,
+        //   });
+        // }
+        queryClient.invalidateQueries("permissions");
+      },
+    });
+  };
 
   const createPermissionMutation = () => {
     return useMutation({
@@ -105,5 +125,6 @@ export const useDbQuerys = () => {
     createRequestMutation,
     updatePermissionMutation,
     createPermissionMutation,
+    ownerUpdatePermissionMutation,
   };
 };

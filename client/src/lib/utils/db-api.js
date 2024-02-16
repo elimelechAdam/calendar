@@ -37,7 +37,9 @@ export const createRequest = async (email, request) => {
   }
 };
 
+// Should change to update permission
 export const updateRequest = async (id, requestStatus) => {
+  console.log(id, requestStatus);
   try {
     const response = await axios.put(`${BASE_URL}/permissions/${id}`, {
       requestStatus,
@@ -47,6 +49,11 @@ export const updateRequest = async (id, requestStatus) => {
     console.log(error);
     throw error;
   }
+};
+
+// Should change to update request
+export const updatePermission = async (params) => {
+  console.log(params);
 };
 
 export const createPermission = async (email, permission) => {
