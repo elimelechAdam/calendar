@@ -93,8 +93,12 @@ export const useDbQuerys = () => {
       mutationKey: ["updatePermission"],
       mutationFn: (params) => updatePermission(params),
       onSuccess: (data) => {
-        // mutate({ email: data.requesterEmail, role: data.requestType });
-        console.log("ownerUpdatePermissionMutation", data);
+        if (data.requestStatus === "approved") {
+          // mutate({ email: data.requesterEmail, role: data.requestType });
+          console.log("ownerUpdatePermissionMutation", data);
+        } else {
+          console.log("Error occured...");
+        }
 
         // if (data.requestStatus === "denied") {
         //   sendMail({

@@ -54,6 +54,7 @@ export const updateRequest = async (id, requestStatus) => {
 // Should change to update request
 export const updatePermission = async (params) => {
   console.log(params);
+  return params;
 };
 
 export const createPermission = async (email, permission) => {

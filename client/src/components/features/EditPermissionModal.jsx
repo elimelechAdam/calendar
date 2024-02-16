@@ -19,22 +19,26 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
   const { mutateAsync, isPending, isError } = ownerUpdatePermissionMutation();
 
   const handleClose = () => {
-    reset();
-    handleToggle();
+    reset({
+      id: details?._id,
+      recipientEmail: details?.recipientEmail,
+      requestType: details?.requestType,
+      requestStatus: details?.requestStatus,
+    });
+    handleToggle(); // Assuming this toggles the visibility of the modal
   };
   const {
     handleSubmit,
     control,
     reset,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       id: details?._id,
       recipientEmail: details?.recipientEmail,
       requestType: details?.requestType,
-      requestType: details?.requestType,
+      requestStatus: details?.requestStatus,
     },
   });
   useEffect(() => {
@@ -43,7 +47,7 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
       setValue("id", details._id);
       setValue("recipientEmail", details.recipientEmail);
       setValue("requestType", details.requestType);
-      setValue("requestType", details.requestType);
+      setValue("requestStatus", details.requestStatus);
     }
   }, [details, setValue]);
 
