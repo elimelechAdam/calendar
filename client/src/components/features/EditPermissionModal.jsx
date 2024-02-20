@@ -25,7 +25,7 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
       requestType: details?.requestType,
       requestStatus: details?.requestStatus,
     });
-    handleToggle(); // Assuming this toggles the visibility of the modal
+    handleToggle();
   };
   const {
     handleSubmit,

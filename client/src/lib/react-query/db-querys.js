@@ -99,14 +99,6 @@ export const useDbQuerys = () => {
         } else {
           console.log("Error occured...");
         }
-
-        // if (data.requestStatus === "denied") {
-        //   sendMail({
-        //     subject: "הרשאה ליומנך נדחתה",
-        //     body: declinePermissionEmail(user.email, user.name),
-        //     to: data.requesterEmail,
-        //   });
-        // }
         queryClient.invalidateQueries("permissions");
       },
     });
