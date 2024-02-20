@@ -95,9 +95,8 @@ export const useDbQuerys = () => {
       onSuccess: (data) => {
         if (data.requestStatus === "approved") {
           // mutate({ email: data.requesterEmail, role: data.requestType });
+          console.log("approved");
           console.log("ownerUpdatePermissionMutation", data);
-        } else {
-          console.log("Error occured...");
         }
         queryClient.invalidateQueries("permissions");
       },

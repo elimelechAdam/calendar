@@ -21,7 +21,7 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
   const handleClose = () => {
     reset({
       id: details?._id,
-      recipientEmail: details?.recipientEmail,
+      requesterEmail: details?.requesterEmail,
       requestType: details?.requestType,
       requestStatus: details?.requestStatus,
     });
@@ -36,7 +36,7 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
   } = useForm({
     defaultValues: {
       id: details?._id,
-      recipientEmail: details?.recipientEmail,
+      requesterEmail: details?.requesterEmail,
       requestType: details?.requestType,
       requestStatus: details?.requestStatus,
     },
@@ -45,7 +45,7 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
     if (details) {
       // Use setValue for each form field that needs to be updated.
       setValue("id", details._id);
-      setValue("recipientEmail", details.recipientEmail);
+      setValue("requesterEmail", details.requesterEmail);
       setValue("requestType", details.requestType);
       setValue("requestStatus", details.requestStatus);
     }
