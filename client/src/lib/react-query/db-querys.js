@@ -88,15 +88,14 @@ export const useDbQuerys = () => {
       },
     });
   };
+
   const ownerUpdatePermissionMutation = () => {
     return useMutation({
       mutationKey: ["updatePermission"],
-      mutationFn: (params) => updatePermission(params),
+      mutationFn: (params) => updatePermission(params.id, params.requestType),
       onSuccess: (data) => {
         if (data.requestStatus === "approved") {
-          // mutate({ email: data.requesterEmail, role: data.requestType });
-          console.log("approved");
-          console.log("ownerUpdatePermissionMutation", data);
+          mutate({ email: data.requesterEmail, role: data.requestType });
         }
         queryClient.invalidateQueries("permissions");
       },

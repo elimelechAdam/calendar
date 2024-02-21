@@ -39,7 +39,7 @@ export const createRequest = async (email, request) => {
 
 // Should change to update permission
 export const updateRequest = async (id, requestStatus) => {
-  console.log(id, requestStatus);
+  console.log(`requestStatus`, requestStatus);
   try {
     const response = await axios.put(`${BASE_URL}/permissions/${id}`, {
       requestStatus,
@@ -52,9 +52,17 @@ export const updateRequest = async (id, requestStatus) => {
 };
 
 // Should change to update request
-export const updatePermission = async (params) => {
-  console.log(params);
-  return params;
+export const updatePermission = async (id, requestType) => {
+  console.log("updatePermission", id, requestType);
+  try {
+    const response = await axios.put(`${BASE_URL}/permissions/calendar/${id}`, {
+      requestType,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 export const createPermission = async (email, permission) => {
