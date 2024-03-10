@@ -1,8 +1,4 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html", "continue": true }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
