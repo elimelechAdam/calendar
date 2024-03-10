@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,200;1,400&family=Rubik:wght@300;400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,200;1,400&family=Rubik:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -10,7 +9,7 @@
   margin: 0;
   box-sizing: border-box;
   direction: rtl;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 body {
@@ -30,4 +29,18 @@ body {
 
 .fadeInTable {
   animation: fadeInFromUp 1s ease-out;
+}
+
+.card-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.card-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6; /* Tailwind gray-100 */
+}
+
+.card-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #212121;
+  border-radius: 20px;
+  border: 3px solid #f3f4f6; /* Tailwind gray-100 */
 }

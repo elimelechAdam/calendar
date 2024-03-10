@@ -32,26 +32,28 @@ export function WhoHasPermissions() {
   };
   const userPermissionsMap = data?.map((item) => {
     return (
-      <ListItem key={item.id} className="flex justify-between">
-        <div>
-          <Typography variant="h6" color="blue-gray">
-            {item.emailAddress.name} - {item.emailAddress.address}
-          </Typography>
+      <>
+        <ListItem key={item.id} className="flex justify-between">
+          <div>
+            <Typography variant="h6" color="blue-gray">
+              {item.emailAddress.name} - {item.emailAddress.address}
+            </Typography>
 
-          <Typography variant="small" color="gray" className="font-normal">
-            {changeRequestsTypeToHeb(item.role)}
-          </Typography>
-        </div>
+            <Typography variant="small" color="gray" className="font-normal">
+              {changeRequestsTypeToHeb(item.role)}
+            </Typography>
+          </div>
 
-        <Button
-          size="sm"
-          onClick={(e) => {
-            handleRemovePermission(item.id, item.emailAddress.address);
-          }}
-        >
-          הסר הרשאה
-        </Button>
-      </ListItem>
+          <Button
+            size="sm"
+            onClick={(e) => {
+              handleRemovePermission(item.id, item.emailAddress.address);
+            }}
+          >
+            הסר הרשאה
+          </Button>
+        </ListItem>
+      </>
     );
   });
   return (
@@ -68,7 +70,7 @@ export function WhoHasPermissions() {
             />
           </div>
         </DialogHeader>
-        <Card className="w-full">
+        <Card className="w-full max-h-96 overflow-auto card-scrollbar">
           <List>{data ? userPermissionsMap : <h1>No data found...</h1>}</List>
         </Card>
       </Dialog>
