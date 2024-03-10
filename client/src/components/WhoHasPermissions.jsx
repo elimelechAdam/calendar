@@ -54,7 +54,6 @@ export function WhoHasPermissions() {
       </ListItem>
     );
   });
-
   return (
     <>
       <Button onClick={handleOpen}>צפה למי יש הרשאות ליומני</Button>
