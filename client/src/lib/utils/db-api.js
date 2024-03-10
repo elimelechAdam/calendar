@@ -1,7 +1,7 @@
 import axios from "axios";
 //backend url
-// const BASE_URL = "http://localhost:5050/api"; // Local
-const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production
+const BASE_URL = "http://localhost:5050/api"; // Local
+// const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production
 
 export const getPermissions = async (email, activeTab, page, searchTerm) => {
   try {
@@ -71,6 +71,17 @@ export const createPermission = async (email, permission) => {
       `${BASE_URL}/permissions/${email}`,
       permission
     );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const removePermission = async (id) => {
+  console.log("removePermission", id);
+  try {
+    const response = await axios.delete(`${BASE_URL}/permissions/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -7,6 +7,7 @@ import {
   getRequests,
   updateRequest,
   updatePermission,
+  removePermission,
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
@@ -94,9 +95,23 @@ export const useDbQuerys = () => {
       mutationKey: ["updatePermission"],
       mutationFn: (params) => updatePermission(params.id, params.requestType),
       onSuccess: (data) => {
+        console.log(data);
         if (data.requestStatus === "approved") {
           mutate({ email: data.requesterEmail, role: data.requestType });
         }
+        queryClient.invalidateQueries("permissions");
+      },
+    });
+  };
+  const removePermissionMutation = () => {
+    return useMutation({
+      mutationKey: ["removePermission"],
+      mutationFn: (params) => removePermission(params.id),
+      onSuccess: (data) => {
+        console.log("data", data);
+        // remove from mongodb
+
+        mutate({ email: data.address, role: "freeBusyRead" });
         queryClient.invalidateQueries("permissions");
       },
     });
@@ -120,5 +135,6 @@ export const useDbQuerys = () => {
     updatePermissionMutation,
     createPermissionMutation,
     ownerUpdatePermissionMutation,
+    removePermissionMutation,
   };
 };

@@ -16,6 +16,7 @@ import SignOutButton from "./SignOutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
+import { WhoHasPermissions } from "./WhoHasPermissions";
 
 const Sidebar = ({ email, id, name }) => {
   return (
@@ -92,6 +93,7 @@ const Sidebar = ({ email, id, name }) => {
                 />
               </ListItemSuffix>
             </ListItem>
+            <WhoHasPermissions />
           </List>
         </div>
 

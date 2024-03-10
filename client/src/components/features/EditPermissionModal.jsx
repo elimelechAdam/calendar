@@ -83,7 +83,6 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
             defaultValue=""
             render={({ field }) => (
               <Select label="עדכן סוג הרשאה" variant="static" {...field}>
-                <Option value="freeBusyRead">בטל הרשאות</Option>
                 <Option value="read">קריאה בלבד</Option>
                 <Option value="write">קריאה ועריכה</Option>
               </Select>
