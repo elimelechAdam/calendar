@@ -146,4 +146,18 @@ route.get("/search/:email", async (req, res) => {
   }
 });
 
+route.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedRequest = await Request.findByIdAndDelete(id);
+    if (!deletedRequest) {
+      return res.status(404).json({ message: "No request found" });
+    }
+
+    res.status(200).json({ message: "Request deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 export default route;

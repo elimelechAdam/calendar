@@ -106,10 +106,9 @@ export const useDbQuerys = () => {
   const removePermissionMutation = () => {
     return useMutation({
       mutationKey: ["removePermission"],
-      mutationFn: (params) => removePermission(params.id),
+      mutationFn: (params) => params,
       onSuccess: (data) => {
-        console.log("data", data);
-        // remove from mongodb
+        //Need to remove from mongo as well
 
         mutate({ email: data.address, role: "freeBusyRead" });
         queryClient.invalidateQueries("permissions");

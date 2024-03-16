@@ -11,14 +11,20 @@ import {
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
 import { CalendarIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { FiArrowLeft } from "react-icons/fi";
+import { MdManageAccounts } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import SignOutButton from "./SignOutButton";
 import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
 import { WhoHasPermissions } from "./WhoHasPermissions";
+import { useState } from "react";
 
 const Sidebar = ({ email, id, name }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
+
   return (
     <motion.div
       initial={{
@@ -65,11 +71,24 @@ const Sidebar = ({ email, id, name }) => {
                 </Typography>
               </ListItem>
             </Link>
+
+            <ListItem
+              className="flex justify-between text-lg"
+              onClick={handleOpen}
+            >
+              <ListItemPrefix>
+                <MdManageAccounts className="h-5 w-5" />
+              </ListItemPrefix>
+              למי יש גישות ליומני
+              <Typography color="blue-gray" className=" font-normal">
+                <FiArrowLeft />
+              </Typography>
+            </ListItem>
+
             <hr className="my-2 border-blue-gray-50" />
             <Tooltip
               content={<UserInfo name={name} email={email} />}
               placement="left-start"
-              // open={tooltipOpen}
             >
               <ListItem className="gap-2">
                 <ListItemPrefix>
@@ -93,10 +112,10 @@ const Sidebar = ({ email, id, name }) => {
                 />
               </ListItemSuffix>
             </ListItem>
-            <WhoHasPermissions />
+            <WhoHasPermissions open={open} handleOpen={handleOpen} />
           </List>
         </div>
-
+        {/* Footer of the sidebar */}
         <div>
           <SignOutButton />
           <CopyRight />
