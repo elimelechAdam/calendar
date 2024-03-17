@@ -78,10 +78,13 @@ export const createPermission = async (email, permission) => {
   }
 };
 
-export const removePermission = async (id) => {
-  console.log("removePermission", id);
+export const removePermission = async ({ address, email }) => {
+  console.log("removePermission", address, email);
   try {
-    const response = await axios.delete(`${BASE_URL}/permissions/${id}`);
+    const response = await axios.delete(`${BASE_URL}/permissions/delete`, {
+      data: { owner: email, permissionGranted: address }, // Wrap the email in a data object
+    });
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -99,5 +102,15 @@ export const searchPermissions = async (email, searchTerms) => {
   } catch (err) {
     console.log(err);
     throw err;
+  }
+};
+
+export const getNotifications = async (email) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/notifications/${email}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

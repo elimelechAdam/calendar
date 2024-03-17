@@ -8,3 +8,9 @@ export const changeRequestsStatusToHeb = (status) => {
   else if (status === "approved") return "אושר";
   else return "לא אושר";
 };
+
+export const changeNotificationTypeToHeb = (type) => {
+  if (type === "You have a new request") return "יש לך בקשה חדשה";
+  else if (type === "Permission denied") return "בקשה נדחתה";
+  else return "הבקשה אושרה";
+};

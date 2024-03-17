@@ -8,6 +8,7 @@ import {
   updateRequest,
   updatePermission,
   removePermission,
+  getNotifications,
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
@@ -106,11 +107,12 @@ export const useDbQuerys = () => {
   const removePermissionMutation = () => {
     return useMutation({
       mutationKey: ["removePermission"],
-      mutationFn: (params) => params,
+      mutationFn: (data) => removePermission(data),
       onSuccess: (data) => {
+        console.log(data);
         //Need to remove from mongo as well
 
-        mutate({ email: data.address, role: "freeBusyRead" });
+        mutate({ email: data, role: "freeBusyRead" });
         queryClient.invalidateQueries("permissions");
       },
     });
@@ -127,6 +129,13 @@ export const useDbQuerys = () => {
     });
   };
 
+  const getNotificationsQuery = () => {
+    return useQuery({
+      queryKey: ["notifications", user],
+      queryFn: () => getNotifications(user.email),
+    });
+  };
+
   return {
     getPermissionsQuery,
     getRequestsQuery,
@@ -135,5 +144,6 @@ export const useDbQuerys = () => {
     createPermissionMutation,
     ownerUpdatePermissionMutation,
     removePermissionMutation,
+    getNotificationsQuery,
   };
 };

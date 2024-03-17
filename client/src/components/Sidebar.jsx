@@ -20,10 +20,12 @@ import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
 import { WhoHasPermissions } from "./WhoHasPermissions";
 import { useState } from "react";
+import { Notifications } from "./Notifications";
 
 const Sidebar = ({ email, id, name }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  // getNotificationsQuery
 
   return (
     <motion.div
@@ -97,7 +99,7 @@ const Sidebar = ({ email, id, name }) => {
                 היי {name}
               </ListItem>
             </Tooltip>
-            <ListItem className="gap-2">
+            <ListItem className="gap-2" onClick={handleOpen}>
               <ListItemPrefix>
                 <InboxIcon className="h-5 w-5" />
               </ListItemPrefix>
@@ -112,7 +114,12 @@ const Sidebar = ({ email, id, name }) => {
                 />
               </ListItemSuffix>
             </ListItem>
-            <WhoHasPermissions open={open} handleOpen={handleOpen} />
+            <WhoHasPermissions
+              open={open}
+              handleOpen={handleOpen}
+              email={email}
+            />
+            <Notifications open={open} handleOpen={handleOpen} email={email} />
           </List>
         </div>
         {/* Footer of the sidebar */}

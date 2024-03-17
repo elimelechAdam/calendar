@@ -13,16 +13,16 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 import { changeRequestsTypeToHeb } from "./../lib/utils/utils";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-export function WhoHasPermissions({ handleOpen, open }) {
+export function WhoHasPermissions({ handleOpen, open, email }) {
   const { getUserPermissionQuery } = useMsgQuerys();
   const { data, isLoading, isError } = getUserPermissionQuery();
   const { removePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending } = removePermissionMutation();
 
-  const handleRemovePermission = async (id, address) => {
-    console.log(id, address);
+  const handleRemovePermission = async (address) => {
+    console.log(address, email);
     try {
-      await mutateAsync({ id, address });
+      await mutateAsync({ address, email });
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +43,7 @@ export function WhoHasPermissions({ handleOpen, open }) {
         <Button
           size="sm"
           onClick={(e) => {
-            handleRemovePermission(item.id, item.emailAddress.address);
+            handleRemovePermission(item.emailAddress.address);
           }}
         >
           הסר הרשאה

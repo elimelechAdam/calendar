@@ -146,16 +146,20 @@ route.get("/search/:email", async (req, res) => {
   }
 });
 
-route.delete("/:id", async (req, res) => {
-  const { id } = req.params;
+route.delete("/delete", async (req, res) => {
+  const { owner, permissionGranted } = req.body;
+  console.log("req.body", req.body);
 
   try {
-    const deletedRequest = await Request.findByIdAndDelete(id);
+    const deletedRequest = await Request.deleteMany({
+      requesterEmail: permissionGranted,
+      recipientEmail: owner,
+    });
     if (!deletedRequest) {
       return res.status(404).json({ message: "No request found" });
     }
 
-    res.status(200).json({ message: "Request deleted successfully" });
+    res.status(200).json(permissionGranted);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
