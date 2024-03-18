@@ -9,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { MdCancel, MdOutlineCheckCircleOutline } from "react-icons/md";
 import {
   changeNotificationTypeToHeb,
   changeRequestsTypeToHeb,
@@ -34,7 +35,7 @@ export const Notifications = ({ handleOpen, open, email }) => {
         <Card className="w-full max-h-96 overflow-auto card-scrollbar">
           {/* // recipientEmail: 'adamtest@wxg.co.il', senderEmail: 'AdamE@wxg.co.il', requestType: 'write', message: 'You have a new request' */}
           <List>
-            {data?.map((notification, index) => (
+            {data?.map((notification) => (
               <ListItem key={notification._id} className="flex justify-between">
                 <div>
                   <Typography variant="h6" color="blue-gray">
@@ -50,33 +51,17 @@ export const Notifications = ({ handleOpen, open, email }) => {
                   </Typography>
                 </div>
                 {notification.message === "You have a new request" ? (
-                  <div className="flex">
-                    <Button
-                      size="sm"
-                      onClick={(e) => {
-                        handleOpen();
-                      }}
-                    >
-                      אשר בקשה
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={(e) => {
-                        handleOpen();
-                      }}
-                    >
-                      דחה בקשה
-                    </Button>
+                  <div className="flex gap-2">
+                    <MdCancel size={25} />
+                    <MdOutlineCheckCircleOutline size={25} />
                   </div>
                 ) : (
-                  <Button
-                    size="sm"
+                  <MdCancel
+                    size={25}
                     onClick={(e) => {
                       handleRemovePermission(item.emailAddress.address);
                     }}
-                  >
-                    הסר
-                  </Button>
+                  />
                 )}
               </ListItem>
             ))}

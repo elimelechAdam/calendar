@@ -21,10 +21,15 @@ import { motion } from "framer-motion";
 import { WhoHasPermissions } from "./WhoHasPermissions";
 import { useState } from "react";
 import { Notifications } from "./Notifications";
+import { useToggle } from "../hooks/useToggle";
 
 const Sidebar = ({ email, id, name }) => {
-  const [open, setOpen] = useState(false);
+  const [toggleModal, setToggleModal] = useToggle();
+  const [open, setOpen] = useToggle();
+
+  // const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const handleOpenUse = () => setToggleModal(!toggleModal);
   // getNotificationsQuery
 
   return (
@@ -76,7 +81,7 @@ const Sidebar = ({ email, id, name }) => {
 
             <ListItem
               className="flex justify-between text-lg"
-              onClick={handleOpen}
+              onClick={handleOpenUse}
             >
               <ListItemPrefix>
                 <MdManageAccounts className="h-5 w-5" />
@@ -115,8 +120,8 @@ const Sidebar = ({ email, id, name }) => {
               </ListItemSuffix>
             </ListItem>
             <WhoHasPermissions
-              open={open}
-              handleOpen={handleOpen}
+              open={toggleModal}
+              handleOpen={setToggleModal}
               email={email}
             />
             <Notifications open={open} handleOpen={handleOpen} email={email} />

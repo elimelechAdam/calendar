@@ -12,6 +12,7 @@ import { useMsgQuerys } from "../lib/react-query/msg-querys";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import { changeRequestsTypeToHeb } from "./../lib/utils/utils";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 
 export function WhoHasPermissions({ handleOpen, open, email }) {
   const { getUserPermissionQuery } = useMsgQuerys();
@@ -39,15 +40,12 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
             {changeRequestsTypeToHeb(item.role)}
           </Typography>
         </div>
-
-        <Button
-          size="sm"
+        <MdCancel
+          size={25}
           onClick={(e) => {
             handleRemovePermission(item.emailAddress.address);
           }}
-        >
-          הסר הרשאה
-        </Button>
+        />
       </ListItem>
     );
   });
