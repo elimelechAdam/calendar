@@ -33,15 +33,14 @@ const RootLayout = () => {
           <section className="flex relative">
             <Sidebar {...userData} />
             <Outlet />
-            {alert && (
-              <Alert
-                color={color}
-                className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1/5 text-center"
-                size="sm"
-              >
-                {content}
-              </Alert>
-            )}
+            <Alert
+              color={color}
+              className="absolute bottom-2 left-3 w-1/6 text-center"
+              size="sm"
+              open={alert}
+            >
+              {content}
+            </Alert>
           </section>
         </AuthenticatedTemplate>
       )}

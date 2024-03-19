@@ -67,7 +67,11 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
             <LoadingSkeleton />
           ) : (
             <List>
-              {!data?.length ? <h1>Not found</h1> : userPermissionsMap}
+              {!data?.length ? (
+                <Typography>לא נמצאו תוצאות</Typography>
+              ) : (
+                userPermissionsMap
+              )}
             </List>
           )}
         </Card>
