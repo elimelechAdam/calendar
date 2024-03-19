@@ -47,8 +47,8 @@ export const client = Client.initWithMiddleware({ authProvider });
 function App() {
   return (
     <MsalProvider instance={msalInstance}>
-      {/* <NotSuppMobileMessage /> */}
-      <main className="xl:block">
+      <NotSuppMobileMessage />
+      <main className="hidden xl:block">
         <ErrorBoundary fallback={<Error />}>
           <Routes>
             <Route element={<AuthLayout />}>
@@ -61,7 +61,7 @@ function App() {
             </Route>
           </Routes>
         </ErrorBoundary>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </main>
     </MsalProvider>
   );

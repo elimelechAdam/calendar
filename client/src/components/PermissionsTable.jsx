@@ -50,6 +50,7 @@ function PermissionsTable() {
   );
 
   if (isError) return <div>error...</div>;
+
   return (
     <motion.div
       initial={{
