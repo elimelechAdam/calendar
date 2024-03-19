@@ -57,7 +57,7 @@ export const getCalendarPermissions = async () => {
       .api("/me/calendar/calendarPermissions")
       .get();
 
-    const filteredPermissions = await permissions.value.filter(
+    const filteredPermissions = permissions.value.filter(
       (permission) => permission.role !== "freeBusyRead"
     );
 

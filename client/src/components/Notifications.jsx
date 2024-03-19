@@ -14,6 +14,7 @@ import {
   changeRequestsTypeToHeb,
 } from "../lib/utils/utils";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
+import React from "react";
 
 export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
   return (

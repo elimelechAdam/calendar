@@ -109,15 +109,13 @@ const Sidebar = ({ email, id, name }) => {
                 </ListItemPrefix>
                 התראות
                 <ListItemSuffix>
-                  {data && data?.length > 0 && (
-                    <Chip
-                      value={data?.length}
-                      size="sm"
-                      variant="ghost"
-                      color="blue-gray"
-                      className="rounded-full"
-                    />
-                  )}
+                  <Chip
+                    value={data?.length || 0}
+                    size="sm"
+                    variant="ghost"
+                    color="blue-gray"
+                    className="rounded-full"
+                  />
                 </ListItemSuffix>
               </ListItem>
             </List>
