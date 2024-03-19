@@ -16,12 +16,14 @@ import getEmailContent from "../../components/email-template/askForPermissionEma
 import { changeRequestsTypeToHeb } from "../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
 import declinePermissionEmail from "../../components/email-template/declinePermissionEmail";
+import { useAlertStore } from "../stores/alert-store";
 
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
   const { grantCalendarPermissionsMutation } = useMsgQuerys();
   const { mutate } = grantCalendarPermissionsMutation();
+  const alert = useAlertStore((state) => state.setAlert);
 
   const getPermissionsQuery = (activeTab, page, searchTerm) => {
     const debouncedSearch = useDebounce(searchTerm, 200);
@@ -62,18 +64,22 @@ export const useDbQuerys = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries("requests");
+        alert({
+          content: "בקשת הרשאה נשלחה בהצלחה",
+          color: "green",
+        });
       },
-      // Optionally, handle errors for the mutation itself
       onError: (error) => {
-        // Error handling logic
-        console.error(error);
+        alert({
+          content: "שגיאה בשליחת בקשת הרשאה",
+          color: "red",
+        });
       },
     });
   };
 
   const updatePermissionMutation = () => {
     return useMutation({
-      mutationKey: ["updateRequest"],
       mutationFn: (params) => updateRequest(params.id, params.requestStatus),
       onSuccess: (data) => {
         if (data.requestStatus === "approved") {
@@ -86,45 +92,87 @@ export const useDbQuerys = () => {
             to: data.requesterEmail,
           });
         }
+        alert({
+          content: "בקשת הרשאה עודכנה בהצלחה",
+          color: "green",
+        });
         queryClient.invalidateQueries("permissions");
+      },
+      onError: () => {
+        alert({
+          content: "שגיאה בעדכון הרשאה",
+          color: "red",
+        });
       },
     });
   };
 
   const ownerUpdatePermissionMutation = () => {
     return useMutation({
-      mutationKey: ["updatePermission"],
       mutationFn: (params) => updatePermission(params.id, params.requestType),
       onSuccess: (data) => {
         console.log(data);
         if (data.requestStatus === "approved") {
           mutate({ email: data.requesterEmail, role: data.requestType });
+          alert({
+            content: "הרשאה שונתה בהצלחה",
+            color: "green",
+          });
         }
+
         queryClient.invalidateQueries("permissions");
+      },
+      onError: () => {
+        alert({
+          content: "שגיאה בעדכון הרשאה",
+          color: "red",
+        });
       },
     });
   };
+
   const removePermissionMutation = () => {
     return useMutation({
-      mutationKey: ["removePermission"],
       mutationFn: (data) => removePermission(data),
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         console.log(data);
-        //Need to remove from mongo as well
 
         mutate({ email: data, role: "freeBusyRead" });
-        queryClient.invalidateQueries("permissions");
+        queryClient.invalidateQueries({
+          queryKey: ["permissions"],
+        });
+        alert({
+          content: "הרשאה הוסרה בהצלחה",
+          color: "green",
+        });
+      },
+      onError: () => {
+        alert({
+          content: "שגיאה בהסרת הרשאה",
+          color: "red",
+        });
       },
     });
   };
 
   const createPermissionMutation = () => {
     return useMutation({
-      mutationKey: ["createPermission"],
       mutationFn: (params) => createPermission(user.email, params),
       onSuccess: (data) => {
         mutate({ email: data.requesterEmail, role: data.requestType });
-        queryClient.invalidateQueries("permissions");
+        queryClient.invalidateQueries({
+          queryKey: ["permissions"],
+        });
+        alert({
+          content: "הרשאה נוצרה בהצלחה",
+          color: "green",
+        });
+      },
+      onError: () => {
+        alert({
+          content: "שגיאה ביצירת הרשאה",
+          color: "red",
+        });
       },
     });
   };

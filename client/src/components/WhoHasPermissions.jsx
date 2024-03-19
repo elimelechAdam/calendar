@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Dialog,
@@ -13,15 +13,15 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 import { changeRequestsTypeToHeb } from "./../lib/utils/utils";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
+import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
 export function WhoHasPermissions({ handleOpen, open, email }) {
-  const { getUserPermissionQuery } = useMsgQuerys();
-  const { data, isLoading, isError } = getUserPermissionQuery();
+  const { data, isLoading, isError } =
+    useMsgQuerys().getUserPermissionQuery(open);
   const { removePermissionMutation } = useDbQuerys();
   const { mutateAsync, isPending } = removePermissionMutation();
 
   const handleRemovePermission = async (address) => {
-    console.log(address, email);
     try {
       await mutateAsync({ address, email });
     } catch (error) {
@@ -63,7 +63,13 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
           </div>
         </DialogHeader>
         <Card className="w-full max-h-96 overflow-auto card-scrollbar">
-          <List>{data ? userPermissionsMap : <h1>No data found...</h1>}</List>
+          {isLoading ? (
+            <LoadingSkeleton />
+          ) : (
+            <List>
+              {!data?.length ? <h1>Not found</h1> : userPermissionsMap}
+            </List>
+          )}
         </Card>
       </Dialog>
     </>

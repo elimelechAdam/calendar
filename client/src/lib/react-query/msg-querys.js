@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../stores/user-store";
 import {
   getCalendarPermissions,
@@ -6,9 +6,11 @@ import {
   searchUser,
 } from "../utils/msg-api";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useAlertStore } from "../stores/alert-store";
 
 export const useMsgQuerys = () => {
   const user = useUserStore((state) => state.user);
+  const queryClient = useQueryClient();
 
   const grantCalendarPermissionsMutation = () => {
     return useMutation({
@@ -21,7 +23,7 @@ export const useMsgQuerys = () => {
         });
       },
       onSuccess: () => {
-        console.log("success");
+        queryClient.invalidateQueries(["getUserPermission", user]);
       },
     });
   };
@@ -33,21 +35,16 @@ export const useMsgQuerys = () => {
       enabled: !!debouncedSearch,
       queryFn: async () => {
         const res = await searchUser(debouncedSearch);
-        console.log(res);
         if (res) return res;
       },
     });
   };
 
-  const getUserPermissionQuery = () => {
+  const getUserPermissionQuery = (enabled = false) => {
     return useQuery({
-      queryKey: ["getUserPermission"],
-      // enabled: !!debouncedSearch,
-      queryFn: async () => {
-        const res = await getCalendarPermissions();
-        console.log(res);
-        if (res) return res;
-      },
+      queryKey: ["getUserPermission", user],
+      queryFn: () => getCalendarPermissions(),
+      enabled,
     });
   };
 

@@ -14,6 +14,9 @@ import { Client } from "@microsoft/microsoft-graph-client";
 import Permissions from "./_root/pages/Permissions";
 import Requests from "./_root/pages/Requests";
 import NotSuppMobileMessage from "./components/ui/NotSuppMobileMessage";
+import ErrorBoundary from "./components/global/ErrorBoundary";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Error from "./components/global/Error";
 
 export const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -44,18 +47,21 @@ export const client = Client.initWithMiddleware({ authProvider });
 function App() {
   return (
     <MsalProvider instance={msalInstance}>
-      <NotSuppMobileMessage />
-      <main className="hidden xl:block">
-        <Routes>
-          <Route element={<AuthLayout />}>
-            <Route index element={<SignInButton />} />
-          </Route>
+      {/* <NotSuppMobileMessage /> */}
+      <main className="xl:block">
+        <ErrorBoundary fallback={<Error />}>
+          <Routes>
+            <Route element={<AuthLayout />}>
+              <Route index element={<SignInButton />} />
+            </Route>
 
-          <Route element={<RootLayout />}>
-            <Route path="/permissions" element={<Permissions />} />
-            <Route path="/requests" element={<Requests />} />
-          </Route>
-        </Routes>
+            <Route element={<RootLayout />}>
+              <Route path="/permissions" element={<Permissions />} />
+              <Route path="/requests" element={<Requests />} />
+            </Route>
+          </Routes>
+        </ErrorBoundary>
+        <ReactQueryDevtools initialIsOpen={false} />
       </main>
     </MsalProvider>
   );

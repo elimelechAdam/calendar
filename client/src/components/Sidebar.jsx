@@ -22,118 +22,126 @@ import { WhoHasPermissions } from "./WhoHasPermissions";
 import { useState } from "react";
 import { Notifications } from "./Notifications";
 import { useToggle } from "../hooks/useToggle";
+import { useDbQuerys } from "../lib/react-query/db-querys";
 
 const Sidebar = ({ email, id, name }) => {
   const [toggleModal, setToggleModal] = useToggle();
   const [open, setOpen] = useToggle();
-
-  // const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
-  const handleOpenUse = () => setToggleModal(!toggleModal);
-  // getNotificationsQuery
+  const { getNotificationsQuery } = useDbQuerys();
+  const { data, isPending, isError } = getNotificationsQuery();
 
   return (
-    <motion.div
-      initial={{
-        x: 1000,
-      }}
-      animate={{
-        x: 0,
-        transition: {
-          duration: 0.6,
-        },
-      }}
-      className="max-w-[20rem]"
-    >
-      <Card className="min-h-screen w-full p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
-        <div>
-          <div className="mb-2 flex items-center gap-4 p-4">
-            <img
-              src="https://www.wxg.co.il/app/themes/wxg/resources/assets/images/WXG-Logo.png"
-              alt="brand"
-              className="h-full"
-            />
-          </div>
-          <List>
-            <Link to="requests">
-              <ListItem className="flex justify-between text-lg">
-                <ListItemPrefix>
-                  <CalendarIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                בקשות שלי ליומנים
-                <Typography color="blue-gray" className="font-normal">
-                  <FiArrowLeft />
-                </Typography>
-              </ListItem>
-            </Link>
+    <>
+      <motion.div
+        initial={{
+          x: 1000,
+        }}
+        animate={{
+          x: 0,
+          transition: {
+            duration: 0.6,
+          },
+        }}
+        className="max-w-[20rem]"
+      >
+        <Card className="min-h-screen w-full p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
+          <div>
+            <div className="mb-2 flex items-center gap-4 p-4">
+              <img
+                src="https://www.wxg.co.il/app/themes/wxg/resources/assets/images/WXG-Logo.png"
+                alt="brand"
+                className="h-full"
+              />
+            </div>
+            <List>
+              <Link to="requests">
+                <ListItem className="flex justify-between text-lg">
+                  <ListItemPrefix>
+                    <CalendarIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  בקשות שלי ליומנים
+                  <Typography color="blue-gray" className="font-normal">
+                    <FiArrowLeft />
+                  </Typography>
+                </ListItem>
+              </Link>
 
-            <Link to="permissions">
-              <ListItem className="flex justify-between text-lg">
+              <Link to="permissions">
+                <ListItem className="flex justify-between text-lg">
+                  <ListItemPrefix>
+                    <CalendarDaysIcon className="h-5 w-5" />
+                  </ListItemPrefix>
+                  בקשות ליומן שלי
+                  <Typography color="blue-gray" className=" font-normal">
+                    <FiArrowLeft />
+                  </Typography>
+                </ListItem>
+              </Link>
+
+              <ListItem
+                className="flex justify-between text-lg"
+                onClick={setToggleModal}
+              >
                 <ListItemPrefix>
-                  <CalendarDaysIcon className="h-5 w-5" />
+                  <MdManageAccounts className="h-5 w-5" />
                 </ListItemPrefix>
-                בקשות ליומן שלי
+                למי יש גישות ליומני
                 <Typography color="blue-gray" className=" font-normal">
                   <FiArrowLeft />
                 </Typography>
               </ListItem>
-            </Link>
 
-            <ListItem
-              className="flex justify-between text-lg"
-              onClick={handleOpenUse}
-            >
-              <ListItemPrefix>
-                <MdManageAccounts className="h-5 w-5" />
-              </ListItemPrefix>
-              למי יש גישות ליומני
-              <Typography color="blue-gray" className=" font-normal">
-                <FiArrowLeft />
-              </Typography>
-            </ListItem>
-
-            <hr className="my-2 border-blue-gray-50" />
-            <Tooltip
-              content={<UserInfo name={name} email={email} />}
-              placement="left-start"
-            >
-              <ListItem className="gap-2">
+              <hr className="my-2 border-blue-gray-50" />
+              <Tooltip
+                content={<UserInfo name={name} email={email} />}
+                placement="left-start"
+              >
+                <ListItem className="gap-2">
+                  <ListItemPrefix>
+                    <UserCircleIcon className="h-5 w-5 gap-2" />
+                  </ListItemPrefix>
+                  היי {name}
+                </ListItem>
+              </Tooltip>
+              <ListItem className="gap-2" onClick={setOpen}>
                 <ListItemPrefix>
-                  <UserCircleIcon className="h-5 w-5 gap-2" />
+                  <InboxIcon className="h-5 w-5" />
                 </ListItemPrefix>
-                היי {name}
+                התראות
+                <ListItemSuffix>
+                  {data && data?.length > 0 && (
+                    <Chip
+                      value={data?.length}
+                      size="sm"
+                      variant="ghost"
+                      color="blue-gray"
+                      className="rounded-full"
+                    />
+                  )}
+                </ListItemSuffix>
               </ListItem>
-            </Tooltip>
-            <ListItem className="gap-2" onClick={handleOpen}>
-              <ListItemPrefix>
-                <InboxIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              הודעות
-              <ListItemSuffix>
-                <Chip
-                  value="0"
-                  size="sm"
-                  variant="ghost"
-                  color="blue-gray"
-                  className="rounded-full"
-                />
-              </ListItemSuffix>
-            </ListItem>
-            <WhoHasPermissions
-              open={toggleModal}
-              handleOpen={setToggleModal}
-              email={email}
-            />
-            <Notifications open={open} handleOpen={handleOpen} email={email} />
-          </List>
-        </div>
-        {/* Footer of the sidebar */}
-        <div>
-          <SignOutButton />
-          <CopyRight />
-        </div>
-      </Card>
-    </motion.div>
+            </List>
+          </div>
+          {/* Footer of the sidebar */}
+          <div>
+            <SignOutButton />
+            <CopyRight />
+          </div>
+        </Card>
+      </motion.div>
+      <WhoHasPermissions
+        open={toggleModal}
+        handleOpen={setToggleModal}
+        email={email}
+      />
+      <Notifications
+        isPending={isPending}
+        open={open}
+        handleOpen={setOpen}
+        email={email}
+        data={data}
+      />
+    </>
   );
 };
 
