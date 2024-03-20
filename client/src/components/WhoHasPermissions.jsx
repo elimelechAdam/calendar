@@ -75,7 +75,12 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
           ) : (
             <List>
               {!data?.length ? (
-                <Typography>לא נמצאו תוצאות</Typography>
+                <Typography
+                  variant="h6"
+                  color="blue-gray"
+                  className="text-center">
+                  אין הרשאות
+                </Typography>
               ) : (
                 userPermissionsMap
               )}
