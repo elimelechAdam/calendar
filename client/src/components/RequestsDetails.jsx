@@ -3,6 +3,7 @@ import { Typography, Chip } from "@material-tailwind/react";
 import {
   changeRequestsStatusToHeb,
   changeRequestsTypeToHeb,
+  dateFormat,
 } from "../lib/utils/utils";
 import { motion } from "framer-motion";
 import { TableItemVariants } from "../lib/utils/variants";
@@ -16,8 +17,7 @@ const RequestsDetails = React.memo(({ data }) => {
             <Typography
               variant="small"
               color="blue-gray"
-              className="font-normal opacity-70"
-            >
+              className="font-normal opacity-70">
               {data.recipientEmail}
             </Typography>
           </div>
@@ -27,8 +27,7 @@ const RequestsDetails = React.memo(({ data }) => {
         <Typography
           variant="small"
           color="blue-gray"
-          className="font-normal flex"
-        >
+          className="font-normal flex">
           {changeRequestsTypeToHeb(data.requestType)}
         </Typography>
       </td>
@@ -52,9 +51,8 @@ const RequestsDetails = React.memo(({ data }) => {
         <Typography
           variant="small"
           color="blue-gray"
-          className="font-normal flex"
-        >
-          {new Date(data.createdAt).toLocaleDateString("he-IL")}
+          className="font-normal flex">
+          {dateFormat(data.createdAt)}
         </Typography>
       </td>
     </motion.tr>

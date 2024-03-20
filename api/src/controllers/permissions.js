@@ -56,11 +56,21 @@ route.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "No request found" });
     }
 
+    const notifications = new Notification({
+      recipientEmail: updatedRequest.requesterEmail,
+      senderEmail: updatedRequest.recipientEmail,
+      requestType: updatedRequest.requestType,
+      message: `Permission ${requestStatus}`,
+    });
+
+    await notifications.save();
+
     res.status(200).json(updatedRequest);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 route.put("/calendar/:id", async (req, res) => {
   const { id } = req.params;
   const { requestType } = req.body;
@@ -89,6 +99,12 @@ route.post("/:email", async (req, res) => {
       recipientEmail: email,
       requesterEmail,
     });
+
+    if (email === requesterEmail) {
+      return res
+        .status(400)
+        .json({ message: "cannot send request to yourself" });
+    }
 
     if (permission) {
       permission.requestStatus = "approved";
@@ -164,4 +180,5 @@ route.delete("/delete", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 export default route;

@@ -7,21 +7,5 @@ export const useToggle = (initialValue = false) => {
     setValue((prev) => !prev);
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setValue(false);
-      }
-    };
-
-    if (value) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [value]);
-
   return [value, toggle];
 };

@@ -52,7 +52,6 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
   }, [details, setValue]);
 
   const submitHandler = async (data) => {
-    console.log("submitHandler", data);
     try {
       await mutateAsync(data);
       handleClose();
@@ -62,11 +61,10 @@ const EditPermissionModal = ({ open, handleToggle, details }) => {
   };
 
   return (
-    <Dialog open={open} size="sm">
+    <Dialog open={open} handler={handleClose} size="sm">
       <form
         className="flex flex-col relative"
-        onSubmit={handleSubmit(submitHandler)}
-      >
+        onSubmit={handleSubmit(submitHandler)}>
         <IoMdClose
           onClick={handleToggle}
           className="absolute left-2 top-2 text-[2.2rem] hover:cursor-pointer hover:bg-blue-gray-100 rounded-full transition-all duration-150 ease-in p-1"

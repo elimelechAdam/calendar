@@ -14,3 +14,7 @@ export const changeNotificationTypeToHeb = (type) => {
   else if (type === "Permission denied") return "בקשה נדחתה";
   else return "הבקשה אושרה";
 };
+
+export const dateFormat = (date) => {
+  return new Date(date).toLocaleDateString("he-IL");
+};

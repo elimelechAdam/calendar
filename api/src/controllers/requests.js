@@ -47,16 +47,22 @@ route.post("/:email", async (req, res) => {
 
   try {
     if (email === recipientEmail)
-      res.status(400).json({ message: "cannot send request to yourself" });
+      return res
+        .status(400)
+        .json({ message: "cannot send request to yourself" });
 
     // Checks if request already exists - not needed for now
-    // const existingRequest = await Request.findOne({
-    //   requesterEmail: email,
-    //   recipientEmail,
-    //   requestType,
-    // });
-    // // if (existingRequest)
-    // //   return res.status(400).json({ message: "request already exist" });
+    const existingRequest = await Request.findOne({
+      requesterEmail: email,
+      recipientEmail,
+      // requestType,
+    });
+    if (existingRequest) {
+      return res.status(400).json({
+        message: "request already exist",
+        date: existingRequest.createdAt,
+      });
+    }
 
     const newRequest = new Request({
       requesterEmail: email,

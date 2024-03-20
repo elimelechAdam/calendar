@@ -53,18 +53,15 @@ export function RequestFormModal({ open, handleToggle }) {
     try {
       await mutateAsync(data);
       handleClose();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (
     <>
-      <Dialog open={open} size="sm">
+      <Dialog open={open} handler={handleClose} size="sm">
         <form
           className="flex flex-col relative"
-          onSubmit={handleSubmit(submitHandler)}
-        >
+          onSubmit={handleSubmit(submitHandler)}>
           <IoMdClose
             onClick={handleClose}
             className="absolute left-2 top-2 text-[2.2rem] hover:cursor-pointer hover:bg-blue-gray-100 rounded-full transition-all duration-150 ease-in p-1"
@@ -109,16 +106,14 @@ export function RequestFormModal({ open, handleToggle }) {
                       return (
                         <div
                           className="px-2 py-3 hover:bg-blue-gray-900"
-                          key={user.id}
-                        >
+                          key={user.id}>
                           <Typography
                             onClick={() => {
                               setValue("recipientEmail", user.mail);
                               setUsers([]);
                               setShowDropdown(false);
                             }}
-                            className="hover:cursor-pointer"
-                          >
+                            className="hover:cursor-pointer">
                             <div className="flex flex-col">
                               <p className="text-gray-100 font-medium">
                                 {user?.displayName}
@@ -161,8 +156,7 @@ export function RequestFormModal({ open, handleToggle }) {
               variant="text"
               color="gray"
               type="submit"
-              disabled={isPending}
-            >
+              disabled={isPending}>
               {isPending ? "שולח בקשה..." : "שלח בקשה"}
             </Button>
             <Button variant="text" color="gray" onClick={handleClose}>

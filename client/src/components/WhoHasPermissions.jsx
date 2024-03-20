@@ -7,11 +7,13 @@ import {
   ListItem,
   Card,
   Typography,
+  Tooltip,
+  IconButton,
 } from "@material-tailwind/react";
 import { useMsgQuerys } from "../lib/react-query/msg-querys";
 import { useDbQuerys } from "../lib/react-query/db-querys";
 import { changeRequestsTypeToHeb } from "./../lib/utils/utils";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosCloseCircleOutline, IoMdCloseCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
@@ -30,7 +32,7 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
   };
   const userPermissionsMap = data?.map((item) => {
     return (
-      <ListItem key={item.id} className="flex justify-between">
+      <ListItem key={item.id} className="flex justify-between cursor-auto">
         <div>
           <Typography variant="h6" color="blue-gray">
             {item.emailAddress.name} - {item.emailAddress.address}
@@ -40,12 +42,17 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
             {changeRequestsTypeToHeb(item.role)}
           </Typography>
         </div>
-        <MdCancel
-          size={25}
-          onClick={(e) => {
-            handleRemovePermission(item.emailAddress.address);
-          }}
-        />
+        <Tooltip content="לחץ להוריד הרשאה" className="z-[10000]">
+          <IconButton
+            color="red"
+            type="button"
+            className="text-[1.3rem]"
+            variant="text"
+            size="sm"
+            onClick={() => handleRemovePermission(item.emailAddress.address)}>
+            <IoMdCloseCircle />
+          </IconButton>
+        </Tooltip>
       </ListItem>
     );
   });

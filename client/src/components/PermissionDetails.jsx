@@ -8,6 +8,7 @@ import {
 import {
   changeRequestsStatusToHeb,
   changeRequestsTypeToHeb,
+  dateFormat,
 } from "../lib/utils/utils";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 import { useDbQuerys } from "../lib/react-query/db-querys";
@@ -39,8 +40,7 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
             <Typography
               variant="small"
               color="blue-gray"
-              className="font-normal opacity-70"
-            >
+              className="font-normal opacity-70">
               {data.requesterEmail}
             </Typography>
           </div>
@@ -50,8 +50,7 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
         <Typography
           variant="small"
           color="blue-gray"
-          className="font-normal flex"
-        >
+          className="font-normal flex">
           {changeRequestsTypeToHeb(data.requestType)}
         </Typography>
       </td>
@@ -75,9 +74,8 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
         <Typography
           variant="small"
           color="blue-gray"
-          className="font-normal flex"
-        >
-          {new Date(data.createdAt).toLocaleDateString("he-IL")}
+          className="font-normal flex">
+          {dateFormat(data.createdAt)}
         </Typography>
       </td>
       <td className={` ${classes} flex gap-3`}>
@@ -94,8 +92,7 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
                 className="text-[1.3rem]"
                 variant="text"
                 size="sm"
-                onClick={() => handleApprove("denied")}
-              >
+                onClick={() => handleApprove("denied")}>
                 <IoMdCloseCircle />
               </IconButton>
             </Tooltip>
@@ -105,8 +102,7 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
                 size="sm"
                 variant="text"
                 className="text-[1.3rem]"
-                onClick={() => handleApprove("approved")}
-              >
+                onClick={() => handleApprove("approved")}>
                 <IoIosCheckmarkCircle />
               </IconButton>
             </Tooltip>
@@ -123,8 +119,7 @@ const PermissionsDetails = React.memo(({ data, setDetails, handleToggle }) => {
                 onClick={() => {
                   setDetails(data);
                   handleToggle();
-                }}
-              >
+                }}>
                 <BiSolidMessageSquareEdit />
               </IconButton>
             </Tooltip>

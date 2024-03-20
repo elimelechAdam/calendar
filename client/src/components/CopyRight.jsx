@@ -1,5 +1,4 @@
 import { FaLinkedin } from "react-icons/fa";
-import { motion } from "framer-motion";
 
 const CopyRight = () => {
   return (
@@ -12,8 +11,7 @@ const CopyRight = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn profile for adam"
-            className="flex items-center gap-1"
-          >
+            className="flex items-center gap-1">
             אדם אלימלך
             <FaLinkedin className="text-base text-[#0A66C2]" />
           </a>
@@ -24,8 +22,7 @@ const CopyRight = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn profile for anton"
-            className="flex items-center gap-1"
-          >
+            className="flex items-center gap-1">
             אנטון לוקיאנוב
             <FaLinkedin className="text-base text-[#0A66C2]" />
           </a>

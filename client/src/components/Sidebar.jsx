@@ -7,6 +7,7 @@ import {
   ListItemSuffix,
   Chip,
   Tooltip,
+  CardFooter,
 } from "@material-tailwind/react";
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
 import { CalendarIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
@@ -42,9 +43,8 @@ const Sidebar = ({ email, id, name }) => {
             duration: 0.6,
           },
         }}
-        className="max-w-[20rem]"
-      >
-        <Card className="min-h-screen w-full p-4 shadow-xl shadow-blue-gray-900/5 justify-between">
+        className="max-w-[20rem]">
+        <Card className="min-h-screen w-full p-3 shadow-xl shadow-blue-gray-900/5 justify-between">
           <div>
             <div className="mb-2 flex items-center gap-4 p-4">
               <img
@@ -53,7 +53,7 @@ const Sidebar = ({ email, id, name }) => {
                 className="h-full"
               />
             </div>
-            <List>
+            <List className="">
               <Link to="requests">
                 <ListItem className="flex justify-between text-lg">
                   <ListItemPrefix>
@@ -80,8 +80,7 @@ const Sidebar = ({ email, id, name }) => {
 
               <ListItem
                 className="flex justify-between text-lg"
-                onClick={setToggleModal}
-              >
+                onClick={setToggleModal}>
                 <ListItemPrefix>
                   <MdManageAccounts className="h-5 w-5" />
                 </ListItemPrefix>
@@ -90,19 +89,8 @@ const Sidebar = ({ email, id, name }) => {
                   <FiArrowLeft />
                 </Typography>
               </ListItem>
-
               <hr className="my-2 border-blue-gray-50" />
-              <Tooltip
-                content={<UserInfo name={name} email={email} />}
-                placement="left-start"
-              >
-                <ListItem className="gap-2">
-                  <ListItemPrefix>
-                    <UserCircleIcon className="h-5 w-5 gap-2" />
-                  </ListItemPrefix>
-                  היי {name}
-                </ListItem>
-              </Tooltip>
+
               <ListItem className="gap-2" onClick={setOpen}>
                 <ListItemPrefix>
                   <InboxIcon className="h-5 w-5" />
@@ -118,13 +106,23 @@ const Sidebar = ({ email, id, name }) => {
                   />
                 </ListItemSuffix>
               </ListItem>
+              <Tooltip
+                content={<UserInfo name={name} email={email} />}
+                placement="left-start">
+                <ListItem className="gap-2">
+                  <ListItemPrefix>
+                    <UserCircleIcon className="h-5 w-5 gap-2" />
+                  </ListItemPrefix>
+                  היי {name}
+                </ListItem>
+              </Tooltip>
             </List>
           </div>
           {/* Footer of the sidebar */}
-          <div>
+          <CardFooter>
             <SignOutButton />
             <CopyRight />
-          </div>
+          </CardFooter>
         </Card>
       </motion.div>
       <WhoHasPermissions

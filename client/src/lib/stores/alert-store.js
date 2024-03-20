@@ -6,7 +6,7 @@ export const useAlertStore = create((set, get) => ({
   color: "",
   timeoutId: undefined, // Include timeoutId in the store's initial state
 
-  setAlert: ({ content, color }, duration = 3000) => {
+  setAlert: ({ content, color }, duration = 4000) => {
     // Clear the timeout if there's already one running
     if (get().timeoutId) {
       clearTimeout(get().timeoutId);

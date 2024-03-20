@@ -9,11 +9,12 @@ import {
   updatePermission,
   removePermission,
   getNotifications,
+  deleteAllNotifications,
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
 import getEmailContent from "../../components/email-template/askForPermissionEmail";
-import { changeRequestsTypeToHeb } from "../utils/utils";
+import { changeRequestsTypeToHeb, dateFormat } from "../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
 import declinePermissionEmail from "../../components/email-template/declinePermissionEmail";
 import { useAlertStore } from "../stores/alert-store";
@@ -45,24 +46,21 @@ export const useDbQuerys = () => {
     return useMutation({
       mutationKey: ["createRequest"],
       mutationFn: async (params) => {
-        try {
-          await createRequest(user.email, params);
+        const response = await createRequest(user.email, params);
 
-          await sendMail({
-            subject: "בקשת הרשאה ליומנך",
-            body: getEmailContent(
-              user.email,
-              user.name,
-              changeRequestsTypeToHeb(params.requestType)
-            ),
-            to: params.recipientEmail,
-          });
-        } catch (error) {
-          // Handle or log the error
-          console.error(error);
-        }
+        await sendMail({
+          subject: "בקשת הרשאה ליומנך",
+          body: getEmailContent(
+            user.email,
+            user.name,
+            changeRequestsTypeToHeb(params.requestType)
+          ),
+          to: params.recipientEmail,
+        });
+
+        return response;
       },
-      onSuccess: () => {
+      onSuccess: (data) => {
         queryClient.invalidateQueries("requests");
         alert({
           content: "בקשת הרשאה נשלחה בהצלחה",
@@ -70,6 +68,18 @@ export const useDbQuerys = () => {
         });
       },
       onError: (error) => {
+        if (error.response.data.message === "cannot send request to yourself") {
+          return alert({
+            content: "לא ניתן לשלוח בקשה לעצמך",
+            color: "red",
+          });
+        }
+        if (error.response.data.message === "request already exist") {
+          return alert({
+            content: `בקשה כבר קיימת מ ${dateFormat(error.response.data.date)}`,
+            color: "blue",
+          });
+        }
         alert({
           content: "שגיאה בשליחת בקשת הרשאה",
           color: "red",
@@ -111,7 +121,6 @@ export const useDbQuerys = () => {
     return useMutation({
       mutationFn: (params) => updatePermission(params.id, params.requestType),
       onSuccess: (data) => {
-        console.log(data);
         if (data.requestStatus === "approved") {
           mutate({ email: data.requesterEmail, role: data.requestType });
           alert({
@@ -184,6 +193,23 @@ export const useDbQuerys = () => {
     });
   };
 
+  const deleteNotificationsMutation = () => {
+    return useMutation({
+      mutationFn: () => deleteAllNotifications(user.email),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["notifications"],
+        });
+      },
+      onError: () => {
+        alert({
+          content: "הודעות לא נמחקו",
+          color: "red",
+        });
+      },
+    });
+  };
+
   return {
     getPermissionsQuery,
     getRequestsQuery,
@@ -193,5 +219,6 @@ export const useDbQuerys = () => {
     ownerUpdatePermissionMutation,
     removePermissionMutation,
     getNotificationsQuery,
+    deleteNotificationsMutation,
   };
 };

@@ -15,7 +15,7 @@ import Permissions from "./_root/pages/Permissions";
 import Requests from "./_root/pages/Requests";
 import NotSuppMobileMessage from "./components/ui/NotSuppMobileMessage";
 import ErrorBoundary from "./components/global/ErrorBoundary";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Error from "./components/global/Error";
 
 export const msalInstance = new PublicClientApplication(msalConfig);

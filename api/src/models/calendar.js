@@ -22,13 +22,16 @@ const requestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const notificationSchema = new mongoose.Schema({
-  recipientEmail: String,
-  senderEmail: String,
-  requestType: String,
-  message: String,
-  read: { type: Boolean, default: false },
-});
+const notificationSchema = new mongoose.Schema(
+  {
+    recipientEmail: String,
+    senderEmail: String,
+    requestType: String,
+    message: String,
+    read: { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
 
 // const permissionSchema = new mongoose.Schema({
 //   grantorEmail: String,

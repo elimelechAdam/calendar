@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useUserStore } from "./../lib/stores/user-store";
 import { Alert } from "@material-tailwind/react";
 import { useAlertStore } from "../lib/stores/alert-store";
+import ReactDOM from "react-dom";
 
 const RootLayout = () => {
   const { instance } = useMsal();
@@ -26,6 +27,13 @@ const RootLayout = () => {
   const userData = useUserStore((state) => state.user);
   return (
     <>
+      <Alert
+        color={color}
+        className="absolute bottom-2 left-3 w-1/6 text-center z-[10000]"
+        size="sm"
+        open={alert}>
+        {content}
+      </Alert>
       {!account ? (
         <Navigate to="/" />
       ) : (
@@ -33,14 +41,6 @@ const RootLayout = () => {
           <section className="flex relative">
             <Sidebar {...userData} />
             <Outlet />
-            <Alert
-              color={color}
-              className="absolute bottom-2 left-3 w-1/6 text-center"
-              size="sm"
-              open={alert}
-            >
-              {content}
-            </Alert>
           </section>
         </AuthenticatedTemplate>
       )}
