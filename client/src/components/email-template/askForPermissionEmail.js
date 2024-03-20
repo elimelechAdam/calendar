@@ -294,7 +294,7 @@ const getEmailContent = (emailAddress, userName, permissionType) => {
                           ${body}
                         </p>
                         <a
-                          href="https://calendaralp.vercel.app/"
+                          href="https://calendaralp.vercel.app/permissions?emails=${emailAddress}"
                           style="
                             background-color: #212121;
                             text-decoration: none !important;

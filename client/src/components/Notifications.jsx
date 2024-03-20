@@ -16,9 +16,20 @@ import {
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import React, { useEffect } from "react";
 import { useDbQuerys } from "./../lib/react-query/db-querys";
+import { useNavigate } from "react-router-dom";
 
 export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
   const { mutate } = useDbQuerys().deleteNotificationsMutation();
+  const navigate = useNavigate();
+
+  const handleViewClick = (email, message) => {
+    handleOpen();
+    if (message.startsWith("Permission")) {
+      navigate(`/requests?emails=${email}`);
+    } else {
+      navigate(`/permissions?emails=${email}`);
+    }
+  };
 
   return (
     <>
@@ -42,7 +53,7 @@ export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
               data?.map((notification) => (
                 <ListItem
                   key={notification._id}
-                  className="flex justify-between">
+                  className="flex justify-between cursor-default">
                   <div>
                     <Typography variant="h6" color="blue-gray">
                       <span>
@@ -65,6 +76,17 @@ export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
                       <span>{dateFormat(notification.createdAt)}</span>
                     </Typography>
                   </div>
+
+                  <Button
+                    size="sm"
+                    onClick={() =>
+                      handleViewClick(
+                        notification.senderEmail,
+                        notification.message
+                      )
+                    }>
+                    צפה
+                  </Button>
                 </ListItem>
               ))
             )}
