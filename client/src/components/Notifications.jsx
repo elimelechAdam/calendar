@@ -16,20 +16,20 @@ import {
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 import React, { useEffect } from "react";
 import { useDbQuerys } from "./../lib/react-query/db-querys";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
   const { mutate } = useDbQuerys().deleteNotificationsMutation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleViewClick = (email, message) => {
-    handleOpen();
-    if (message.startsWith("Permission")) {
-      navigate(`/requests?emails=${email}`);
-    } else {
-      navigate(`/permissions?emails=${email}`);
-    }
-  };
+  // const handleViewClick = (email, message) => {
+  //   handleOpen();
+  //   if (message.startsWith("Permission")) {
+  //     navigate(`/requests?emails=${email}`);
+  //   } else {
+  //     navigate(`/permissions?emails=${email}`);
+  //   }
+  // };
 
   return (
     <>
@@ -77,7 +77,7 @@ export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
                     </Typography>
                   </div>
 
-                  <Button
+                  {/* <Button
                     size="sm"
                     onClick={() =>
                       handleViewClick(
@@ -86,7 +86,7 @@ export const Notifications = ({ handleOpen, open, email, data, isPending }) => {
                       )
                     }>
                     צפה
-                  </Button>
+                  </Button> */}
                 </ListItem>
               ))
             )}

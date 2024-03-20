@@ -9,8 +9,10 @@ const TableSearch = ({ setSearchTerm, value }) => {
       onChange={(e) => setSearchTerm({ emails: e.target.value })}
       value={value}
       icon={
-        <MagnifyingGlassIcon className="h-5 w-5 relative right-[15.5rem]" />
+        <MagnifyingGlassIcon className="h-5 w-5 relative right-[15.6rem]" />
       }
+      id="Search"
+      type="search"
     />
   );
 };

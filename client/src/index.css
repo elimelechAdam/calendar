@@ -44,3 +44,8 @@ body {
   border-radius: 20px;
   border: 3px solid #f3f4f6; /* Tailwind gray-100 */
 }
+
+#Search::-webkit-search-cancel-button {
+  position: relative;
+  left: 16px;
+}
