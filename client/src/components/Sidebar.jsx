@@ -43,7 +43,8 @@ const Sidebar = ({ email, id, name }) => {
             duration: 0.6,
           },
         }}
-        className="max-w-[20rem]">
+        className="max-w-[20rem]"
+      >
         <Card className="min-h-screen w-full p-3 shadow-xl shadow-blue-gray-900/5 justify-between">
           <div>
             <div className="mb-2 flex items-center gap-4 p-4">
@@ -80,7 +81,8 @@ const Sidebar = ({ email, id, name }) => {
 
               <ListItem
                 className="flex justify-between text-lg"
-                onClick={setToggleModal}>
+                onClick={setToggleModal}
+              >
                 <ListItemPrefix>
                   <MdManageAccounts className="h-5 w-5" />
                 </ListItemPrefix>
@@ -90,7 +92,17 @@ const Sidebar = ({ email, id, name }) => {
                 </Typography>
               </ListItem>
               <hr className="my-2 border-blue-gray-50" />
-
+              <Tooltip
+                content={<UserInfo name={name} email={email} />}
+                placement="left-start"
+              >
+                <ListItem className="gap-2">
+                  <ListItemPrefix>
+                    <UserCircleIcon className="h-5 w-5 gap-2" />
+                  </ListItemPrefix>
+                  היי {name}
+                </ListItem>
+              </Tooltip>
               <ListItem className="gap-2" onClick={setOpen}>
                 <ListItemPrefix>
                   <InboxIcon className="h-5 w-5" />
@@ -106,16 +118,6 @@ const Sidebar = ({ email, id, name }) => {
                   />
                 </ListItemSuffix>
               </ListItem>
-              <Tooltip
-                content={<UserInfo name={name} email={email} />}
-                placement="left-start">
-                <ListItem className="gap-2">
-                  <ListItemPrefix>
-                    <UserCircleIcon className="h-5 w-5 gap-2" />
-                  </ListItemPrefix>
-                  היי {name}
-                </ListItem>
-              </Tooltip>
             </List>
           </div>
           {/* Footer of the sidebar */}
