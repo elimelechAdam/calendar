@@ -9,6 +9,9 @@ import {
   Typography,
   Tooltip,
   IconButton,
+  Popover,
+  PopoverHandler,
+  PopoverContent,
 } from "@material-tailwind/react";
 import { useMsgQuerys } from "../lib/react-query/msg-querys";
 import { useDbQuerys } from "../lib/react-query/db-querys";
@@ -42,17 +45,39 @@ export function WhoHasPermissions({ handleOpen, open, email }) {
             {changeRequestsTypeToHeb(item.role)}
           </Typography>
         </div>
-        <Tooltip content="לחץ להוריד הרשאה" className="z-[10000]">
-          <IconButton
-            color="red"
-            type="button"
-            className="text-[1.3rem]"
-            variant="text"
-            size="sm"
-            onClick={() => handleRemovePermission(item.emailAddress.address)}>
-            <IoMdCloseCircle />
-          </IconButton>
-        </Tooltip>
+        <Popover placement="bottom-start">
+          <Tooltip content="לחץ להוריד הרשאה" className="z-[10000]">
+            <PopoverHandler>
+              <IconButton
+                type="button"
+                className="text-[1.3rem]"
+                variant="text"
+                size="sm">
+                <IoMdCloseCircle />
+              </IconButton>
+            </PopoverHandler>
+          </Tooltip>
+          <PopoverContent className="z-[10000] border border-red-200 flex flex-col gap-2">
+            <Typography>
+              האם אתה בטוח שברצונך להסיר
+              <br /> את ההרשאה למשתמש? - {""}
+              <span className="font-semibold text-lg">
+                {item.emailAddress.name}
+              </span>
+            </Typography>
+            <div className="flex justify-end">
+              <Button
+                onClick={() =>
+                  handleRemovePermission(item.emailAddress.address)
+                }
+                color="red"
+                size="sm"
+                className="w-1/4 rounded-sm">
+                הסר
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </ListItem>
     );
   });

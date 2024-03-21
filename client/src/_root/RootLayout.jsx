@@ -25,10 +25,11 @@ const RootLayout = () => {
   }, []);
 
   const userData = useUserStore((state) => state.user);
+
   return (
     <>
       <Alert
-        color={color}
+        color={color ? color : "blue-gray"}
         className="absolute bottom-2 left-3 w-1/6 text-center z-[10000]"
         size="sm"
         open={alert}>
