@@ -20,7 +20,6 @@ import CopyRight from "./CopyRight";
 import { UserInfo } from "./UserInfo";
 import { motion } from "framer-motion";
 import { WhoHasPermissions } from "./WhoHasPermissions";
-import { useState } from "react";
 import { Notifications } from "./Notifications";
 import { useToggle } from "../hooks/useToggle";
 import { useDbQuerys } from "../lib/react-query/db-querys";
@@ -49,9 +48,9 @@ const Sidebar = ({ email, id, name }) => {
           <div>
             <div className="mb-2 flex items-center gap-4 p-4">
               <img
-                src="https://www.wxg.co.il/app/themes/wxg/resources/assets/images/WXG-Logo.png"
+                src="https://www.wxg.co.il/app/themes/wxg/resources/assets/images/new-logo.png"
                 alt="brand"
-                className="h-full"
+                className="min-w-[250px] min-h-[80px] max-w-xs max-h-3 w-auto h-auto object-contain"
               />
             </div>
             <List className="">
