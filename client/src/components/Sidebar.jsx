@@ -8,9 +8,10 @@ import {
   Chip,
   Tooltip,
   CardFooter,
+  Alert
 } from "@material-tailwind/react";
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
-import { CalendarIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { CalendarIcon, CalendarDaysIcon,  CubeTransparentIcon,} from "@heroicons/react/24/outline";
 import { FiArrowLeft } from "react-icons/fi";
 import { MdManageAccounts } from "react-icons/md";
 
@@ -23,11 +24,14 @@ import { WhoHasPermissions } from "./WhoHasPermissions";
 import { Notifications } from "./Notifications";
 import { useToggle } from "../hooks/useToggle";
 import { useDbQuerys } from "../lib/react-query/db-querys";
+import { useState } from "react";
 
 const Sidebar = ({ email, id, name }) => {
   const [toggleModal, setToggleModal] = useToggle();
   const [open, setOpen] = useToggle();
   const { getNotificationsQuery } = useDbQuerys();
+  const [openAlert, setOpenAlert] = useState(true);
+
   const { data, isPending, isError } = getNotificationsQuery();
 
   return (
@@ -119,6 +123,19 @@ const Sidebar = ({ email, id, name }) => {
               </ListItem>
             </List>
           </div>
+
+          {/* Ad for Slowness */}
+          <Alert open={openAlert} className="mt-auto" onClose={() => setOpenAlert(false)}>
+        <Typography variant="h6" className="mb-1">
+         איטיות במערכת
+        </Typography>
+        <Typography variant="small" className="font-normal opacity-80">
+          שימו לב שזאת מערכת ניסיון ולכן המערכת תעבוד עם איטיות
+        </Typography>
+        
+      </Alert>
+
+
           {/* Footer of the sidebar */}
           <CardFooter>
             <SignOutButton />
