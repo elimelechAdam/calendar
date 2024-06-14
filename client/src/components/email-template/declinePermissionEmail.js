@@ -54,7 +54,7 @@ const declinePermissionEmail = (emailAddress, userName) => {
                   <a href="https://wxg.co.il" title="logo" target="_blank">
                     <img
                       width="150"
-                      src="https://careers.wxg.co.il/www.wxg.co.il/app/themes/wxg/resources/assets/images/WXG-Logo.png"
+                      src="https://www.wxg.co.il/app/themes/wxg/resources/assets/images/new-logo.png"
                       title="logo"
                       alt="logo"
                     />
