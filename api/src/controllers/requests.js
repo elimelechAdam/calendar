@@ -88,18 +88,40 @@ route.post("/:email", async (req, res) => {
   }
 });
 
-// route.get("search/:email", async (req, res) => {
-//   const { email } = req.params;
-//   const { searchQuery } = req.query;
-//   try {
-//     const requests = await Request.find({
-//       requesterEmail: email,
-//       recipientEmail: { $regex: searchQuery, $options: "i" },
-//     });
-//     res.status(200).json(requests);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
+// Accept in Modal
+
+router.get('/accept/:requestId', async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const request = await Request.findByIdAndUpdate(requestId, { requestStatus: 'approved' }, { new: true });
+    
+    if (!request) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    await Notification.updateMany({ requestId }, { message: 'Your request has been approved' });
+
+    res.status(200).json({ message: 'Request approved', request });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get('/deny/:requestId', async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const request = await Request.findByIdAndUpdate(requestId, { requestStatus: 'denied' }, { new: true });
+    
+    if (!request) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    await Notification.updateMany({ requestId }, { message: 'Your request has been denied' });
+
+    res.status(200).json({ message: 'Request denied', request });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 export default route;
