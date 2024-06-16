@@ -29,6 +29,7 @@ const notificationSchema = new mongoose.Schema(
     requestType: String,
     message: String,
     read: { type: Boolean, default: false },
+    // requestId: { type: mongoose.Schema.Types.ObjectId, ref: "Request" }, - Need to modify and add the option
   },
   { timestamps: true }
 );
