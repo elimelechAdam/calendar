@@ -24,7 +24,6 @@ import useTabWithPagination from "../hooks/useTabWithPagination";
 import TableSearch from "./TableSearch";
 import { TableContainerVariants } from "../lib/utils/variants";
 import { useToggle } from "./../hooks/useToggle";
-import { set } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 
 const TABLE_HEAD = [
@@ -52,7 +51,8 @@ function RequestsTable() {
       }}
       animate={{
         opacity: 1,
-      }}>
+      }}
+    >
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
@@ -68,7 +68,8 @@ function RequestsTable() {
               <Button
                 className="flex items-center gap-3"
                 size="sm"
-                onClick={setToggleModal}>
+                onClick={setToggleModal}
+              >
                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> בקש הרשאה
                 ליומן
               </Button>
@@ -88,11 +89,13 @@ function RequestsTable() {
                 {TABLE_HEAD.map((head, index) => (
                   <th
                     key={head}
-                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                  >
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70">
+                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                    >
                       {head}{" "}
                       {index !== TABLE_HEAD.length - 1 && (
                         <ChevronUpDownIcon
@@ -108,7 +111,8 @@ function RequestsTable() {
             <motion.tbody
               initial="hidden"
               animate="visible"
-              variants={isPending ? "" : TableContainerVariants}>
+              variants={isPending ? "" : TableContainerVariants}
+            >
               {isPending ? (
                 <tr>
                   <td colSpan="the number of columns to span">

@@ -8,10 +8,14 @@ import {
   Chip,
   Tooltip,
   CardFooter,
-  Alert
+  Alert,
 } from "@material-tailwind/react";
 import { UserCircleIcon, InboxIcon } from "@heroicons/react/24/solid";
-import { CalendarIcon, CalendarDaysIcon,  CubeTransparentIcon,} from "@heroicons/react/24/outline";
+import {
+  CalendarIcon,
+  CalendarDaysIcon,
+  CubeTransparentIcon,
+} from "@heroicons/react/24/outline";
 import { FiArrowLeft } from "react-icons/fi";
 import { MdManageAccounts } from "react-icons/md";
 
@@ -125,21 +129,26 @@ const Sidebar = ({ email, id, name }) => {
           </div>
 
           {/* Ad for Slowness */}
-          <Alert open={openAlert} className="mt-auto" onClose={() => setOpenAlert(false)}>
-        <Typography variant="h6" className="mb-1">
-         איטיות במערכת
-        </Typography>
-        <Typography variant="small" className="font-normal opacity-80">
-          שימו לב שזאת מערכת ניסיון ולכן המערכת תעבוד עם איטיות
-        </Typography>
-        
-      </Alert>
-
+          <Alert
+            open={openAlert}
+            className="mt-auto"
+            onClose={() => setOpenAlert(false)}
+          >
+            <Typography variant="h6" className="mb-1">
+              איטיות במערכת
+            </Typography>
+            <Typography variant="small" className="font-normal opacity-80">
+              שימו לב שזאת מערכת ניסיון ולכן המערכת תעבוד עם איטיות
+            </Typography>
+          </Alert>
 
           {/* Footer of the sidebar */}
           <CardFooter>
             <SignOutButton />
             <CopyRight />
+            <span className="block  text-sm text-center mt-2">
+              v{import.meta.env.VITE_VERSION}
+            </span>
           </CardFooter>
         </Card>
       </motion.div>

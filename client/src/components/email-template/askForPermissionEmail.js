@@ -1,4 +1,9 @@
-const getEmailContent = (emailAddress, userName, permissionType) => {
+const getEmailContent = (
+  emailAddress,
+  userName,
+  permissionType,
+  notificationId
+) => {
   const title = "בקשת הרשאה ליומנך";
   const body = `
                   המשתמש ${userName} - ${emailAddress} <br>
@@ -135,6 +140,34 @@ const getEmailContent = (emailAddress, userName, permissionType) => {
                           "
                           >כניסה למערכת</a
                         >
+                      </td>
+                      <td>
+                      <a href="http://localhost:5173/accept/${notificationId}"
+                      style="
+                            background-color: #212121;
+                            text-decoration: none !important;
+                            font-weight: 500;
+                            margin-top: 35px;
+                            color: #fff;
+                            text-transform: uppercase;
+                            font-size: 14px;
+                            padding: 10px 24px;
+                            display: inline-block;
+                            border-radius: 50px;
+                          ">אשר</a>
+                      <a href="http://localhost:5173/deny/${notificationId}"
+                      style="
+                            background-color: red;
+                            text-decoration: none !important;
+                            font-weight: 500;
+                            margin-top: 35px;
+                            color: #fff;
+                            text-transform: uppercase;
+                            font-size: 14px;
+                            padding: 10px 24px;
+                            display: inline-block;
+                            border-radius: 50px;
+                          ">דחה</a>
                       </td>
                     </tr>
                     <td>

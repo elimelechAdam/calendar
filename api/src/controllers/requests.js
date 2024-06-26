@@ -90,35 +90,58 @@ route.post("/:email", async (req, res) => {
 
 // Accept in Modal
 
-router.get('/accept/:requestId', async (req, res) => {
+route.post("/accept/:requestId", async (req, res) => {
   try {
     const { requestId } = req.params;
-    const request = await Request.findByIdAndUpdate(requestId, { requestStatus: 'approved' }, { new: true });
-    
+    console.log(requestId);
+    const request = await Request.findByIdAndUpdate(
+      requestId,
+      { requestStatus: "approved" },
+      { new: true }
+    );
+
     if (!request) {
-      return res.status(404).json({ message: 'Request not found' });
+      return res.status(404).json({ message: "בקשה לא נמצאה" });
     }
 
-    await Notification.updateMany({ requestId }, { message: 'Your request has been approved' });
+    //Check if the request is already approved
+    if (request.requestStatus === "approved") {
+      return res.status(400).json({ message: "הבקשה שלך כבר אושרה" });
+    }
 
-    res.status(200).json({ message: 'Request approved', request });
+    await Notification.updateMany(
+      { requestId },
+      { message: "הבקשה שלך אושרה" }
+    );
+
+    res.status(200).json({ message: "בקשה אושרה", request });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-router.get('/deny/:requestId', async (req, res) => {
+route.post("/deny/:requestId", async (req, res) => {
   try {
     const { requestId } = req.params;
-    const request = await Request.findByIdAndUpdate(requestId, { requestStatus: 'denied' }, { new: true });
-    
+    const request = await Request.findByIdAndUpdate(
+      requestId,
+      { requestStatus: "denied" },
+      { new: true }
+    );
+
     if (!request) {
-      return res.status(404).json({ message: 'Request not found' });
+      return res.status(404).json({ message: "בקשה לא נמצאה" });
+    }
+    if (request.requestStatus === "denied") {
+      return res.status(400).json({ message: "הבקשה נדחתה" });
     }
 
-    await Notification.updateMany({ requestId }, { message: 'Your request has been denied' });
+    await Notification.updateMany(
+      { requestId },
+      { message: "הבקשה שלך נדחתה" }
+    );
 
-    res.status(200).json({ message: 'Request denied', request });
+    res.status(200).json({ message: "הבקשה נדחתה", request });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

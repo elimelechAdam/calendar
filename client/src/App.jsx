@@ -17,6 +17,8 @@ import NotSuppMobileMessage from "./components/ui/NotSuppMobileMessage";
 import ErrorBoundary from "./components/global/ErrorBoundary";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Error from "./components/global/Error";
+import { UserAccept } from "./components/UserAccept";
+import { UserDeny } from "./components/UserDeny";
 
 export const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -58,6 +60,8 @@ function App() {
             <Route element={<RootLayout />}>
               <Route path="/permissions" element={<Permissions />} />
               <Route path="/requests" element={<Requests />} />
+              <Route path="/accept/:id" element={<UserAccept />} />
+              <Route path="/deny/:id" element={<UserDeny />} />
             </Route>
           </Routes>
         </ErrorBoundary>

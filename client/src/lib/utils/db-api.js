@@ -1,8 +1,6 @@
 import axios from "axios";
-//backend url
-// const BASE_URL = "http://localhost:5050/api"; // Local
-const BASE_URL = "https://calendar-y87a.vercel.app/api"; // Production
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const getPermissions = async (email, activeTab, page, searchTerm) => {
   try {
     const queryString = `status=${activeTab}&page=${page}&search=${searchTerm}`;
@@ -266,6 +264,60 @@ export const deleteAllNotifications = async (email) => {
       console.error("Response data:", error.response.data);
     } else {
       console.error("Error deleting notifications:", error.message);
+    }
+
+    throw error;
+  }
+};
+
+export const acceptRequestEmail = async (requestId) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/requests/accept/${requestId}`
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(
+        "Failed to accept request. Server returned status: " + response.status
+      );
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        "Server responded with non-success status:",
+        error.response.status
+      );
+      console.error("Response data:", error.response.data);
+    } else {
+      console.error("Error accepting request:", error.message);
+    }
+
+    throw error;
+  }
+};
+
+export const denyRequestEmail = async (requestId) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/requests/deny/${requestId}`);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(
+        "Failed to accept request. Server returned status: " + response.status
+      );
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        "Server responded with non-success status:",
+        error.response.status
+      );
+      console.error("Response data:", error.response.data);
+    } else {
+      console.error("Error accepting request:", error.message);
     }
 
     throw error;

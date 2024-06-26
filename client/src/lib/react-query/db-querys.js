@@ -10,6 +10,8 @@ import {
   removePermission,
   getNotifications,
   deleteAllNotifications,
+  acceptRequestEmail,
+  denyRequestEmail,
 } from "../utils/db-api";
 import { useMsgQuerys } from "./msg-querys";
 import { sendMail } from "../utils/msg-api";
@@ -18,6 +20,7 @@ import { changeRequestsTypeToHeb, dateFormat } from "../utils/utils";
 import { useDebounce } from "../../hooks/useDebounce";
 import declinePermissionEmail from "../../components/email-template/declinePermissionEmail";
 import { useAlertStore } from "../stores/alert-store";
+import { useNavigate } from "react-router-dom";
 
 export const useDbQuerys = () => {
   const user = useUserStore((state) => state.user);
@@ -25,6 +28,7 @@ export const useDbQuerys = () => {
   const { grantCalendarPermissionsMutation } = useMsgQuerys();
   const { mutate } = grantCalendarPermissionsMutation();
   const alert = useAlertStore((state) => state.setAlert);
+  const navigate = useNavigate();
 
   const getPermissionsQuery = (activeTab, page, searchTerm) => {
     const debouncedSearch = useDebounce(searchTerm, 200);
@@ -48,12 +52,14 @@ export const useDbQuerys = () => {
       mutationFn: async (params) => {
         const response = await createRequest(user.email, params);
 
+        console.log("createaRequestMutation: ", response);
         await sendMail({
           subject: "בקשת הרשאה ליומנך",
           body: getEmailContent(
             user.email,
             user.name,
-            changeRequestsTypeToHeb(params.requestType)
+            changeRequestsTypeToHeb(params.requestType),
+            response._id
           ),
           to: params.recipientEmail,
         });
@@ -210,6 +216,55 @@ export const useDbQuerys = () => {
     });
   };
 
+  // Mutation to accept request
+  const useAcceptRequestMutation = () => {
+    return useMutation({
+      mutationFn: (requestId) => acceptRequestEmail(requestId),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["requests"],
+        });
+        navigate("/requests");
+        alert({
+          content: "בקשה אושרה",
+          color: "green",
+        });
+      },
+      onError: (error) => {
+        console.log(error.response.data.message);
+        alert({
+          content: error.response.data.message,
+          color: "red",
+        });
+        navigate("/requests");
+      },
+    });
+  };
+
+  // Mutation to deny request
+  const useDenyRequestMutation = () => {
+    return useMutation({
+      mutationFn: (requestId) => denyRequestEmail(requestId),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["requests"],
+        });
+        navigate("/requests");
+        alert({
+          content: "בקשה נדחתה",
+          color: "green",
+        });
+      },
+      onError: (error) => {
+        alert({
+          content: error.response.data.message,
+          color: "red",
+        });
+        navigate("/requests");
+      },
+    });
+  };
+
   return {
     getPermissionsQuery,
     getRequestsQuery,
@@ -220,5 +275,7 @@ export const useDbQuerys = () => {
     removePermissionMutation,
     getNotificationsQuery,
     deleteNotificationsMutation,
+    useAcceptRequestMutation,
+    useDenyRequestMutation,
   };
 };
