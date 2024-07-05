@@ -114,35 +114,19 @@ const getEmailContent = (
                             width: 100px;
                           "
                         ></span>
+                        <div style="height: 140px">
                         <p
                           style="
                             color: #455056;
                             font-size: 15px;
-                            line-height: 24px;
+                            line-height: 20px;
                             margin: 0;
                           "
                         >
                           ${body}
                         </p>
-                        <a
-                          href="https://calendaralp.vercel.app/permissions?emails=${emailAddress}"
-                          style="
-                            background-color: #212121;
-                            text-decoration: none !important;
-                            font-weight: 500;
-                            margin-top: 35px;
-                            color: #fff;
-                            text-transform: uppercase;
-                            font-size: 14px;
-                            padding: 10px 24px;
-                            display: inline-block;
-                            border-radius: 50px;
-                          "
-                          >כניסה למערכת</a
-                        >
-                      </td>
-                      <td>
-                      <a href="http://localhost:5173/accept/${notificationId}"
+                        
+                        <a href="http://localhost:5173/accept/${notificationId}"
                       style="
                             background-color: #212121;
                             text-decoration: none !important;
@@ -157,7 +141,7 @@ const getEmailContent = (
                           ">אשר</a>
                       <a href="http://localhost:5173/deny/${notificationId}"
                       style="
-                            background-color: red;
+                            background-color: #fcaf19;
                             text-decoration: none !important;
                             font-weight: 500;
                             margin-top: 35px;
@@ -168,7 +152,9 @@ const getEmailContent = (
                             display: inline-block;
                             border-radius: 50px;
                           ">דחה</a>
+                        </div>
                       </td>
+                      
                     </tr>
                     <td>
                     <p style="color: #455056;font-size: 15px;line-height: 12px;padding:10px">${footer}</p>
