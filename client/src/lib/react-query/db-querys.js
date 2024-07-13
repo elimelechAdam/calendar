@@ -217,53 +217,53 @@ export const useDbQuerys = () => {
   };
 
   // Mutation to accept request
-  const useAcceptRequestMutation = () => {
-    return useMutation({
-      mutationFn: (requestId) => acceptRequestEmail(requestId),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["requests"],
-        });
-        navigate("/requests");
-        alert({
-          content: "בקשה אושרה",
-          color: "green",
-        });
-      },
-      onError: (error) => {
-        console.log(error.response.data.message);
-        alert({
-          content: error.response.data.message,
-          color: "red",
-        });
-        navigate("/requests");
-      },
-    });
-  };
+  // const useAcceptRequestMutation = () => {
+  //   return useMutation({
+  //     mutationFn: (requestId) => acceptRequestEmail(requestId),
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries({
+  //         queryKey: ["requests"],
+  //       });
+  //       navigate("/requests");
+  //       alert({
+  //         content: "בקשה אושרה",
+  //         color: "green",
+  //       });
+  //     },
+  //     onError: (error) => {
+  //       console.log(error.response.data.message);
+  //       alert({
+  //         content: error.response.data.message,
+  //         color: "red",
+  //       });
+  //       navigate("/requests");
+  //     },
+  //   });
+  // };
 
-  // Mutation to deny request
-  const useDenyRequestMutation = () => {
-    return useMutation({
-      mutationFn: (requestId) => denyRequestEmail(requestId),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["requests"],
-        });
-        navigate("/requests");
-        alert({
-          content: "בקשה נדחתה",
-          color: "green",
-        });
-      },
-      onError: (error) => {
-        alert({
-          content: error.response.data.message,
-          color: "red",
-        });
-        navigate("/requests");
-      },
-    });
-  };
+  // // Mutation to deny request
+  // const useDenyRequestMutation = () => {
+  //   return useMutation({
+  //     mutationFn: (requestId) => denyRequestEmail(requestId),
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries({
+  //         queryKey: ["requests"],
+  //       });
+  //       navigate("/requests");
+  //       alert({
+  //         content: "בקשה נדחתה",
+  //         color: "green",
+  //       });
+  //     },
+  //     onError: (error) => {
+  //       alert({
+  //         content: error.response.data.message,
+  //         color: "red",
+  //       });
+  //       navigate("/requests");
+  //     },
+  //   });
+  // };
 
   return {
     getPermissionsQuery,
@@ -275,7 +275,7 @@ export const useDbQuerys = () => {
     removePermissionMutation,
     getNotificationsQuery,
     deleteNotificationsMutation,
-    useAcceptRequestMutation,
-    useDenyRequestMutation,
+    // useAcceptRequestMutation,
+    // useDenyRequestMutation,
   };
 };
