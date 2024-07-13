@@ -4,7 +4,6 @@ import { useDbQuerys } from "../lib/react-query/db-querys";
 
 export const UserAccept = () => {
   const { id } = useParams();
-  //   const { mutate } = useDbQuerys().useAcceptRequest();
   const { useAcceptRequestMutation } = useDbQuerys();
   const { mutate } = useAcceptRequestMutation();
 

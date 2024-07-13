@@ -49,7 +49,7 @@ export const client = Client.initWithMiddleware({ authProvider });
 const appId = import.meta.env.VITE_APP_ID;
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
-const version = import.meta.env.VERSION;
+const version = import.meta.env.VITE_VERSION;
 
 function App() {
   console.log("App ID:", appId);
