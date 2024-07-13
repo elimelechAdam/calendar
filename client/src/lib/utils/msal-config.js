@@ -1,6 +1,6 @@
 export const config = {
   appId: "7c1c570a-146e-44cf-b715-ecc470c6436c",
-  redirectUri: import.meta.env.VITE_REDIRECT_URL,
+  redirectUri: "https://calendaralp.vercel.app/",
   scopes: ["User.Read", "User.Read.All", "Calendars.ReadWrite"],
 };
 
