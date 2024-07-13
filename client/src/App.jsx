@@ -46,7 +46,16 @@ const authProvider = new AuthCodeMSALBrowserAuthenticationProvider(
 
 export const client = Client.initWithMiddleware({ authProvider });
 
+const appId = import.meta.env.VITE_APP_ID;
+const baseUrl = import.meta.env.VITE_BASE_URL;
+const redirectUrl = import.meta.env.VITE_REDIRECT_URL;
+const version = import.meta.env.VERSION;
+
 function App() {
+  console.log("App ID:", appId);
+  console.log("Base URL:", baseUrl);
+  console.log("Redirect URL:", redirectUrl);
+  console.log("Version:", version);
   return (
     <MsalProvider instance={msalInstance}>
       <NotSuppMobileMessage />
