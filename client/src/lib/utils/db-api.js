@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://calendaralp.vercel.app/api";
+const BASE_URL = "https://calendar-y87a.vercel.app/api";
 export const getPermissions = async (email, activeTab, page, searchTerm) => {
   try {
     const queryString = `status=${activeTab}&page=${page}&search=${searchTerm}`;
