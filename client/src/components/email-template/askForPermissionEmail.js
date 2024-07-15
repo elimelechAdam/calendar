@@ -126,7 +126,7 @@ const getEmailContent = (
                           ${body}
                         </p>
                         
-                        <a href="http://localhost:5173/accept/${notificationId}"
+                        <a href="https://calendaralp.vercel.app/accept/${notificationId}"
                       style="
                             background-color: #212121;
                             text-decoration: none !important;
@@ -139,7 +139,7 @@ const getEmailContent = (
                             display: inline-block;
                             border-radius: 50px;
                           ">אשר</a>
-                      <a href="http://localhost:5173/deny/${notificationId}"
+                      <a href="https://calendaralp.vercel.app/deny/${notificationId}"
                       style="
                             background-color: #fcaf19;
                             text-decoration: none !important;

@@ -9,4 +9,8 @@ export const msalConfig = {
     clientId: config.appId,
     redirectUri: config.redirectUri,
   },
+  cache: {
+    cacheLocation: "localStorage", // This sets the cache location to localStorage
+    storeAuthStateInCookie: true, // Set to true for IE11 or Edge
+  },
 };
