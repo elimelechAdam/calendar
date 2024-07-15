@@ -69,8 +69,8 @@ function App() {
             <Route element={<RootLayout />}>
               <Route path="/permissions" element={<Permissions />} />
               <Route path="/requests" element={<Requests />} />
-              {/* <Route path="/accept/:id" element={<UserAccept />} />
-              <Route path="/deny/:id" element={<UserDeny />} /> */}
+              <Route path="/accept/:id" element={<UserAccept />} />
+              <Route path="/deny/:id" element={<UserDeny />} />
             </Route>
           </Routes>
         </ErrorBoundary>
