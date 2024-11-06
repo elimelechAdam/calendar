@@ -12,3 +12,7 @@ This Calendar Management System is a comprehensive application designed to manag
 - **Advanced Calendar Management:** Integrates Microsoft Graph API to leverage complex functionalities like event management, invitation handling, and permission controls.
 - **Access Control:** Allows precise control over who can view or edit calendar entries, enhancing security and user management.
 - **Logging System:** Maintains a detailed log system that tracks all changes and access, providing accountability and traceability.
+
+
+![Login image]([image_url](https://raw.githubusercontent.com/elimelechAdam/calendar/refs/heads/ahshli-bahshli/login.png))
+![System image]([image_url](https://raw.githubusercontent.com/elimelechAdam/calendar/refs/heads/ahshli-bahshli/system.png))
